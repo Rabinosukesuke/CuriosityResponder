@@ -1,0 +1,14 @@
+version: '3.9'
+
+services:
+  mobile-app:
+    container_name: mobile-app-react-native
+    build:
+      context: .
+      dockerfile: ./mobile-app/Dockerfile
+    volumes:
+      - ./mobile-app/app:/app
+    ports:
+      - 8081:8081
+      - 19006:19006
+    tty: true
