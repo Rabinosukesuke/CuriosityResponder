@@ -3,6 +3,7 @@ version: '3.9'
 services:
   mobile-app:
     container_name: mobile-app-react-native
+    image: mobile-app-react-native:latest
     build:
       context: .
       dockerfile: ./mobile-app/Dockerfile
