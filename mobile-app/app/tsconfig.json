@@ -6,5 +6,8 @@
   "include": [
     ".//*.ts",
     ".//*.tsx"
+, "types/env.d.ts"  ],
+  "typeRoots": [
+    "./types/"
   ]
 }
