@@ -1,3 +1,9 @@
+export type RootStackParamList = {
+    Home: undefined;
+    SignIn: undefined;
+    SignUp: undefined;
+};
+
 export type EmailWithPassword = {
     email: string;
     password: string;
