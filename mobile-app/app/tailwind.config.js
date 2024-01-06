@@ -2,7 +2,6 @@
 module.exports = {
   content: [
     "./App.{ts,tsx}",
-    "./app/**/*.{ts,tsx}",
     "../app/**/*.{ts,tsx}",
   ],
   theme: {
@@ -10,6 +9,7 @@ module.exports = {
     colors:{
       primary:"#CBF0E9",
       secondary:"#95E1D3",
+      tertiary:"#95E1D3",
     },
   },
   plugins: [],
