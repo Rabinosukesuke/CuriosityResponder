@@ -15,6 +15,7 @@ export const RouteNavigator = () => {
                     headerStyle: {
                         backgroundColor: '#95E1D3',
                     },
+                    headerTitleAlign: 'center',
                 }}
             >
                 <Stack.Screen name='Home' component={HomeScreen} />
