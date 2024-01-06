@@ -1,9 +1,7 @@
 import { View, Text, StyleSheet, Pressable } from 'react-native'
 import { Input } from 'react-native-elements';
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux';
-import { signIn } from '../slices/userSlices'
-import { AppDispatch } from '../store';
+import { useAuth } from '../hooks/useAuth';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types/type';
 
@@ -14,7 +12,7 @@ type Props = {
 }
 
 export const SignInScreen = ({ navigation }: Props) => {
-  const dispatch = useDispatch<AppDispatch>();
+  const { signIn } = useAuth();
 
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
@@ -39,12 +37,12 @@ export const SignInScreen = ({ navigation }: Props) => {
       <Pressable
         style={styles.button}
         onPress={() => {
-          dispatch(signIn({ email, password }))
+          signIn(email, password)
             .then(() => {
               navigation.navigate("Home")
             })
-            .catch((err) => {
-              console.log(err);
+            .catch((error) => {
+              alert(error.message);
             })
         }}
       >

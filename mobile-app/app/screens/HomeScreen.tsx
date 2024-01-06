@@ -1,11 +1,9 @@
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 import React from 'react';
-import { UserInfo } from '../components/UserInfo';
 import { useSelector } from 'react-redux';
-import { selectUser } from '../slices/userSlices';
-import { useDispatch } from 'react-redux';
-import { signOut } from '../slices/userSlices';
-import { AppDispatch } from '../store';
+import { selectAuth } from "../slices/authSlices";
+import { useAuth } from '../hooks/useAuth';
+import { UserInfo } from '../components/UserInfo';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types/type';
 
@@ -16,15 +14,14 @@ type Props = {
 }
 
 export const HomeScreen = ({ navigation }: Props) => {
+  const user = useSelector(selectAuth);
 
-  const dispatch = useDispatch<AppDispatch>();
-
-  const user = useSelector(selectUser);
+  const { signOut } = useAuth();
 
   return (
     <View className='bg-primary flex-1'>
       {
-        user?.user ? (
+        user ? (
           // logged in
           <View className='flex-1 items-center justify-center'>
             <Text className='text-3xl'>
@@ -37,8 +34,12 @@ export const HomeScreen = ({ navigation }: Props) => {
             <Pressable
               style={styles.button}
               onPress={() => {
-                dispatch(signOut())
-              }}>
+                signOut()
+                  .catch((error) => {
+                    alert(error.message);
+                  })
+              }}
+            >
               <Text
                 style={styles.buttonText}
               >ログアウト</Text>

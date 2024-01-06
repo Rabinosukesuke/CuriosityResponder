@@ -1,17 +1,20 @@
 import { View, Text } from 'react-native'
 import React, { memo } from 'react'
 import { useSelector } from 'react-redux'
-import { selectUser } from '../slices/userSlices';
+import { selectAuth } from '../slices/authSlices';
 
 const UserInfoMemo = () => {
-  const user = useSelector(selectUser);
+
+  const user = useSelector(selectAuth);
 
   console.log("UserInfo is rendered");
 
   if (!user) {
     return (
       <View>
-        <Text>You are not logged in</Text>
+        <Text
+          className='text-3xl'
+        >You are not logged in</Text>
       </View>
     )
   }
@@ -19,8 +22,8 @@ const UserInfoMemo = () => {
   return (
     <View>
       <Text>your info</Text>
-      <Text>{user.user?.uid}</Text>
-      <Text>{user.user?.email}</Text>
+      <Text>uid : {user.uid}</Text>
+      <Text>email : {user.email}</Text>
     </View>
   );
 };
