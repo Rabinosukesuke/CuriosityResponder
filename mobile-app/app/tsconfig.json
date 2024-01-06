@@ -6,7 +6,7 @@
   "include": [
     ".//*.ts",
     ".//*.tsx"
-, "types/env.d.ts", "types/tailwind.d.ts"  ],
+, "types/env.d.ts", "types/nativewind.d.ts"  ],
   "typeRoots": [
     "./types/"
   ]
