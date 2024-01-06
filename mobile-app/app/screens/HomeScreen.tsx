@@ -30,6 +30,16 @@ export const HomeScreen = ({ navigation }: Props) => {
 
             <UserInfo />
 
+            {/* ParentLoginScreen Button */}
+            <Pressable
+              style={styles.button}
+              onPress={() => navigation.navigate("ParentLogin")}
+            >
+              <Text
+                style={styles.buttonText}
+              >親用ログイン</Text>
+            </Pressable>
+
             {/* SignOut Button */}
             <Pressable
               style={styles.button}

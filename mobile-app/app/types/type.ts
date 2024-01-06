@@ -2,6 +2,7 @@ export type RootStackParamList = {
     Home: undefined;
     SignIn: undefined;
     SignUp: undefined;
+    ParentLogin: undefined;
 };
 
 export type EmailWithPassword = {
