@@ -1,49 +1,84 @@
-import { View, Text, StyleSheet } from 'react-native'
-import { Button, Input } from 'react-native-elements';
+import { View, Text, StyleSheet, Pressable } from 'react-native'
+import { Input } from 'react-native-elements';
 import React, { useState } from 'react'
-import { UserInfo } from '../components/UserInfo'
 import { useDispatch } from 'react-redux';
 import { signIn } from '../slices/userSlices'
 import { AppDispatch } from '../store';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../types/type';
 
+type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, "SignIn">;
 
-export const SignInScreen = ({ navigation }: any) => {
+type Props = {
+  navigation: HomeScreenNavigationProp;
+}
+
+export const SignInScreen = ({ navigation }: Props) => {
   const dispatch = useDispatch<AppDispatch>();
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
 
   return (
-    <View style={styles.container}>
-      <Text>SignInScreen</Text>
+    <View className='bg-primary flex-1 items-center justify-center'>
+      <Text className='text-3xl font-bold'>ログイン</Text>
       <Input
-        placeholder='type email'
+        placeholder='*****@example.com'
         value={email}
         onChangeText={setEmail}
+        textContentType='emailAddress'
       />
       <Input
-        placeholder='type password'
+        placeholder='**password**'
         value={password}
         onChangeText={setPassword}
+        textContentType='password'
       />
-      <Button title="SignIn" onPress={() => {
-        dispatch(signIn({ email, password }))
-          .then(() => {
-            navigation.navigate("Home")
-          })
-          .catch((err) => {
-            console.log(err);
-          })
-      }} />
+
+      {/* SignIn Button */}
+      <Pressable
+        style={styles.button}
+        onPress={() => {
+          dispatch(signIn({ email, password }))
+            .then(() => {
+              navigation.navigate("Home")
+            })
+            .catch((err) => {
+              console.log(err);
+            })
+        }}
+      >
+        <Text
+          style={styles.buttonText}
+        >ログイン</Text>
+      </Pressable >
     </View>
   )
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+  button: {
+    width: "70%",
+    height: "5%",
+    borderWidth: 1,
+    shadowColor: "#000",
+    backgroundColor: "#6EE7B3",
+    flexDirection: "column",
+    borderRadius: 50,
+    borderColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 1,
+    marginVertical: 5,
   },
+  buttonText: {
+    color: "white",
+    textAlign: "center",
+    // fontFamily: "Junge",
+    fontSize: 20,
+    fontStyle: "normal",
+    fontWeight: "400",
+    letterSpacing: -0.5,
+    textTransform: "capitalize",
+  }
 });
