@@ -1,11 +1,11 @@
-import { View, Text, StyleSheet, Pressable } from 'react-native'
-import { Input } from 'react-native-elements';
+import { View, Text, StyleSheet, Pressable, TextInput } from 'react-native'
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { selectAuth } from '../slices/authSlices';
 import { useAuth } from '../hooks/useAuth';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types/type';
+import { useFonts, Junge_400Regular } from '@expo-google-fonts/dev';
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, "ParentLogin">;
 
@@ -22,15 +22,44 @@ export const ParentLoginScreen = ({ navigation }: Props) => {
 
     const [password, setPassword] = useState<string>('');
 
+    const [fontsLoaded] = useFonts({
+        Junge_400Regular,
+    });
+
+    if (!fontsLoaded) {
+        return <Text>Loading...</Text>
+    }
+
     return (
-        <View className='bg-primary flex-1 items-center justify-center'>
-            <Text className='text-3xl font-bold'>保護者向けログイン</Text>
-            <Input
-                placeholder='**password**'
-                value={password}
-                onChangeText={setPassword}
-                textContentType='password'
-            />
+        <View className='bg-primary flex-1 items-center justify-start'>
+            <Text
+                style={{
+                    color: "black",
+                    textAlign: "center",
+                    fontFamily: "Junge_400Regular",
+                    fontSize: 32,
+                    fontStyle: "normal",
+                    fontWeight: "400",
+                    letterSpacing: -0.5,
+                    textTransform: "capitalize",
+
+                    marginTop: "20%",
+                }}
+            >Discover Ease{'\n'}保護者向けログイン</Text>
+            <View className='w-11/12 h-1/2 justify-center'>
+                <Text
+                    className='ml-3'
+                >パスワード</Text>
+                <TextInput
+                    placeholder='パスワードを入力してください'
+                    value={password}
+                    onChangeText={setPassword}
+                    style={styles.Input}
+                    inputMode='url'
+                    placeholderTextColor={"#ffffff"}
+                    secureTextEntry={true}
+                />
+            </View>
 
             {/* ParentLogin Button */}
             <Pressable
@@ -60,7 +89,7 @@ export const ParentLoginScreen = ({ navigation }: Props) => {
             >
                 <Text
                     style={styles.buttonText}
-                >ログイン</Text>
+                >Next</Text>
             </Pressable>
         </View >
     )
@@ -84,11 +113,26 @@ const styles = StyleSheet.create({
     buttonText: {
         color: "white",
         textAlign: "center",
-        // fontFamily: "Junge",
+        fontFamily: "Junge_400Regular",
         fontSize: 20,
         fontStyle: "normal",
         fontWeight: "400",
         letterSpacing: -0.5,
         textTransform: "capitalize",
+    },
+    Input: {
+        width: "100%",
+        height: "15%",
+        borderRadius: 50,
+        borderWidth: 3,
+        borderColor: "#ffffff",
+
+        textAlign: "center",
+        fontFamily: "Junge_400Regular",
+        fontSize: 20,
+        fontStyle: "normal",
+        fontWeight: "400",
+        color: "#fff",
+        letterSpacing: -0.5,
     }
 });
