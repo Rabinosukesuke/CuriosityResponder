@@ -15,6 +15,7 @@ type Auth = {
     signUp: (email: string, password: string) => Promise<void>
     signIn: (email: string, password: string) => Promise<void>
     signOut: () => Promise<void>
+    autoSignIn: (user: FirebaseUser) => Promise<void>
 }
 
 export const useAuth = (): Auth => {
@@ -63,9 +64,19 @@ export const useAuth = (): Auth => {
             });
     };
 
+    const autoSignIn = async (user: FirebaseUser): Promise<void> => {
+        const currentUser: User = {
+            uid: user.uid,
+            email: user.email,
+        }
+        dispatch(setUser(currentUser))
+        console.log("auto sign in")
+    }
+
     return {
         signUp,
         signIn,
         signOut,
+        autoSignIn,
     }
 }

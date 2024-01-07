@@ -6,6 +6,9 @@ import { useAuth } from '../hooks/useAuth';
 import { UserInfo } from '../components/UserInfo';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types/type';
+import { auth } from '../firebase';
+import { onAuthStateChanged } from 'firebase/auth';
+import { type User as firebaseUser } from 'firebase/auth';
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, "Home">;
 
@@ -16,7 +19,28 @@ type Props = {
 export const HomeScreen = ({ navigation }: Props) => {
   const user = useSelector(selectAuth);
 
-  const { signOut } = useAuth();
+  const { signOut, autoSignIn } = useAuth();
+
+  if (user) {
+    navigation.navigate("ChildChatScreen")
+  }
+  else {
+    let initialized = false;
+
+    onAuthStateChanged(auth, (user: firebaseUser | null) => {
+      if (!initialized) {
+        initialized = true;
+        console.log("onAuthStateChanged : ", user?.email);
+        if (user) {
+          autoSignIn(user)
+            .catch((error) => {
+              alert(error.message);
+            })
+        }
+      }
+    })
+  }
+
 
   return (
     <View className='bg-primary flex-1'>
@@ -29,6 +53,16 @@ export const HomeScreen = ({ navigation }: Props) => {
             </Text>
 
             <UserInfo />
+
+            {/* ChildChatScreen Button */}
+            <Pressable
+              style={styles.button}
+              onPress={() => navigation.navigate("ChildChatScreen")}
+            >
+              <Text
+                style={styles.buttonText}
+              >チャット画面</Text>
+            </Pressable>
 
             {/* ParentLoginScreen Button */}
             <Pressable

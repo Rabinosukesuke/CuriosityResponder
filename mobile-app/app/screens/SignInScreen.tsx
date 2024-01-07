@@ -39,7 +39,7 @@ export const SignInScreen = ({ navigation }: Props) => {
         onPress={() => {
           signIn(email, password)
             .then(() => {
-              navigation.navigate("ChildChatScreen")
+              navigation.navigate("Home")
             })
             .catch((error) => {
               alert(error.message);
