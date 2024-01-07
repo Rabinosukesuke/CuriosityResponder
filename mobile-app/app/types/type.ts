@@ -3,6 +3,7 @@ export type RootStackParamList = {
     SignIn: undefined;
     SignUp: undefined;
     ParentLogin: undefined;
+    ChildChatScreen: undefined; 
 };
 
 export type EmailWithPassword = {
