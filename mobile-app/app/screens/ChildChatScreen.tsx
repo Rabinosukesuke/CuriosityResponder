@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { View, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import { FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
+import TopBar from '../components/TopBar';
+// import { FontAwesome } from '@expo/vector-icons';
 
 // FontAwesomeにおける有効なアイコン名の型
 type FontAwesomeName = 'smile-o' | 'meh-o' | 'frown-o';
@@ -57,8 +59,9 @@ const ChildChatScreen = () => {
         </TouchableOpacity>
         {/* <View style={styles.brandicon}>
         <FontAwesome name="twitter-square" size={24}  />
-        </View> */}
+        </View> */}     
       </View>
+      <TopBar /> 
     </View>
   );
 };
