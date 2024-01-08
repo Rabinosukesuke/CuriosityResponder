@@ -9,6 +9,7 @@ import { RootStackParamList } from '../types/type';
 import { auth } from '../firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { type User as firebaseUser } from 'firebase/auth';
+import { Header } from '../components/Header';
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, "Home">;
 
@@ -45,6 +46,7 @@ export const HomeScreen = ({ navigation }: Props) => {
 
   return (
     <View className='bg-primary flex-1'>
+      <Header navigation={null} BackScreenName={null} />
       {
         user ? (
           // logged in
