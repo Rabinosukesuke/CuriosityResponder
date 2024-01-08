@@ -6,6 +6,7 @@ import { useAuth } from '../hooks/useAuth';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types/type';
 import { useFonts, Junge_400Regular } from '@expo-google-fonts/dev';
+import { Header } from '../components/Header';
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, "ParentLogin">;
 
@@ -32,6 +33,7 @@ export const ParentLoginScreen = ({ navigation }: Props) => {
 
     return (
         <View className='bg-primary flex-1 items-center justify-start'>
+            <Header navigation={navigation} BackScreenName={"Home"} />
             <Text
                 style={{
                     color: "black",
@@ -43,10 +45,10 @@ export const ParentLoginScreen = ({ navigation }: Props) => {
                     letterSpacing: -0.5,
                     textTransform: "capitalize",
 
-                    marginTop: "20%",
+                    marginTop: "5%",
                 }}
             >Discover Ease{'\n'}保護者向けログイン</Text>
-            <View className='w-11/12 h-1/2 justify-center'>
+            <View className='w-11/12 h-16 mt-16'>
                 <Text
                     className='ml-3'
                 >パスワード</Text>
@@ -109,6 +111,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         padding: 1,
         marginVertical: 5,
+        marginTop: "50%",
     },
     buttonText: {
         color: "white",
@@ -122,7 +125,7 @@ const styles = StyleSheet.create({
     },
     Input: {
         width: "100%",
-        height: "15%",
+        height: "100%",
         borderRadius: 50,
         borderWidth: 3,
         borderColor: "#ffffff",
