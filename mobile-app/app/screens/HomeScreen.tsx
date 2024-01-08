@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, Pressable } from 'react-native';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { selectAuth } from "../slices/authSlices";
 import { useAuth } from '../hooks/useAuth';
@@ -21,25 +21,26 @@ export const HomeScreen = ({ navigation }: Props) => {
 
   const { signOut, autoSignIn } = useAuth();
 
-  if (user) {
-    navigation.navigate("ChildChatScreen")
-  }
-  else {
-    let initialized = false;
+  useEffect(() => {
+    if (user) {
+      navigation.navigate("ChildChatScreen");
+    } else {
+      let initialized = false;
 
-    onAuthStateChanged(auth, (user: firebaseUser | null) => {
-      if (!initialized) {
-        initialized = true;
-        console.log("onAuthStateChanged : ", user?.email);
-        if (user) {
-          autoSignIn(user)
-            .catch((error) => {
-              alert(error.message);
-            })
+      onAuthStateChanged(auth, (user: firebaseUser | null) => {
+        if (!initialized) {
+          initialized = true;
+          console.log("onAuthStateChanged : ", user?.email);
+          if (user) {
+            autoSignIn(user)
+              .catch((error) => {
+                alert(error.message);
+              });
+          }
         }
-      }
-    })
-  }
+      });
+    }
+  }, [user, navigation, autoSignIn]);
 
 
   return (
