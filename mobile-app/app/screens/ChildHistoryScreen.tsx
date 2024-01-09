@@ -5,10 +5,8 @@ import TopBar from '../components/TopBar';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types/type';
 
-type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, "Home">;
-
 type Props = {
-    navigation: HomeScreenNavigationProp;
+    navigation: NativeStackNavigationProp<RootStackParamList, "Home">;
 }
 
 export const ChildHistoryScreen = ({ navigation }: Props) => {

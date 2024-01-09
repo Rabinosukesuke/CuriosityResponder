@@ -6,10 +6,8 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types/type';
 import { Header } from '../components/Header';
 
-type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, "SignUp">;
-
 type Props = {
-    navigation: HomeScreenNavigationProp;
+    navigation: NativeStackNavigationProp<RootStackParamList, "SignUp">;
 }
 
 export const SignUpScreen = ({ navigation }: Props) => {
@@ -70,7 +68,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         padding: 1,
-        
+
         marginTop: "30%",
     },
     buttonText: {

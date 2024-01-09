@@ -5,11 +5,11 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types/type';
 import { useFonts, Yellowtail_400Regular } from '@expo-google-fonts/dev';
 
-type BackScreenName = keyof RootStackParamList
+type RouteParamKey = keyof RootStackParamList
 
 type Props = {
-    navigation: NativeStackNavigationProp<RootStackParamList, BackScreenName> | null;
-    BackScreenName: BackScreenName | null;
+    navigation: NativeStackNavigationProp<RootStackParamList, RouteParamKey> | null;
+    BackScreenName: RouteParamKey | null;
 }
 
 export const Header = ({ navigation, BackScreenName }: Props) => {

@@ -6,10 +6,8 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types/type';
 import { Header } from '../components/Header';
 
-type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, "SignIn">;
-
 type Props = {
-  navigation: HomeScreenNavigationProp;
+  navigation: NativeStackNavigationProp<RootStackParamList, "SignIn">;
 }
 
 export const SignInScreen = ({ navigation }: Props) => {

@@ -11,10 +11,8 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { type User as firebaseUser } from 'firebase/auth';
 import { Header } from '../components/Header';
 
-type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, "Home">;
-
 type Props = {
-  navigation: HomeScreenNavigationProp;
+  navigation: NativeStackNavigationProp<RootStackParamList, "Home">;
 }
 
 export const HomeScreen = ({ navigation }: Props) => {

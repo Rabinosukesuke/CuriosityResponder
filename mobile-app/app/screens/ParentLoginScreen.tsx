@@ -8,10 +8,8 @@ import { RootStackParamList } from '../types/type';
 import { useFonts, Junge_400Regular } from '@expo-google-fonts/dev';
 import { Header } from '../components/Header';
 
-type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, "ParentLogin">;
-
 type Props = {
-    navigation: HomeScreenNavigationProp;
+    navigation: NativeStackNavigationProp<RootStackParamList, "ParentLogin">;
 }
 
 export const ParentLoginScreen = ({ navigation }: Props) => {
