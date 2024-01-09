@@ -21,7 +21,7 @@ export const SignUpScreen = ({ navigation }: Props) => {
     return (
         <View className='bg-primary flex-1 items-center justify-top'>
             <Header navigation={navigation} BackScreenName={"Home"} />
-            <Text className='h-1/6 text-3xl font-bold'>アカウント登録</Text>
+            <Text className='mt-20 mb-20 text-3xl font-bold'>アカウント登録</Text>
             <Input
                 placeholder='type email'
                 value={email}
@@ -70,7 +70,8 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         padding: 1,
-        marginVertical: 5,
+        
+        marginTop: "30%",
     },
     buttonText: {
         color: "white",

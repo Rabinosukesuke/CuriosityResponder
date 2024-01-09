@@ -21,7 +21,7 @@ export const SignInScreen = ({ navigation }: Props) => {
   return (
     <View className='bg-primary flex-1 items-center justify-top'>
       <Header navigation={navigation} BackScreenName={"Home"} />
-      <Text className='h-1/6 text-3xl font-bold'>ログイン</Text>
+      <Text className='mt-20 mb-20 text-3xl font-bold'>ログイン</Text>
       <Input
         placeholder='*****@example.com'
         value={email}
@@ -69,7 +69,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     padding: 1,
-    marginVertical: 5,
+
+    marginTop: "30%",
   },
   buttonText: {
     color: "white",
