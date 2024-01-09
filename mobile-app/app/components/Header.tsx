@@ -3,6 +3,7 @@ import React from 'react'
 import { AntDesign } from '@expo/vector-icons';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types/type';
+import { useFonts, Yellowtail_400Regular } from '@expo-google-fonts/dev';
 
 type BackScreenName = keyof RootStackParamList
 
@@ -12,6 +13,13 @@ type Props = {
 }
 
 export const Header = ({ navigation, BackScreenName }: Props) => {
+
+    const [fontsLoaded] = useFonts({
+        Yellowtail_400Regular,
+    });
+    if (!fontsLoaded) {
+        return null;
+    }
 
     return (
         <View className='h-1/5 w-full flex flex-row'>
