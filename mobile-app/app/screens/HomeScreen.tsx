@@ -77,6 +77,16 @@ export const HomeScreen = ({ navigation }: Props) => {
               >親用ログイン</Text>
             </Pressable>
 
+            {/* ChildHistoryScreen Button */}
+            <Pressable
+              style={styles.button}
+              onPress={() => navigation.navigate("ChildHistory")}
+            >
+              <Text
+                style={styles.buttonText}
+              >履歴画面</Text>
+            </Pressable>
+
             {/* SignOut Button */}
             <Pressable
               style={styles.button}

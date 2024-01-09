@@ -7,6 +7,7 @@ import { SignInScreen } from '../screens/SignInScreen';
 import { SignUpScreen } from '../screens/SignUpScreen';
 import { ParentLoginScreen } from '../screens/ParentLoginScreen';
 import ChildChatScreen from '../screens/ChildChatScreen';
+import { ChildHistoryScreen } from '../screens/ChildHistoryScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -19,6 +20,7 @@ export const RouteNavigator = () => {
                 <Stack.Screen name='ChildChatScreen' component={ChildChatScreen} />
                 <Stack.Screen name='SignUp' component={SignUpScreen} />
                 <Stack.Screen name='ParentLogin' component={ParentLoginScreen} />
+                <Stack.Screen name='ChildHistory' component={ChildHistoryScreen} />
             </Stack.Navigator>
         </NavigationContainer>
     );

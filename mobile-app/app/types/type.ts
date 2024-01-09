@@ -4,6 +4,7 @@ export type RootStackParamList = {
     SignUp: undefined;
     ParentLogin: undefined;
     ChildChatScreen: undefined; 
+    ChildHistory: undefined;
 };
 
 export type User = {
