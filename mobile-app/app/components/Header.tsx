@@ -22,13 +22,12 @@ export const Header = ({ navigation, BackScreenName }: Props) => {
     }
 
     return (
-        <View className='h-1/5 w-full flex flex-row'>
-            <View className='w-1/5 h-full items-center justify-center'>
+        <View className='h-1/5 w-full flex flex-row bg-secondary'>
+            <View className='w-1/5 h-full items-center justify-end'>
                 {BackScreenName && navigation ? (
                     <Pressable
-                        onPress={() => {
-                            navigation.navigate(BackScreenName)
-                        }}
+                        className='pb-5 pt-5'
+                        onPress={() => { navigation.navigate(BackScreenName) }}
                     >
                         <AntDesign name="arrowleft" size={32} color="black" />
                     </Pressable>
