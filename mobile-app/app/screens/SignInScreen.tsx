@@ -4,11 +4,10 @@ import React, { useState } from 'react'
 import { useAuth } from '../hooks/useAuth';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types/type';
-
-type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, "SignIn">;
+import { Header } from '../components/Header';
 
 type Props = {
-  navigation: HomeScreenNavigationProp;
+  navigation: NativeStackNavigationProp<RootStackParamList, "SignIn">;
 }
 
 export const SignInScreen = ({ navigation }: Props) => {
@@ -18,8 +17,9 @@ export const SignInScreen = ({ navigation }: Props) => {
   const [password, setPassword] = useState<string>('');
 
   return (
-    <View className='bg-primary flex-1 items-center justify-center'>
-      <Text className='text-3xl font-bold'>ログイン</Text>
+    <View className='bg-primary flex-1 items-center justify-top'>
+      <Header navigation={navigation} BackScreenName={"Home"} />
+      <Text className='mt-20 mb-20 text-3xl font-bold'>ログイン</Text>
       <Input
         placeholder='*****@example.com'
         value={email}
@@ -67,7 +67,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     padding: 1,
-    marginVertical: 5,
+
+    marginTop: "30%",
   },
   buttonText: {
     color: "white",

@@ -21,6 +21,9 @@ const TapBar = () => {
       navigation.navigate('MediaInputScreen');
     });
   };
+  const navigateToChildHistoryScreen = () => {
+    navigation.navigate('ChildHistoryScreen');
+  };
 
   const rotate = animation.interpolate({
     inputRange: [0, 1],
@@ -48,8 +51,9 @@ const TapBar = () => {
 
   return (
     <View style={styles.container}>
-      <FontAwesome5 name="stack-overflow" size={40} color="#95E1D3" style={styles.icon} />
-
+      <TouchableOpacity onPress={navigateToChildHistoryScreen}>
+        <FontAwesome5 name="stack-overflow" size={40} color="#95E1D3" style={styles.icon} />
+      </TouchableOpacity>
       <Animated.View style={buttonStyle}>
         <TouchableOpacity onPress={navigateToMediaInputScreen}>
           <FontAwesome5 name="plus" size={24} color="white" />

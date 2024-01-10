@@ -2,8 +2,18 @@ import React, { useState } from 'react';
 import { View, TextInput, StyleSheet, TouchableOpacity, Button } from 'react-native';
 import { FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
 import TapBar from '../components/TapBar';
-import axios from 'axios';
-import { OPENAI_API_KEY } from '@env';
+import { Header } from '../components/Header'; 
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../types/type'; 
+
+type ChildChatScreenNavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'ChildChatScreen'
+>;
+
+type Props = {
+  navigation: ChildChatScreenNavigationProp;
+};
 
 type FontAwesomeName = 'smile-o' | 'meh-o' | 'frown-o';
 
@@ -16,8 +26,7 @@ const convertEmojiName = (iconName: string): FontAwesomeName => {
   return iconMap[iconName] || 'meh-o'; 
 };
 
-
-const ChildChatScreen = () => {
+const ChildChatScreen: React.FC<Props> = ({ navigation }) => {
   const [emoji, setEmoji] = useState('meh-o');
   const [question, setQuestion] = useState('');
   const [response, setResponse] = useState('');
@@ -26,36 +35,10 @@ const ChildChatScreen = () => {
     setEmoji(convertEmojiName(selectedEmoji));
   };
 
-  const sendToGPT = async () => {
-    if (question.trim() === '') {
-      alert('質問を入力してください。');
-      return;
-    }
-    try {
-      const result = await axios.post(
-        'https://api.openai.com/v1/engines/text-davinci-003/completions',
-        {
-          prompt: question,
-          max_tokens: 150
-        },
-        {
-          headers: {
-            'Authorization': `Bearer ${OPENAI_API_KEY}`
-          }
-        }
-      );
-      setResponse(result.data.choices[0].text.trim());
-    } catch (error) {
-      console.error('Error during API request', error);
-      setResponse('エラーが発生しました。');
-    }
-  };
-
- 
 
   return (
     <View style={styles.container}>
-    <View style={styles.container}>
+      <Header navigation={navigation} BackScreenName={"Home"} /> 
       <FontAwesome name={emoji} size={24} style={styles.emojiIcon} />
       <View style={styles.inputQuestionContainer}>
         <TextInput
@@ -86,7 +69,6 @@ const ChildChatScreen = () => {
       </View>
       <TapBar/>   
        </View>
-    </View>
   );
 };
 
@@ -98,7 +80,7 @@ const styles = StyleSheet.create({
   emojiIcon: {
     position: 'absolute',
     left: 34, 
-    top: 18, 
+    top: 180, 
     zIndex: 2,
     marginRight: 16,
   },

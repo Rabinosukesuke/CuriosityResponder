@@ -1,68 +1,41 @@
 import React from 'react';
-import { View, Text, TextInput, Image, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
-import { FontAwesome5, MaterialCommunityIcons, FontAwesome, Ionicons } from '@expo/vector-icons';
+import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
+import { Header } from '../components/Header'; 
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../types/type'; 
 
-const MediaInputScreen = () => {
+type MediaInputScreenNavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'MediaInputScreen'
+>;
+
+// Props型を定義
+type Props = {
+  navigation: MediaInputScreenNavigationProp;
+};
+
+const MediaInputScreen: React.FC<Props> = ({ navigation }) => {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#000' }}>
-
+      <Header navigation={navigation} BackScreenName={"Home"} />
       
-      {/* チャットバブル */}
-      <View style={styles.chatBubble}>
-        <Text style={styles.chatText}>いまどうしてる？</Text>
+      <View style={styles.centeredView}>
+        <Text style={styles.text}>この画面は作成中です。</Text>
       </View>
-      
-      {/* 画像サムネイル */}
-      <Image 
-        source={{ uri: 'path_to_your_image' }}
-        style={styles.thumbnail}
-      />
-      
-      {/* メディアアイコン */}
-      <View style={styles.iconRow}>
-        <FontAwesome5 name="microphone" size={24} color="white" />
-        <FontAwesome5 name="camera" size={24} color="white" />
-        <FontAwesome name="photo" size={24} color="white" />
-        <Ionicons name="add-circle-outline" size={24} color="white" />
-        {/* その他のアイコンをここに追加 */}
-      </View>
-      
-      {/* テキスト入力エリア */}
-      <TextInput 
-        style={styles.textInput}
-        placeholder="Aa"
-        placeholderTextColor="#888"
-      />
-      
-      {/* ここにキーボードを表示させる */}
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  // ここにスタイルを定義
-  navBar: {
-    // ナビゲーションバーのスタイル
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
-  timeText: {
-    // 時刻テキストのスタイル
-  },
-  chatBubble: {
-    // チャットバブルのスタイル
-  },
-  chatText: {
-    // チャットテキストのスタイル
-  },
-  thumbnail: {
-    // 画像サムネイルのスタイル
-  },
-  iconRow: {
-    // アイコンの行のスタイル
-  },
-  textInput: {
-    // テキスト入力のスタイル
-  },
-  // その他のスタイル
+  text: {
+    color: 'white',
+    fontSize: 18
+  }
 });
 
 export default MediaInputScreen;

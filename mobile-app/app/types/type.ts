@@ -4,6 +4,7 @@ export type RootStackParamList = {
     SignUp: undefined;
     ParentLogin: undefined;
     ChildChatScreen: undefined; 
+    ChildHistoryScreen: undefined; 
     MediaInputScreen: undefined; 
 
 };
@@ -11,6 +12,7 @@ export type RootStackParamList = {
 export type EmailWithPassword = {
     email: string;
     password: string;
+
 };
 
 export type User = {

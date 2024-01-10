@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, Pressable } from 'react-native';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { selectAuth } from "../slices/authSlices";
 import { useAuth } from '../hooks/useAuth';
@@ -9,11 +9,10 @@ import { RootStackParamList } from '../types/type';
 import { auth } from '../firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { type User as firebaseUser } from 'firebase/auth';
-
-type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, "Home">;
+import { Header } from '../components/Header';
 
 type Props = {
-  navigation: HomeScreenNavigationProp;
+  navigation: NativeStackNavigationProp<RootStackParamList, "Home">;
 }
 
 export const HomeScreen = ({ navigation }: Props) => {
@@ -21,29 +20,31 @@ export const HomeScreen = ({ navigation }: Props) => {
 
   const { signOut, autoSignIn } = useAuth();
 
-  if (user) {
-    navigation.navigate("ChildChatScreen")
-  }
-  else {
-    let initialized = false;
+  useEffect(() => {
+    if (user) {
+      navigation.navigate("ChildChatScreen");
+    } else {
+      let initialized = false;
 
-    onAuthStateChanged(auth, (user: firebaseUser | null) => {
-      if (!initialized) {
-        initialized = true;
-        console.log("onAuthStateChanged : ", user?.email);
-        if (user) {
-          autoSignIn(user)
-            .catch((error) => {
-              alert(error.message);
-            })
+      onAuthStateChanged(auth, (user: firebaseUser | null) => {
+        if (!initialized) {
+          initialized = true;
+          console.log("onAuthStateChanged : ", user?.email);
+          if (user) {
+            autoSignIn(user)
+              .catch((error) => {
+                alert(error.message);
+              });
+          }
         }
-      }
-    })
-  }
+      });
+    }
+  }, [user, navigation, autoSignIn]);
 
 
   return (
     <View className='bg-primary flex-1'>
+      <Header navigation={null} BackScreenName={null} />
       {
         user ? (
           // logged in
@@ -72,6 +73,16 @@ export const HomeScreen = ({ navigation }: Props) => {
               <Text
                 style={styles.buttonText}
               >親用ログイン</Text>
+            </Pressable>
+
+            {/* ChildHistoryScreen Button */}
+            <Pressable
+              style={styles.button}
+              onPress={() => navigation.navigate("ChildHistory")}
+            >
+              <Text
+                style={styles.buttonText}
+              >履歴画面</Text>
             </Pressable>
 
             {/* SignOut Button */}
