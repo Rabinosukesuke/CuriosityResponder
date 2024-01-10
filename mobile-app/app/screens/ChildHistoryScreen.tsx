@@ -177,204 +177,25 @@ const styles = StyleSheet.create({
 
 export default Index;
 
+// import { View, Text } from 'react-native'
+// import React from 'react'
+// import { Header } from '../components/Header';
+// import TopBar from '../components/TopBar';
+// import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+// import { RootStackParamList } from '../types/type';
 
-// import React, { Component } from "react";
-// import { StyleSheet, View } from "react-native";
-// import Svg, { Ellipse } from "react-native-svg";
-
-// function Index(props) {
-//   return (
-//     <View style={styles.container}>
-//       <View style={styles.rect}>
-//         <View style={styles.group3Row}>
-//           <View style={styles.group3}>
-//             <View style={styles.rect4}></View>
-//             <View style={styles.rect3}>
-//               <View style={styles.group}>
-//                 <View style={styles.ellipseStack}>
-//                   <Svg viewBox="0 0 11.04 14.43" style={styles.ellipse}>
-//                     <Ellipse
-//                       stroke="rgba(230, 230, 230,1)"
-//                       strokeWidth={0}
-//                       fill="rgba(253,253,253,1)"
-//                       cx={6}
-//                       cy={7}
-//                       rx={6}
-//                       ry={7}
-//                     ></Ellipse>
-//                   </Svg>
-//                   <Svg viewBox="0 0 8.71 11.16" style={styles.ellipse2}>
-//                     <Ellipse
-//                       stroke="rgba(230, 230, 230,1)"
-//                       strokeWidth={0}
-//                       fill="rgba(203,240,233,1)"
-//                       cx={4}
-//                       cy={6}
-//                       rx={4}
-//                       ry={6}
-//                     ></Ellipse>
-//                   </Svg>
-//                   <View style={styles.rect5}></View>
-//                 </View>
-//               </View>
-//             </View>
-//           </View>
-//           <View style={styles.group2}>
-//             <View style={styles.rect6Stack}>
-//               <View style={styles.rect6}>
-//                 <View style={styles.rect7}>
-//                   <View style={styles.rect8}>
-//                     <View style={styles.rect9}></View>
-//                   </View>
-//                 </View>
-//               </View>
-//               <Svg viewBox="0 0 7.01 7.01" style={styles.ellipse3}>
-//                 <Ellipse
-//                   stroke="rgba(230, 230, 230,1)"
-//                   strokeWidth={0}
-//                   fill="rgba(253,253,253,1)"
-//                   cx={4}
-//                   cy={4}
-//                   rx={4}
-//                   ry={4}
-//                 ></Ellipse>
-//               </Svg>
-//             </View>
-//           </View>
-//         </View>
-//       </View>
-//     </View>
-//   );
+// type Props = {
+//     navigation: NativeStackNavigationProp<RootStackParamList, "Home">;
 // }
 
-// const styles = StyleSheet.create({
-//   container: {
-//     width: 365,
-//     height: 97
-//   },
-//   rect: {
-//     width: 365,
-//     height: 97,
-//     backgroundColor: "rgba(255,255,255,1)",
-//     borderBottomRightRadius: 35,
-//     borderBottomLeftRadius: 35,
-//     borderTopLeftRadius: 20,
-//     borderTopRightRadius: 20,
-//     flexDirection: "row"
-//   },
-//   group3: {
-//     width: 33,
-//     height: 32
-//   },
-//   rect4: {
-//     width: 33,
-//     height: 6,
-//     backgroundColor: "rgba(203,240,233,1)",
-//     borderTopLeftRadius: 100,
-//     borderTopRightRadius: 100
-//   },
-//   rect3: {
-//     width: 33,
-//     height: 23,
-//     backgroundColor: "rgba(203,240,233,1)",
-//     marginTop: 2
-//   },
-//   group: {
-//     width: 15,
-//     height: 15,
-//     marginTop: 2,
-//     marginLeft: 9
-//   },
-//   ellipse: {
-//     top: 1,
-//     left: 2,
-//     width: 11,
-//     height: 14,
-//     position: "absolute"
-//   },
-//   ellipse2: {
-//     top: 3,
-//     left: 3,
-//     width: 9,
-//     height: 11,
-//     position: "absolute"
-//   },
-//   rect5: {
-//     top: 0,
-//     left: 0,
-//     width: 15,
-//     height: 8,
-//     position: "absolute",
-//     backgroundColor: "rgba(203,240,233,1)"
-//   },
-//   ellipseStack: {
-//     width: 15,
-//     height: 15
-//   },
-//   group2: {
-//     width: 19,
-//     height: 19,
-//     marginLeft: 175,
-//     marginTop: 6
-//   },
-//   rect6: {
-//     top: 0,
-//     left: 1,
-//     width: 4,
-//     height: 19,
-//     position: "absolute",
-//     backgroundColor: "rgba(203,240,233,1)"
-//   },
-//   rect7: {
-//     width: 4,
-//     height: 19,
-//     backgroundColor: "rgba(203,240,233,1)",
-//     transform: [
-//       {
-//         rotate: "-45.00deg"
-//       }
-//     ]
-//   },
-//   rect8: {
-//     width: 4,
-//     height: 19,
-//     backgroundColor: "rgba(203,240,233,1)",
-//     transform: [
-//       {
-//         rotate: "-90.00deg"
-//       }
-//     ]
-//   },
-//   rect9: {
-//     width: 4,
-//     height: 19,
-//     backgroundColor: "rgba(203,240,233,1)",
-//     transform: [
-//       {
-//         rotate: "-135.00deg"
-//       }
-//     ]
-//   },
-//   ellipse3: {
-//     top: 6,
-//     left: 0,
-//     width: 7,
-//     height: 7,
-//     position: "absolute"
-//   },
-//   rect6Stack: {
-//     width: 7,
-//     height: 19,
-//     marginLeft: 6
-//   },
-//   group3Row: {
-//     height: 32,
-//     flexDirection: "row",
-//     flex: 1,
-//     marginRight: 75,
-//     marginLeft: 63,
-//     marginTop: 35
-//   }
-// });
+// export const ChildHistoryScreen = ({ navigation }: Props) => {
+//     return (
+//         <View className='bg-primary flex-1'>
+//             <Header navigation={navigation} BackScreenName={"Home"} />
+//             <View className='h-4/6'>
 
-// export default Index;
+//             </View>
+//             <TopBar />
+//         </View>
+//     )
+// }

@@ -2,9 +2,7 @@ import { Platform } from "react-native";
 import { initializeApp } from "firebase/app";
 import { initializeAuth } from 'firebase/auth';
 import { getReactNativePersistence } from "firebase/auth";
-// import * as firebaseAuth from "firebase/auth";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-// import auth from '@react-native-firebase/auth';
 import {
     FIREBASE_API_KEY,
     FIREBASE_AUTH_DOMAIN,
@@ -26,11 +24,24 @@ const firebaseConfig = {
 
 console.log(firebaseConfig);
 
-
 const app = initializeApp(firebaseConfig);
-const auth = initializeAuth(app, {
-    persistence: getReactNativePersistence(AsyncStorage)
+
+const platformOs = Platform.OS;
+console.log("platformOs: ", platformOs);
+
+let persistence = undefined;
+
+if (platformOs === "android" || platformOs === "ios") {
+    persistence = getReactNativePersistence(AsyncStorage);
+    console.log("mobile platform");
+}
+else if (platformOs === "web") {
+    console.log("web platform");
+}
+else {
+    console.log("unknown platform");
+}
+
+export const auth = initializeAuth(app, {
+    persistence: persistence
 });
-export { auth };
-
-

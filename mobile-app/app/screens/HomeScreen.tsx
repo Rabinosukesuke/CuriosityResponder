@@ -9,11 +9,10 @@ import { RootStackParamList } from '../types/type';
 import { auth } from '../firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { type User as firebaseUser } from 'firebase/auth';
-
-type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, "Home">;
+import { Header } from '../components/Header';
 
 type Props = {
-  navigation: HomeScreenNavigationProp;
+  navigation: NativeStackNavigationProp<RootStackParamList, "Home">;
 }
 
 export const HomeScreen = ({ navigation }: Props) => {
@@ -45,6 +44,7 @@ export const HomeScreen = ({ navigation }: Props) => {
 
   return (
     <View className='bg-primary flex-1'>
+      <Header navigation={null} BackScreenName={null} />
       {
         user ? (
           // logged in
@@ -73,6 +73,16 @@ export const HomeScreen = ({ navigation }: Props) => {
               <Text
                 style={styles.buttonText}
               >親用ログイン</Text>
+            </Pressable>
+
+            {/* ChildHistoryScreen Button */}
+            <Pressable
+              style={styles.button}
+              onPress={() => navigation.navigate("ChildHistory")}
+            >
+              <Text
+                style={styles.buttonText}
+              >履歴画面</Text>
             </Pressable>
 
             {/* SignOut Button */}

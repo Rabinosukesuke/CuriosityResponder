@@ -4,11 +4,7 @@ export type RootStackParamList = {
     SignUp: undefined;
     ParentLogin: undefined;
     ChildChatScreen: undefined; 
-};
-
-export type EmailWithPassword = {
-    email: string;
-    password: string;
+    ChildHistory: undefined;
 };
 
 export type User = {
