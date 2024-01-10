@@ -4,6 +4,8 @@ export type RootStackParamList = {
     SignUp: undefined;
     ParentLogin: undefined;
     ChildChatScreen: undefined; 
+    MediaInputScreen: undefined; 
+
 };
 
 export type EmailWithPassword = {

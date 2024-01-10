@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import { View, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, TextInput, StyleSheet, TouchableOpacity, Button } from 'react-native';
 import { FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
-import TopBar from '../components/TopBar';
-// import { FontAwesome } from '@expo/vector-icons';
+import TapBar from '../components/TapBar';
+import axios from 'axios';
+import { OPENAI_API_KEY } from '@env';
 
-// FontAwesomeにおける有効なアイコン名の型
 type FontAwesomeName = 'smile-o' | 'meh-o' | 'frown-o';
 
-// 絵文字の変換を行う関数
 const convertEmojiName = (iconName: string): FontAwesomeName => {
   const iconMap: Record<string, FontAwesomeName> = {
     'happy': 'smile-o',     
@@ -17,26 +16,53 @@ const convertEmojiName = (iconName: string): FontAwesomeName => {
   return iconMap[iconName] || 'meh-o'; 
 };
 
-const ChildChatScreen = () => {
-  const [emoji, setEmoji] = useState<FontAwesomeName>('meh-o');
-  const [question, setQuestion] = useState('');
 
-  // 絵文字を更新する関数
+const ChildChatScreen = () => {
+  const [emoji, setEmoji] = useState('meh-o');
+  const [question, setQuestion] = useState('');
+  const [response, setResponse] = useState('');
+
   const updateEmoji = (selectedEmoji: string) => {
     setEmoji(convertEmojiName(selectedEmoji));
   };
 
+  const sendToGPT = async () => {
+    if (question.trim() === '') {
+      alert('質問を入力してください。');
+      return;
+    }
+    try {
+      const result = await axios.post(
+        'https://api.openai.com/v1/engines/text-davinci-003/completions',
+        {
+          prompt: question,
+          max_tokens: 150
+        },
+        {
+          headers: {
+            'Authorization': `Bearer ${OPENAI_API_KEY}`
+          }
+        }
+      );
+      setResponse(result.data.choices[0].text.trim());
+    } catch (error) {
+      console.error('Error during API request', error);
+      setResponse('エラーが発生しました。');
+    }
+  };
+
+ 
 
   return (
     <View style={styles.container}>
-      {/* 絵文字の表示を更新 */}
+    <View style={styles.container}>
       <FontAwesome name={emoji} size={24} style={styles.emojiIcon} />
       <View style={styles.inputQuestionContainer}>
         <TextInput
           style={styles.inputQuestion}
           placeholder="ここに質問を入力してね！"
-          onChangeText={text => setQuestion(text)} // 入力されたテキストで質問を更新
-          value={question} // TextInputの値を状態から設定
+          editable={false}
+          value={question}
         />
       </View>
       <View style={styles.inputAnswerContainer}>
@@ -44,7 +70,7 @@ const ChildChatScreen = () => {
           style={styles.inputAnswer}
           placeholder="回答はここに出るよ〜"
           editable={false}
-          value={question} // 質問のテキストを回答として表示
+          value={response}
         />
       </View>
       <View style={styles.iconContainer}>
@@ -57,11 +83,9 @@ const ChildChatScreen = () => {
         <TouchableOpacity onPress={() => updateEmoji('sad')}>
           <MaterialCommunityIcons name="emoticon-sad" size={24}  />
         </TouchableOpacity>
-        {/* <View style={styles.brandicon}>
-        <FontAwesome name="twitter-square" size={24}  />
-        </View> */}     
       </View>
-      <TopBar /> 
+      <TapBar/>   
+       </View>
     </View>
   );
 };
@@ -127,10 +151,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     marginBottom: 16, 
     },  
-    // brandicon: {
-
-    // },
-
-});
+  });
 
 export default ChildChatScreen;

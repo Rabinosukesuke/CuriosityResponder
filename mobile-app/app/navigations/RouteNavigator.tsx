@@ -7,6 +7,7 @@ import { SignInScreen } from '../screens/SignInScreen';
 import { SignUpScreen } from '../screens/SignUpScreen';
 import { ParentLoginScreen } from '../screens/ParentLoginScreen';
 import ChildChatScreen from '../screens/ChildChatScreen';
+import MediaInputScreen from '../screens/MediaInputScreen';
 import { useFonts, Yellowtail_400Regular } from '@expo-google-fonts/dev';
 
 const Stack = createNativeStackNavigator();
@@ -41,6 +42,7 @@ export const RouteNavigator = () => {
                 <Stack.Screen name='Home' component={HomeScreen} />
                 <Stack.Screen name='SignIn' component={SignInScreen} />
                 <Stack.Screen name='ChildChatScreen' component={ChildChatScreen} />
+                <Stack.Screen name='MediaInputScreen' component={MediaInputScreen} />
                 <Stack.Screen name='SignUp' component={SignUpScreen} />
                 <Stack.Screen name='ParentLogin' component={ParentLoginScreen} />
             </Stack.Navigator>
