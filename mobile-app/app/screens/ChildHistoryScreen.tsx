@@ -1,78 +1,72 @@
 import React, { useState } from 'react';
-import { View, TextInput, StyleSheet, TouchableOpacity, Button } from 'react-native';
-import { FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
+import { View, Text, TextInput, StyleSheet, FlatList } from 'react-native';
 import TapBar from '../components/TapBar';
-import { Header } from '../components/Header'; 
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../types/type'; 
-import { FontAwesome5 } from '@expo/vector-icons';
+import { Header } from '../components/Header';
 
+// ダミーの投稿データ
+const posts = [
+  { id: '1', title: 'First Post', category: 'Tech' },
+  { id: '2', title: 'Second Post', category: 'Travel' },
+  // ... 他の投稿データ
+];
 
-type ChildChatScreenNavigationProp = NativeStackNavigationProp<
-  RootStackParamList,
-  'ChildChatScreen'
->;
+const ChildChatScreen = ({ navigation }) => {
+  const [searchValue, setSearchValue] = useState('');
+  const [showPosts, setShowPosts] = useState(posts);
 
-type Props = {
-  navigation: ChildChatScreenNavigationProp;
-};
+  // 検索欄への入力値での絞り込み
+  const search = (value) => {
+    setSearchValue(value);
 
-type FontAwesomeName = 'smile-o' | 'meh-o' | 'frown-o';
+    // 検索欄への入力が空の場合は全ての投稿を表示
+    if (value === '') {
+      setShowPosts(posts);
+      return;
+    }
 
-// const convertEmojiName = (iconName: string): FontAwesomeName => {
-//   const iconMap: Record<string, FontAwesomeName> = {
-//     'happy': 'smile-o',     
-//     'normal': 'meh-o',      
-//     'sad': 'frown-o',       
-//   };
-//   return iconMap[iconName] || 'meh-o'; 
-// };
+    const searchedPosts = posts.filter(
+      (post) =>
+        Object.values(post).filter(
+          (item) =>
+            item !== undefined &&
+            item !== null &&
+            item.toLowerCase().includes(value.toLowerCase())
+        ).length > 0
+    );
 
-const ChildChatScreen: React.FC<Props> = ({ navigation }) => {
-  const [emoji, setEmoji] = useState('meh-o');
-  const [question, setQuestion] = useState('');
-  const [response, setResponse] = useState('');
-
-  // const updateEmoji = (selectedEmoji: string) => {
-  //   setEmoji(convertEmojiName(selectedEmoji));
-  // };
-
+    setShowPosts(searchedPosts);
+  };
 
   return (
     <View style={styles.container}>
-      <Header navigation={navigation} BackScreenName={"Home"} /> 
-      {/* <FontAwesome5 name="cog" size={40} color="#9F0000" style={styles.icon} />   設定のアイコン*/}
+      {/* ヘッダーコンポーネント */}
+      <Header navigation={navigation} BackScreenName={'Home'} />
 
-      {/* <FontAwesome name={emoji} size={24} style={styles.emojiIcon} /> */}
-      {/* <View style={styles.inputQuestionContainer}>
+      {/* フリーキーワード検索フォーム */}
+      <View style={styles.searchContainer}>
         <TextInput
-          style={styles.inputQuestion}
-          // placeholder="ここに質問を入力してね！"
-          editable={false}
-          value={question}
-        />
-      </View> */}
-      <View style={styles.inputAnswerContainer}>
-        <TextInput
-          // style={styles.inputAnswer}
-          // placeholder="回答はここに出るよ〜"
-          editable={false}
-          value={response}
+          style={styles.searchInput}
+          placeholder="Search"
+          value={searchValue}
+          onChangeText={search}
         />
       </View>
-      {/* <View style={styles.iconContainer}>
-        <TouchableOpacity onPress={() => updateEmoji('happy')}>  ニコニコアイコン
-        <MaterialCommunityIcons name="emoticon-happy" size={24}  />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => updateEmoji('normal')}>
-          <MaterialCommunityIcons name="emoticon-neutral" size={24} />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => updateEmoji('sad')}>
-          <MaterialCommunityIcons name="emoticon-sad" size={24}  />
-        </TouchableOpacity>
-      </View> */}
-      <TapBar/>   
-       </View>
+
+      {/* 検索結果を表示するリスト */}
+      <FlatList
+        data={showPosts}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <View style={styles.postContainer}>
+            <Text>{item.title}</Text>
+            <Text>Category: {item.category}</Text>
+          </View>
+        )}
+      />
+
+      {/* タブバーコンポーネント */}
+      <TapBar />
+    </View>
   );
 };
 
@@ -81,69 +75,24 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#CBF0E9',
   },
-  emojiIcon: {
-    position: 'absolute',
-    left: 34, 
-    top: 180, 
-    zIndex: 2,
-    marginRight: 16,
-  },
-  // inputQuestionContainer: {
-  //   // backgroundColor: 'white', 
-  //   backgroundColor: '#9F0000', 
-  //   alignItems: 'center',
-  //   justifyContent: 'center', 
-  //   marginHorizontal: 16,
-  //   marginTop: 30,
-  //   borderTopLeftRadius: 20,
-  //   borderTopRightRadius: 20,
-  //   padding: 16, 
-  // },
-  inputQuestion: {
-    minHeight: 50,
-    maxHeight: 100,
-    fontSize: 16,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    borderBottomWidth: 0, 
-  },
-  inputAnswerContainer: {
-    flex:2,
-    // backgroundColor: 'white', 
-    backgroundColor: '#CBF0E9',  
-    alignItems: 'center',
-    justifyContent: 'center', 
+  searchContainer: {
     marginHorizontal: 16,
-    marginTop: 5,
-    marginBottom: 5,
-    padding: 16, 
+    marginTop: 10,
+    marginBottom: 10,
+    padding: 8,
+    backgroundColor: 'white',
+    borderRadius: 10,
   },
-  
-  inputAnswer: {
-    width: '100%', 
+  searchInput: {
     fontSize: 16,
-    borderRadius: 0, 
-    paddingVertical: 16,
-    paddingHorizontal: 16, 
-    minHeight: 100, 
-    backgroundColor: 'white', 
   },
-    // iconContainer: {
-    // flexDirection: 'row',
-    // justifyContent: 'flex-end',
-    // // backgroundColor: 'white',
-    // backgroundColor: '#9F0000', 
-    // borderBottomLeftRadius: 20,
-    // borderBottomRightRadius: 20,
-    // borderTopWidth: 0,
-    // paddingVertical: 16,
-    // marginHorizontal: 16,
-    // marginBottom: 16, 
-    // },  
-    // icon: {
-    //   marginHorizontal: 60, 
-    //   // marginBottom: -50,
-    // },
-  });
+  postContainer: {
+    marginHorizontal: 16,
+    marginTop: 10,
+    padding: 16,
+    backgroundColor: 'white',
+    borderRadius: 10,
+  },
+});
 
 export default ChildChatScreen;
