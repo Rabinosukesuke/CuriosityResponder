@@ -14,11 +14,10 @@ export const ChildHistoryComponent = (data: StorageData) => {
             ) : (
                 <MaterialCommunityIcons name="emoticon-neutral" size={72} />
             )}
-            <View className=''>
-                <Text className='text-base font-bold'>どうしてそらは青いの?</Text>
-                <Text className='text-sm font-normal'>質問してくれてありがとう</Text>
+            <View>
+                <Text className='text-base font-bold'>{data.question}</Text>
+                <Text className='text-sm font-normal'>{data.answer}</Text>
             </View>
-
         </View>
     )
 }
