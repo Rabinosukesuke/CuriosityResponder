@@ -71,6 +71,7 @@ const ChildChatScreen = ({ navigation }: Props) => {
           </View>
         )}
       />
+      <ChildHistoryComponent timestamp={new Date} question={'空はどうして青いの？'} answer={'自分で考えろ'} emoji={'sad'} />
 
       {/* タブバーコンポーネント */}
       <TapBar />
