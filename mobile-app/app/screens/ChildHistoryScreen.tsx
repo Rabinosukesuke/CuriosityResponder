@@ -10,6 +10,7 @@ const posts = [
   // ... 他の投稿データ
 ];
 
+
 const ChildChatScreen = ({ navigation }) => {
   const [searchValue, setSearchValue] = useState('');
   const [showPosts, setShowPosts] = useState(posts);
