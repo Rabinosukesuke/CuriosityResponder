@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, FlatList } from 'react-native';
 import TapBar from '../components/TapBar';
 import { Header } from '../components/Header';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../types/type';
+import { ChildHistoryComponent } from "../components/ChildHistoryComponent";
 
 // ダミーの投稿データ
 const posts = [
@@ -10,13 +13,16 @@ const posts = [
   // ... 他の投稿データ
 ];
 
+type Props = {
+  navigation: NativeStackNavigationProp<RootStackParamList, "ChildChatScreen">;
+}
 
-const ChildChatScreen = ({ navigation }) => {
+const ChildChatScreen = ({ navigation }: Props) => {
   const [searchValue, setSearchValue] = useState('');
   const [showPosts, setShowPosts] = useState(posts);
 
   // 検索欄への入力値での絞り込み
-  const search = (value) => {
+  const search = (value: string) => {
     setSearchValue(value);
 
     // 検索欄への入力が空の場合は全ての投稿を表示
@@ -51,6 +57,7 @@ const ChildChatScreen = ({ navigation }) => {
           value={searchValue}
           onChangeText={search}
         />
+        {/* <ChildHistoryComponent /> */}
       </View>
 
       {/* 検索結果を表示するリスト */}
