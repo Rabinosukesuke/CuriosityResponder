@@ -8,7 +8,7 @@ import { SignUpScreen } from '../screens/SignUpScreen';
 import { ParentLoginScreen } from '../screens/ParentLoginScreen';
 import ChildChatScreen from '../screens/ChildChatScreen';
 import MediaInputScreen from '../screens/MediaInputScreen';
-import ChildHistoryScreen from '../screens/ChildHistoryScreen';
+import { ChildHistoryScreen } from '../screens/ChildHistoryScreen';
 import { useFonts, Yellowtail_400Regular } from '@expo-google-fonts/dev';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
