@@ -3,24 +3,31 @@ import React from 'react'
 import { AntDesign } from '@expo/vector-icons';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types/type';
+import { useFonts, Yellowtail_400Regular } from '@expo-google-fonts/dev';
 
-type BackScreenName = keyof RootStackParamList
+type RouteParamKey = keyof RootStackParamList
 
 type Props = {
-    navigation: NativeStackNavigationProp<RootStackParamList, BackScreenName> | null;
-    BackScreenName: BackScreenName | null;
+    navigation: NativeStackNavigationProp<RootStackParamList, RouteParamKey> | null;
+    BackScreenName: RouteParamKey | null;
 }
 
 export const Header = ({ navigation, BackScreenName }: Props) => {
 
+    const [fontsLoaded] = useFonts({
+        Yellowtail_400Regular,
+    });
+    if (!fontsLoaded) {
+        return null;
+    }
+
     return (
-        <View className='h-1/5 w-full flex flex-row'>
-            <View className='w-1/5 h-full items-center justify-center'>
+        <View className='h-1/5 w-full flex flex-row bg-secondary'>
+            <View className='w-1/5 h-full items-center justify-end'>
                 {BackScreenName && navigation ? (
                     <Pressable
-                        onPress={() => {
-                            navigation.navigate(BackScreenName)
-                        }}
+                        className='pb-5 pt-5'
+                        onPress={() => { navigation.navigate(BackScreenName) }}
                     >
                         <AntDesign name="arrowleft" size={32} color="black" />
                     </Pressable>

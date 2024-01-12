@@ -1,13 +1,22 @@
 import React, { useState } from 'react';
-import { View, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, TextInput, StyleSheet, TouchableOpacity, Button } from 'react-native';
 import { FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
-import TopBar from '../components/TopBar';
-// import { FontAwesome } from '@expo/vector-icons';
+import TapBar from '../components/TapBar';
+import { Header } from '../components/Header'; 
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../types/type'; 
 
-// FontAwesomeにおける有効なアイコン名の型
+type ChildChatScreenNavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'ChildChatScreen'
+>;
+
+type Props = {
+  navigation: ChildChatScreenNavigationProp;
+};
+
 type FontAwesomeName = 'smile-o' | 'meh-o' | 'frown-o';
 
-// 絵文字の変換を行う関数
 const convertEmojiName = (iconName: string): FontAwesomeName => {
   const iconMap: Record<string, FontAwesomeName> = {
     'happy': 'smile-o',     
@@ -21,10 +30,14 @@ type Props = {
 };
 
 const ChildChatScreen: React.FC<Props> = ({ navigation }) => {
+<<<<<<< HEAD
   const [emoji, setEmoji] = useState<FontAwesomeName>('meh-o');
+=======
+  const [emoji, setEmoji] = useState('meh-o');
+>>>>>>> origin/dev
   const [question, setQuestion] = useState('');
+  const [response, setResponse] = useState('');
 
-  // 絵文字を更新する関数
   const updateEmoji = (selectedEmoji: string) => {
     setEmoji(convertEmojiName(selectedEmoji));
   };
@@ -32,14 +45,14 @@ const ChildChatScreen: React.FC<Props> = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      {/* 絵文字の表示を更新 */}
+      <Header navigation={navigation} BackScreenName={"Home"} /> 
       <FontAwesome name={emoji} size={24} style={styles.emojiIcon} />
       <View style={styles.inputQuestionContainer}>
         <TextInput
           style={styles.inputQuestion}
           placeholder="ここに質問を入力してね！"
-          onChangeText={text => setQuestion(text)} // 入力されたテキストで質問を更新
-          value={question} // TextInputの値を状態から設定
+          editable={false}
+          value={question}
         />
       </View>
       <View style={styles.inputAnswerContainer}>
@@ -47,7 +60,7 @@ const ChildChatScreen: React.FC<Props> = ({ navigation }) => {
           style={styles.inputAnswer}
           placeholder="回答はここに出るよ〜"
           editable={false}
-          value={question} // 質問のテキストを回答として表示
+          value={response}
         />
       </View>
       <View style={styles.iconContainer}>
@@ -60,12 +73,14 @@ const ChildChatScreen: React.FC<Props> = ({ navigation }) => {
         <TouchableOpacity onPress={() => updateEmoji('sad')}>
           <MaterialCommunityIcons name="emoticon-sad" size={24}  />
         </TouchableOpacity>
-        {/* <View style={styles.brandicon}>
-        <FontAwesome name="twitter-square" size={24}  />
-        </View> */}     
       </View>
+<<<<<<< HEAD
       <TopBar navigation={navigation} /> 
     </View>
+=======
+      <TapBar/>   
+       </View>
+>>>>>>> origin/dev
   );
 };
 
@@ -77,7 +92,7 @@ const styles = StyleSheet.create({
   emojiIcon: {
     position: 'absolute',
     left: 34, 
-    top: 18, 
+    top: 180, 
     zIndex: 2,
     marginRight: 16,
   },
@@ -130,10 +145,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     marginBottom: 16, 
     },  
-    // brandicon: {
-
-    // },
-
-});
+  });
 
 export default ChildChatScreen;
