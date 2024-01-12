@@ -28,6 +28,10 @@ export const ChildHistoryScreen = ({ navigation }: Props) => {
     fetchData();
   }, []);
 
+  const filteredChatData = storageData.filter((item) => {
+    return item.value.question.includes(searchValue) || item.value.answer.includes(searchValue);
+  });
+
   return (
     <View className='flex-1 bg-primary items-center w-full h-full'>
       <Header navigation={navigation} BackScreenName={'ChildChatScreen'} />
@@ -56,7 +60,7 @@ export const ChildHistoryScreen = ({ navigation }: Props) => {
       />
 
       <View className='w-full h-3/5 items-center'>
-        {storageData.map((item: ChatDataWithKey, index) => (
+        {filteredChatData.map((item: ChatDataWithKey, index) => (
           <ChildHistoryComponent
             key={index}
             timestamp={item.value.timestamp}
