@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View } from 'react-native';
+import { View, Pressable } from 'react-native';
 import { Input } from 'react-native-elements';
 import TapBar from '../components/TapBar';
 import { Header } from '../components/Header';
@@ -15,8 +15,9 @@ type Props = {
 }
 
 export const ChildHistoryScreen = ({ navigation }: Props) => {
-  const [searchValue, setSearchValue] = useState('');
+  const [searchValue, setSearchValue] = useState<string>('');
   const [storageData, setStorageData] = useState<ChatDataWithKey[]>([]);
+  const [isToggled, setIsToggled] = useState<boolean>(false);
 
   const { getAllChat } = useChatStorage();
 
@@ -28,9 +29,15 @@ export const ChildHistoryScreen = ({ navigation }: Props) => {
     fetchData();
   }, []);
 
-  const filteredChatData = storageData.filter((item) => {
-    return item.value.question.includes(searchValue) || item.value.answer.includes(searchValue);
-  });
+  const SortAndFilterChatData = storageData
+    .filter(item => item.value.question.includes(searchValue) || item.value.answer.includes(searchValue))
+    .sort((a, b) => {
+      if (isToggled) {
+        return new Date(a.value.timestamp) > new Date(b.value.timestamp) ? 1 : -1;
+      } else {
+        return new Date(a.value.timestamp) < new Date(b.value.timestamp) ? 1 : -1;
+      }
+    });
 
   return (
     <View className='flex-1 bg-primary items-center w-full h-full'>
@@ -38,7 +45,7 @@ export const ChildHistoryScreen = ({ navigation }: Props) => {
 
       <Input
         placeholder="検索"
-        placeholderTextColor={"#000000"}
+        placeholderTextColor={"black"}
         value={searchValue}
         onChangeText={setSearchValue}
         containerStyle={{
@@ -60,7 +67,7 @@ export const ChildHistoryScreen = ({ navigation }: Props) => {
       />
 
       <View className='w-full h-3/5 items-center'>
-        {filteredChatData.map((item: ChatDataWithKey, index) => (
+        {SortAndFilterChatData.map((item: ChatDataWithKey, index) => (
           <ChildHistoryComponent
             key={index}
             timestamp={item.value.timestamp}
@@ -70,6 +77,17 @@ export const ChildHistoryScreen = ({ navigation }: Props) => {
           />
         ))}
       </View>
+
+      <Pressable
+        className='absolute top-48 right-5'
+        onPress={() => {
+          setIsToggled(!isToggled)
+          console.log(SortAndFilterChatData)
+          console.log(typeof SortAndFilterChatData[0].value.timestamp)
+        }}
+      >
+        <FontAwesome name={isToggled ? ("sort-amount-asc") : ("sort-amount-desc")} size={24} color="black" />
+      </Pressable>
 
       <TapBar />
     </View>
