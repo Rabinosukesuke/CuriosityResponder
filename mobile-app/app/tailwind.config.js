@@ -5,11 +5,13 @@ module.exports = {
     "../app/**/*.{ts,tsx}",
   ],
   theme: {
-    extend: {},
-    colors:{
-      primary:"#CBF0E9",
-      secondary:"#95E1D3",
-      tertiary:"#95E1D3",
+    extend: {
+      colors: {
+        primary: "#CBF0E9",
+        secondary: "#95E1D3",
+        tertiary: "#95E1D3",
+        white: "#FFFFFF",
+      },
     },
   },
   plugins: [],
