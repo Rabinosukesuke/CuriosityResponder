@@ -25,16 +25,10 @@ const convertEmojiName = (iconName: string): FontAwesomeName => {
   };
   return iconMap[iconName] || 'meh-o'; 
 };
-type Props = {
-  navigation: any; // 任意のナビゲーション型を指定するか、'any'を使用する
-};
+
 
 const ChildChatScreen: React.FC<Props> = ({ navigation }) => {
-<<<<<<< HEAD
   const [emoji, setEmoji] = useState<FontAwesomeName>('meh-o');
-=======
-  const [emoji, setEmoji] = useState('meh-o');
->>>>>>> origin/dev
   const [question, setQuestion] = useState('');
   const [response, setResponse] = useState('');
 
@@ -74,13 +68,8 @@ const ChildChatScreen: React.FC<Props> = ({ navigation }) => {
           <MaterialCommunityIcons name="emoticon-sad" size={24}  />
         </TouchableOpacity>
       </View>
-<<<<<<< HEAD
-      <TopBar navigation={navigation} /> 
-    </View>
-=======
       <TapBar/>   
        </View>
->>>>>>> origin/dev
   );
 };
 
