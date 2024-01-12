@@ -1,8 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ChatData, ChatDataWithKey } from "../types/type";
+import { storage } from '../strage';
 
 type ChatStorage = {
     getAllChat: () => Promise<ChatDataWithKey[]>
+    storeChat: (chatData: ChatData) => Promise<void>
 }
 
 function isChatData(obj: any): obj is ChatData {
@@ -48,9 +50,33 @@ export const useChatStorage = (): ChatStorage => {
             console.error(error);
             return [];
         }
-    }
+    };
+
+    const storeChat = async (chatData: ChatData): Promise<void> => {
+        try {
+            const keys = await AsyncStorage.getAllKeys();
+            const numOnlyKeys = keys.filter((key) => !Number.isNaN(Number(key)));
+            if (numOnlyKeys.length == 0) {
+                storage.save({
+                    key: '0',
+                    data: chatData,
+                    expires: null,
+                })
+            } else {
+                const lastKey = Math.max(...numOnlyKeys.map((key) => Number(key)));
+                storage.save({
+                    key: String(lastKey + 1),
+                    data: chatData,
+                    expires: null,
+                })
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
     return {
         getAllChat,
+        storeChat,
     }
 }
