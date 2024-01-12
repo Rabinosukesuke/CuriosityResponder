@@ -4,11 +4,9 @@ import { Input } from 'react-native-elements';
 import TapBar from '../components/TapBar';
 import { Header } from '../components/Header';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../types/type';
+import { RootStackParamList, ChatDataWithKey } from '../types/type';
 import { ChildHistoryComponent } from "../components/ChildHistoryComponent";
-import { ChatDataWithKey } from '../types/type';
-import { FontAwesome } from '@expo/vector-icons';
-import { FontAwesome5 } from '@expo/vector-icons';
+import { FontAwesome, FontAwesome5 } from '@expo/vector-icons';
 import { useChatStorage } from '../hooks/useChatStorage';
 
 type Props = {
@@ -68,7 +66,7 @@ export const ChildHistoryScreen = ({ navigation }: Props) => {
       />
 
       <View className='w-full h-3/5 items-center'>
-        {SortAndFilterChatData.map((item: ChatDataWithKey, index) => (
+        {SortAndFilterChatData.map((item: ChatDataWithKey, index: number) => (
           <ChildHistoryComponent
             key={index}
             timestamp={item.value.timestamp}
@@ -82,7 +80,7 @@ export const ChildHistoryScreen = ({ navigation }: Props) => {
       <Pressable
         className='absolute top-48 right-5'
         onPress={() => { setIsToggled(!isToggled) }}>
-        <FontAwesome name={isToggled ? ("sort-amount-asc") : ("sort-amount-desc")} size={24} color="black" />
+        <FontAwesome5 name={isToggled ? ("sort-amount-up-alt") : ("sort-amount-down")} size={24} color="black" />
       </Pressable>
 
       <TapBar />
