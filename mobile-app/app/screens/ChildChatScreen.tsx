@@ -16,8 +16,11 @@ const convertEmojiName = (iconName: string): FontAwesomeName => {
   };
   return iconMap[iconName] || 'meh-o'; 
 };
+type Props = {
+  navigation: any; // 任意のナビゲーション型を指定するか、'any'を使用する
+};
 
-const ChildChatScreen = () => {
+const ChildChatScreen: React.FC<Props> = ({ navigation }) => {
   const [emoji, setEmoji] = useState<FontAwesomeName>('meh-o');
   const [question, setQuestion] = useState('');
 
@@ -61,7 +64,7 @@ const ChildChatScreen = () => {
         <FontAwesome name="twitter-square" size={24}  />
         </View> */}     
       </View>
-      <TopBar /> 
+      <TopBar navigation={navigation} /> 
     </View>
   );
 };

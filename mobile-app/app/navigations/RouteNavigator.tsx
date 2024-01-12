@@ -19,6 +19,7 @@ export const RouteNavigator = () => {
                 <Stack.Screen name='ChildChatScreen' component={ChildChatScreen} />
                 <Stack.Screen name='SignUp' component={SignUpScreen} />
                 <Stack.Screen name='ParentLogin' component={ParentLoginScreen} />
+                <Stack.Screen name='SettingsScreen' component={SettingsScreen} />
             </Stack.Navigator>
         </NavigationContainer>
     );
