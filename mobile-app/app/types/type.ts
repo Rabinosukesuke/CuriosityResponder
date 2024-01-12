@@ -14,10 +14,14 @@ export type User = {
     email: string | null;
 }
 
-export type StorageData = {
-    // key: string;
+export type ChatData = {
     timestamp: Date;
     question: string;
     answer: string;
     emoji: "happy" | "normal" | "sad";
+}
+
+export type ChatDataWithKey = {
+    key: string;
+    value: ChatData;
 }

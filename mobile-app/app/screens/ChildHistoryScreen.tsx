@@ -1,20 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, StyleSheet, FlatList } from 'react-native';
+import { View } from 'react-native';
+import { Input } from 'react-native-elements';
 import TapBar from '../components/TapBar';
 import { Header } from '../components/Header';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types/type';
 import { ChildHistoryComponent } from "../components/ChildHistoryComponent";
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { StorageData } from '../types/type';
-import { KeyValuePair } from '@react-native-async-storage/async-storage/lib/typescript/types';
-
-// ダミーの投稿データ
-const posts = [
-  { id: '1', title: 'First Post', category: 'Tech' },
-  { id: '2', title: 'Second Post', category: 'Travel' },
-  // ... 他の投稿データ
-];
+import { ChatDataWithKey } from '../types/type';
+import { FontAwesome } from '@expo/vector-icons';
+import { useChatStorage } from '../hooks/useChatStorage';
 
 type Props = {
   navigation: NativeStackNavigationProp<RootStackParamList, "ChildHistoryScreen">;
@@ -22,74 +16,49 @@ type Props = {
 
 export const ChildHistoryScreen = ({ navigation }: Props) => {
   const [searchValue, setSearchValue] = useState('');
-  const [showPosts, setShowPosts] = useState(posts);
-  const [storageData, setStorageData] = useState<{ key: string, value: StorageData }[]>([]);
+  const [storageData, setStorageData] = useState<ChatDataWithKey[]>([]);
 
-
-
-  const getAllData = async () => {
-    const keys = await AsyncStorage.getAllKeys();
-    const numOnlyKeys = keys.filter((key) => !Number.isNaN(Number(key)));
-    const values = await AsyncStorage.multiGet(numOnlyKeys);
-    console.log(values);
-
-    const storageData = []
-    for (let i = 0; i < values.length; i++) {
-      if (values[i][1] !== null) {
-        const jsonObject = JSON.parse(values[i][1] as string);
-        const data = {
-          key: values[i][0],
-          value: jsonObject["rawData"]
-        }
-        storageData.push(data);
-      }
-    }
-    setStorageData(storageData);
-    console.log(storageData);
-  }
+  const { getAllChat } = useChatStorage();
 
   useEffect(() => {
-    getAllData();
+    const fetchData = async () => {
+      const data = await getAllChat();
+      setStorageData(data);
+    };
+    fetchData();
   }, []);
 
-  // 検索欄への入力値での絞り込み
-  const search = (value: string) => {
-    setSearchValue(value);
-
-    // 検索欄への入力が空の場合は全ての投稿を表示
-    if (value === '') {
-      setShowPosts(posts);
-      return;
-    }
-
-    const searchedPosts = posts.filter(
-      (post) =>
-        Object.values(post).filter(
-          (item) =>
-            item !== undefined &&
-            item !== null &&
-            item.toLowerCase().includes(value.toLowerCase())
-        ).length > 0
-    );
-
-    setShowPosts(searchedPosts);
-  };
-
   return (
-    <View style={styles.container}>
-      <Header navigation={navigation} BackScreenName={'Home'} />
+    <View className='flex-1 bg-primary items-center w-full h-full'>
+      <Header navigation={navigation} BackScreenName={'ChildChatScreen'} />
 
-      <View style={styles.searchContainer}>
-        <TextInput
-          style={styles.searchInput}
-          placeholder="Search"
-          value={searchValue}
-          onChangeText={search}
-        />
-      </View>
+      <Input
+        placeholder="検索"
+        placeholderTextColor={"#000000"}
+        value={searchValue}
+        onChangeText={setSearchValue}
+        containerStyle={{
+          width: '80%',
+          height: "5%",
+          marginTop: -14,
+          justifyContent: 'center',
+        }}
+        inputContainerStyle={{
+          height: "100%",
+          backgroundColor: 'white',
+          borderRadius: 20,
+          borderColor: 'black',
+          borderWidth: 1,
+        }}
+        inputStyle={{ paddingLeft: 5 }}
+        leftIcon={<FontAwesome name="search" size={20} color="black" />}
+        leftIconContainerStyle={{ marginLeft: 10 }}
+      />
+
       <View className='w-full h-3/5 items-center'>
-        {storageData.map((item: { key: string, value: StorageData },) => (
+        {storageData.map((item: ChatDataWithKey, index) => (
           <ChildHistoryComponent
+            key={index}
             timestamp={item.value.timestamp}
             question={item.value.question}
             answer={item.value.answer}
@@ -102,28 +71,3 @@ export const ChildHistoryScreen = ({ navigation }: Props) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#CBF0E9',
-  },
-  searchContainer: {
-    marginHorizontal: 16,
-    marginTop: 10,
-    marginBottom: 10,
-    padding: 8,
-    backgroundColor: 'white',
-    borderRadius: 10,
-  },
-  searchInput: {
-    fontSize: 16,
-  },
-  postContainer: {
-    marginHorizontal: 16,
-    marginTop: 10,
-    padding: 16,
-    backgroundColor: 'white',
-    borderRadius: 10,
-  },
-});
