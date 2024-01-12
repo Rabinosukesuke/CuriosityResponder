@@ -7,9 +7,13 @@ import { SignInScreen } from '../screens/SignInScreen';
 import { SignUpScreen } from '../screens/SignUpScreen';
 import { ParentLoginScreen } from '../screens/ParentLoginScreen';
 import ChildChatScreen from '../screens/ChildChatScreen';
+<<<<<<< HEAD
+import SettingsScreen from '../screens/SettingsScreen';
+=======
 import MediaInputScreen from '../screens/MediaInputScreen';
 import { ChildHistoryScreen } from '../screens/ChildHistoryScreen';
 import { useFonts, Yellowtail_400Regular } from '@expo-google-fonts/dev';
+>>>>>>> origin/dev
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -23,7 +27,11 @@ export const RouteNavigator = () => {
                 <Stack.Screen name='MediaInputScreen' component={MediaInputScreen} />
                 <Stack.Screen name='SignUp' component={SignUpScreen} />
                 <Stack.Screen name='ParentLogin' component={ParentLoginScreen} />
+<<<<<<< HEAD
+                <Stack.Screen name='SettingsScreen' component={SettingsScreen} />
+=======
                 <Stack.Screen name='ChildHistoryScreen' component={ChildHistoryScreen} />
+>>>>>>> origin/dev
             </Stack.Navigator>
         </NavigationContainer>
     );
