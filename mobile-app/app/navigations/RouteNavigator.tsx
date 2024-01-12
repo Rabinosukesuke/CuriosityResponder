@@ -7,6 +7,7 @@ import { SignInScreen } from '../screens/SignInScreen';
 import { SignUpScreen } from '../screens/SignUpScreen';
 import { ParentLoginScreen } from '../screens/ParentLoginScreen';
 import ChildChatScreen from '../screens/ChildChatScreen';
+import SettingsScreen from '../screens/SettingsScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 

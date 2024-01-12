@@ -1,10 +1,17 @@
 import React, { useState, useRef } from 'react';
-import { View, TouchableOpacity, Animated, StyleSheet, Dimensions } from 'react-native';
-import { FontAwesome5 } from '@expo/vector-icons';
+import { View, TouchableOpacity, Animated, StyleSheet, Dimensions, Pressable } from 'react-native';
+import { FontAwesome5 ,Ionicons } from '@expo/vector-icons';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../types/type';
 
 const windowWidth = Dimensions.get('window').width;
 
-const HomeButton = () => {
+type SettingsScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, "SettingsScreen">;
+type Props = {
+  navigation: SettingsScreenNavigationProp;
+}
+const HomeButton = ({ navigation }: Props) => {
+
   const [menuOpen, setMenuOpen] = useState(false);
   const animation = useRef(new Animated.Value(0)).current; // アニメーションの初期値は0です。
 
@@ -79,11 +86,15 @@ const HomeButton = () => {
   const iconStyle = {
     transform: [{ rotate: rotate }],
   };
+  
 
   return (
     <View style={styles.container}>
-      <Animated.View style={backgroundStyle} />
-      <Animated.View style={[styles.menu, menuStyle]}>
+      <Animated.View style={styles.backgroundStyle} />
+        <Pressable style={styles.button} onPress={() => navigation.navigate("SettingsScreen")}>
+            <Ionicons style={styles.settingsIcon} name="settings" size={50} color="black" />
+        </Pressable>
+      <Animated.View style={[styles.menu, styles.menuStyle]}>
         <TouchableOpacity onPress={toggleMenu} style={styles.menuButton}>
           <Animated.View style={iconStyle}>
             <FontAwesome5 name="plus" size={24} color="white" />
@@ -110,6 +121,25 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     paddingBottom: 50, 
   },
+  settingsIcon: {
+    position: 'absolute',
+    right: 0,
+    top: 5,
+  },
+  button: {
+    width: "70%",
+    height: "5%",
+    borderWidth: 1,
+    shadowColor: "#000",
+    backgroundColor: "#6EE7B3",
+    flexDirection: "column",
+    borderRadius: 50,
+    borderColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 1,
+    marginVertical: 5,
+  },
   menu: {
     position: 'absolute',
     top: '0%',
@@ -129,9 +159,28 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   backgroundStyle: {
-
+    position: 'absolute',
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    backgroundColor: '#CBF0E9',
+    top: -42,
+    left: '55%',
+    transform: [
+      { translateX: -30 }, 
+      { scale: 0 }, 
+    ],
   },
-
+  menuStyle:{
+    width: 60,
+    transform: [
+        { translateX: -30 },
+        { translateY: -50 },
+      ],    
+    backgroundColor: '#95E1D3',
+    borderRadius: 30, 
+    overflow: 'hidden',
+  }
 });
 
 export default HomeButton;
