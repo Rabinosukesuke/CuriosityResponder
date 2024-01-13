@@ -23,7 +23,8 @@ export type ChatData = {
     emoji: "happy" | "normal" | "sad";
 }
 
-export type ChatDataWithKey = {
-    key: string;
+export type ChatRecord = {
+    key: "chatData";
+    id: string;
     value: ChatData;
 }
