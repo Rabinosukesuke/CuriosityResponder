@@ -4,7 +4,7 @@ import { Input } from 'react-native-elements';
 import TapBar from '../components/TapBar';
 import { Header } from '../components/Header';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList, ChatDataWithKey } from '../types/type';
+import { RootStackParamList, ChatRecord } from '../types/type';
 import { ChildHistoryComponent } from "../components/ChildHistoryComponent";
 import { FontAwesome, FontAwesome5 } from '@expo/vector-icons';
 import { useChatStorage } from '../hooks/useChatStorage';
@@ -15,7 +15,7 @@ type Props = {
 
 export const ChildHistoryScreen = ({ navigation }: Props) => {
   const [searchValue, setSearchValue] = useState<string>('');
-  const [storageData, setStorageData] = useState<ChatDataWithKey[]>([]);
+  const [storageData, setStorageData] = useState<ChatRecord[]>([]);
   const [isToggled, setIsToggled] = useState<boolean>(false);
 
   const { getAllChat } = useChatStorage();
@@ -66,7 +66,7 @@ export const ChildHistoryScreen = ({ navigation }: Props) => {
       />
 
       <View className='w-full h-3/5 items-center'>
-        {SortAndFilterChatData.map((item: ChatDataWithKey, index: number) => (
+        {SortAndFilterChatData.map((item: ChatRecord, index: number) => (
           <ChildHistoryComponent
             key={index}
             timestamp={item.value.timestamp}

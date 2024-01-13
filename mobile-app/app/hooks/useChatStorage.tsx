@@ -1,71 +1,72 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { ChatData, ChatDataWithKey } from "../types/type";
+import { ChatData, ChatRecord } from "../types/type";
 import { storage } from '../strage';
+import { initialStorageData } from "../initialStrageData"
 
 type ChatStorage = {
-    getAllChat: () => Promise<ChatDataWithKey[]>
-    storeChat: (chatData: ChatData) => Promise<void>
-}
-
-function isChatData(obj: any): obj is ChatData {
-    if ("timestamp" in obj && "question" in obj && "answer" in obj && "emoji" in obj) {
-        return true;
-    }
-    return false;
+    initChatStorage: () => Promise<void>,
+    getAllChat: () => Promise<ChatRecord[]>,
+    storeChatDataInStorage: (chatData: ChatData) => Promise<void>
+    updateChatDataInStorage: (ChatRecord: ChatRecord) => Promise<void>
+    deleteAllChatDataFromStorage: () => Promise<void>
 }
 
 export const useChatStorage = (): ChatStorage => {
-    const getAllChat = async (): Promise<ChatDataWithKey[]> => {
+
+    const initChatStorage = async (): Promise<void> => {
         try {
-            const keys = await AsyncStorage.getAllKeys();
-            const numOnlyKeys = keys.filter((key) => !Number.isNaN(Number(key)));
-            const values = await AsyncStorage.multiGet(numOnlyKeys);
-            const storageData: ChatDataWithKey[] = values
-                .map((value) => {
-                    const obj = JSON.parse(value[1] as string)["rawData"];
-                    if (isChatData(obj)) {
-                        try {
-                            const new_obj: ChatData = {
-                                timestamp: new Date(obj.timestamp),
-                                question: obj.question,
-                                answer: obj.answer,
-                                emoji: obj.emoji
-                            }
-                            return {
-                                key: value[0],
-                                value: new_obj
-                            }
-                        } catch (error) {
-                            console.error(error);
-                            return null
-                        }
-                    }
-                    else {
-                        return null
-                    }
-                }).filter((item): item is ChatDataWithKey => item !== null);
-            console.log(storageData);
-            return storageData;
+            await deleteAllChatDataFromStorage();
+            for (let i = 0; i < initialStorageData.length; i++) {
+                await storage.save({
+                    key: "chatData",
+                    id: i.toString(),
+                    data: initialStorageData[i],
+                    expires: null,
+                });
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const getAllChat = async (): Promise<any> => {
+        try {
+            const chatIds = await storage.getIdsForKey('chatData');
+            const chatRecords: ChatRecord[] = [];
+            for (const id of chatIds) {
+                await storage.load({
+                    key: 'chatData',
+                    id: id,
+                }).then((chatData) => {
+                    chatRecords.push({
+                        key: "chatData",
+                        id: id,
+                        value: chatData,
+                    });
+                }).catch((error) => {
+                    console.error(error);
+                });
+            }
+            return chatRecords;
         } catch (error) {
             console.error(error);
             return [];
         }
     };
 
-    const storeChat = async (chatData: ChatData): Promise<void> => {
+    const storeChatDataInStorage = async (chatData: ChatData): Promise<void> => {
         try {
-            const keys = await AsyncStorage.getAllKeys();
-            const numOnlyKeys = keys.filter((key) => !Number.isNaN(Number(key)));
-            if (numOnlyKeys.length == 0) {
+            const chatIds = await storage.getIdsForKey('chatData');
+            if (chatIds.length == 0) {
                 storage.save({
                     key: '0',
                     data: chatData,
                     expires: null,
                 })
             } else {
-                const lastKey = Math.max(...numOnlyKeys.map((key) => Number(key)));
+                const maxChatIds = Math.max(...chatIds.map((id) => Number(id)));
                 storage.save({
-                    key: String(lastKey + 1),
+                    key: "chatData",
+                    id: (maxChatIds + 1).toString(),
                     data: chatData,
                     expires: null,
                 })
@@ -75,8 +76,35 @@ export const useChatStorage = (): ChatStorage => {
         }
     };
 
+    const updateChatDataInStorage = async (chatRecord: ChatRecord): Promise<void> => {
+        try {
+            storage.save({
+                key: chatRecord.key,
+                id: chatRecord.id,
+                data: chatRecord.value,
+                expires: null,
+            })
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const deleteAllChatDataFromStorage = async (): Promise<void> => {
+        try {
+            const data = await storage.getAllDataForKey('chatData');
+            if (data.length != 0) {
+                await storage.clearMapForKey('chatData');
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
     return {
+        initChatStorage,
         getAllChat,
-        storeChat,
+        storeChatDataInStorage,
+        updateChatDataInStorage,
+        deleteAllChatDataFromStorage
     }
 }
