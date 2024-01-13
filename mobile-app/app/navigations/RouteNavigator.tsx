@@ -6,9 +6,10 @@ import { HomeScreen } from '../screens/HomeScreen';
 import { SignInScreen } from '../screens/SignInScreen';
 import { SignUpScreen } from '../screens/SignUpScreen';
 import { ParentLoginScreen } from '../screens/ParentLoginScreen';
-import ChildChatScreen from '../screens/ChildChatScreen';
-import MediaInputScreen from '../screens/MediaInputScreen';
+import { ChildChatScreen } from '../screens/ChildChatScreen';
+import { MediaInputScreen } from '../screens/MediaInputScreen';
 import { ChildHistoryScreen } from '../screens/ChildHistoryScreen';
+import { SettingsScreen } from '../screens/SettingsScreen';
 import { useFonts, Yellowtail_400Regular } from '@expo-google-fonts/dev';
 
 
@@ -25,6 +26,7 @@ export const RouteNavigator = () => {
                 <Stack.Screen name='SignUp' component={SignUpScreen} />
                 <Stack.Screen name='ParentLogin' component={ParentLoginScreen} />
                 <Stack.Screen name='ChildHistoryScreen' component={ChildHistoryScreen} />
+                <Stack.Screen name='SettingsScreen' component={SettingsScreen} />
             </Stack.Navigator>
         </NavigationContainer>
     );

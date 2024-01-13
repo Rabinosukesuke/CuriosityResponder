@@ -6,7 +6,7 @@ import { RootStackParamList } from '../types/type';
 
 const windowWidth = Dimensions.get('window').width;
 
-const TapBar = () => {
+export const TapBar = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const animation = useRef(new Animated.Value(0)).current;
   const buttonSize = 70;
@@ -24,6 +24,9 @@ const TapBar = () => {
   const navigateToChildHistoryScreen = () => {
     navigation.navigate('ChildHistoryScreen');
   };
+  const navigateToSettingsScreen = () => {
+    navigation.navigate('SettingsScreen');
+  };
 
   const rotate = animation.interpolate({
     inputRange: [0, 1],
@@ -31,9 +34,9 @@ const TapBar = () => {
   });
 
   const buttonStyle = {
-    position: 'absolute',
-    top: '0%',
-    left: '50%',
+    position: 'absolute' as const, 
+    top: 0,
+    left: windowWidth / 2,
     transform: [
       { translateX: -(buttonSize / 2) },
       { translateY: -(buttonSize / 2) },
@@ -45,8 +48,8 @@ const TapBar = () => {
     backgroundColor: '#95E1D3',
     borderColor: '#CBF0E9',
     borderWidth: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: 'center' as const, 
+    alignItems: 'center' as const,
   };
 
   return (
@@ -59,8 +62,9 @@ const TapBar = () => {
           <FontAwesome5 name="plus" size={24} color="white" />
         </TouchableOpacity>
       </Animated.View>
-
-      <FontAwesome5 name="cog" size={40} color="#95E1D3" style={styles.icon} />
+      <TouchableOpacity onPress={navigateToSettingsScreen}>
+        <FontAwesome5 name="cog" size={40} color="#95E1D3" style={styles.icon} />
+      </TouchableOpacity>
     </View>
   );
 };
@@ -87,5 +91,3 @@ const styles = StyleSheet.create({
   },
 
 });
-
-export default TapBar;

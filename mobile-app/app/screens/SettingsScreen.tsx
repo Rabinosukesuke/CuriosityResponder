@@ -1,4 +1,3 @@
-import TopBar from '../components/TopBar';
 import React from 'react';
 import { View ,StyleSheet} from 'react-native';
 import { AntDesign ,Entypo ,MaterialIcons ,MaterialCommunityIcons } from '@expo/vector-icons';
@@ -23,16 +22,16 @@ type Props = {
     navigation: any; // 任意のナビゲーション型を指定するか、'any'を使用する
 };
 
-const SettingsScreen: React.FC<Props> = ({ navigation }) => {
+export const SettingsScreen: React.FC<Props> = ({ navigation }) => {
     return (
         <View style={styles.container}>
-            <Header navigation={null} BackScreenName={null} />
+            <Header navigation={navigation} BackScreenName={'ChildChatScreen'} />
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 10 }}>
-                <View style={{ width: 90, height: 90, backgroundColor: 'white' ,left:55}}>
+                <View style={{ width: 90, height: 90, backgroundColor: 'white', left: 55 }}>
                     <AntDesign name="user" size={90} color="black" />
                 </View>
-                <View style={{ width: 90, height: 90, backgroundColor: 'white' ,right:55}}>
-                <Entypo name="text-document" size={90} color="black" />
+                <View style={{ width: 90, height: 90, backgroundColor: 'white', right: 55 }}>
+                    <Entypo name="text-document" size={90} color="black" />
                 </View>
             </View>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 40 }}>
@@ -49,7 +48,6 @@ const SettingsScreen: React.FC<Props> = ({ navigation }) => {
                 </View>
                 <View style={{ marginVertical: 65 }}></View>
             </View>
-            <TopBar navigation={navigation} />
         </View>
     );
 };
@@ -60,5 +58,3 @@ const styles = StyleSheet.create({
     backgroundColor: '#CBF0E9',
     },
 });
-
-export default SettingsScreen;

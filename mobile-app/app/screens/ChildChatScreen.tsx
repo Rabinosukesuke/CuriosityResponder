@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { View, TextInput, StyleSheet, TouchableOpacity, Button } from 'react-native';
-import { FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
-import TapBar from '../components/TapBar';
+import React, { useState, useEffect } from 'react';
+import { View, TextInput, StyleSheet, TouchableOpacity } from 'react-native';import { FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
+import { TapBar } from '../components/TapBar';
 import { Header } from '../components/Header'; 
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types/type'; 
+import { RouteProp } from '@react-navigation/native';
 
 type ChildChatScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -13,6 +13,7 @@ type ChildChatScreenNavigationProp = NativeStackNavigationProp<
 
 type Props = {
   navigation: ChildChatScreenNavigationProp;
+  route: RouteProp<RootStackParamList, 'ChildChatScreen'>;
 };
 
 type FontAwesomeName = 'smile-o' | 'meh-o' | 'frown-o';
@@ -27,11 +28,19 @@ const convertEmojiName = (iconName: string): FontAwesomeName => {
 };
 
 
-const ChildChatScreen: React.FC<Props> = ({ navigation }) => {
+export const ChildChatScreen: React.FC<Props> = ({ navigation, route }) => {
   const [emoji, setEmoji] = useState<FontAwesomeName>('meh-o');
-  const [question, setQuestion] = useState('');
+  const [question, setQuestion] = useState(''); 
   const [response, setResponse] = useState('');
 
+  useEffect(() => {
+    if (route.params?.question) {
+      setQuestion(route.params.question);
+    }
+    if (route.params?.response) {
+      setResponse(route.params.response);
+    }
+  }, [route.params?.question, route.params?.response]);
   const updateEmoji = (selectedEmoji: string) => {
     setEmoji(convertEmojiName(selectedEmoji));
   };
@@ -50,12 +59,13 @@ const ChildChatScreen: React.FC<Props> = ({ navigation }) => {
         />
       </View>
       <View style={styles.inputAnswerContainer}>
-        <TextInput
-          style={styles.inputAnswer}
-          placeholder="回答はここに出るよ〜"
-          editable={false}
-          value={response}
-        />
+      <TextInput
+        style={styles.inputAnswer}
+        placeholder="回答はここに出るよ〜"
+        editable={false}
+        value={response} 
+        multiline
+      />
       </View>
       <View style={styles.iconContainer}>
         <TouchableOpacity onPress={() => updateEmoji('happy')}>
@@ -68,12 +78,12 @@ const ChildChatScreen: React.FC<Props> = ({ navigation }) => {
           <MaterialCommunityIcons name="emoticon-sad" size={24}  />
         </TouchableOpacity>
       </View>
-      <TapBar/>   
+      <TapBar />   
        </View>
   );
 };
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#CBF0E9',
@@ -130,10 +140,8 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
     borderTopWidth: 0,
-    paddingVertical: 16,
+    paddingVertical: 16, 
     marginHorizontal: 16,
     marginBottom: 16, 
     },  
   });
-
-export default ChildChatScreen;

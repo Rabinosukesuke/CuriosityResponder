@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Pressable } from 'react-native';
 import { Input } from 'react-native-elements';
-import TapBar from '../components/TapBar';
+import { TapBar } from '../components/TapBar';
 import { Header } from '../components/Header';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList, ChatDataWithKey } from '../types/type';
