@@ -1,6 +1,6 @@
 import { ChatData, ChatRecord } from "../types/type";
 import { storage } from '../strage';
-import { initialStorageData } from "../initialStrageData"
+import { initialStorageData } from "../initialStorageData"
 
 type ChatStorage = {
     initChatStorage: () => Promise<void>,
