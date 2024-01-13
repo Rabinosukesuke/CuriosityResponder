@@ -24,3 +24,5 @@ services:
       - ./backend/app:/app
     ports:
       - 9000:8080
+    env_file:
+      - ./backend/.env.backend
