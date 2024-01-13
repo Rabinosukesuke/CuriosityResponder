@@ -13,16 +13,3 @@ services:
       - 8081:8081
       - 19006:19006
     tty: true
-
-  backend:
-    container_name: backend-python
-    image: backend-python:latest
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-    volumes:
-      - ./backend/app:/app
-    ports:
-      - 9000:8080
-    env_file:
-      - ./backend/.env.backend

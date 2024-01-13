@@ -1,5 +1,5 @@
-# Created by https://www.toptal.com/developers/gitignore/api/macos,windows,git
-# Edit at https://www.toptal.com/developers/gitignore?templates=macos,windows,git
+# Created by https://www.toptal.com/developers/gitignore/api/windows,macos,git
+# Edit at https://www.toptal.com/developers/gitignore?templates=windows,macos,git
 
 ### Git ###
 # Created by git for backups. To disable backups in Git:
@@ -75,7 +75,4 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# End of https://www.toptal.com/developers/gitignore/api/macos,windows,git
-
-#env
-.env.backend
+# End of https://www.toptal.com/developers/gitignore/api/windows,macos,git
