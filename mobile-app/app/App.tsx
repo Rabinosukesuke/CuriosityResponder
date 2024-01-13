@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { RouteNavigator } from './navigations/RouteNavigator';
+import { RouteNavigator } from './navigation/RouteNavigator';
 import { Provider } from "react-redux";
 import { store } from './store';
 import { NativeWindStyleSheet } from "nativewind";
