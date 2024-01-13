@@ -10,10 +10,10 @@ NativeWindStyleSheet.setOutput({
 });
 
 export default function App() {
-  const { initChatStorage } = useChatStorage();
+  const { initChatDataInStorage } = useChatStorage();
 
   useEffect(() => {
-    initChatStorage();
+    initChatDataInStorage();
   }, []);
 
   return (

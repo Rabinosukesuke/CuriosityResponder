@@ -18,11 +18,11 @@ export const ChildHistoryScreen = ({ navigation }: Props) => {
   const [storageData, setStorageData] = useState<ChatRecord[]>([]);
   const [isToggled, setIsToggled] = useState<boolean>(false);
 
-  const { getAllChat } = useChatStorage();
+  const { fetchAllChatFromStorage } = useChatStorage();
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getAllChat();
+      const data = await fetchAllChatFromStorage();
       setStorageData(data);
     };
     fetchData();

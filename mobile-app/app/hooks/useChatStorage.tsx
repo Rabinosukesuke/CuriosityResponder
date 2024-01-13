@@ -3,8 +3,8 @@ import { storage } from '../storage';
 import { initialStorageData } from "../initialStorageData"
 
 type ChatStorage = {
-    initChatStorage: () => Promise<void>,
-    getAllChat: () => Promise<ChatRecord[]>,
+    initChatDataInStorage: () => Promise<void>,
+    fetchAllChatFromStorage: () => Promise<ChatRecord[]>,
     storeChatDataInStorage: (chatData: ChatData) => Promise<void>
     updateChatDataInStorage: (ChatRecord: ChatRecord) => Promise<void>
     deleteAllChatDataFromStorage: () => Promise<void>
@@ -12,7 +12,7 @@ type ChatStorage = {
 
 export const useChatStorage = (): ChatStorage => {
 
-    const initChatStorage = async (): Promise<void> => {
+    const initChatDataInStorage = async (): Promise<void> => {
         try {
             await deleteAllChatDataFromStorage();
             for (let i = 0; i < initialStorageData.length; i++) {
@@ -28,7 +28,7 @@ export const useChatStorage = (): ChatStorage => {
         }
     };
 
-    const getAllChat = async (): Promise<any> => {
+    const fetchAllChatFromStorage = async (): Promise<any> => {
         try {
             const chatIds = await storage.getIdsForKey('chatData');
             const chatRecords: ChatRecord[] = [];
@@ -101,8 +101,8 @@ export const useChatStorage = (): ChatStorage => {
     };
 
     return {
-        initChatStorage,
-        getAllChat,
+        initChatDataInStorage,
+        fetchAllChatFromStorage,
         storeChatDataInStorage,
         updateChatDataInStorage,
         deleteAllChatDataFromStorage
