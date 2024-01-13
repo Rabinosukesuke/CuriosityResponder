@@ -1,5 +1,5 @@
 import { ChatData, ChatRecord } from "../types/type";
-import { storage } from '../strage';
+import { storage } from '../storage';
 import { initialStorageData } from "../initialStorageData"
 
 type ChatStorage = {
