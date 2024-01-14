@@ -13,14 +13,13 @@ export const ChildHistoryComponent = (data: StorageData) => {
             ) : data.emoji === 'sad' ? (
                 <Image source={require('../../app/assets/sad.png')} style={{ width: 80, height: 80 }} />
             ) : (
-                <Image source={require('../../app/assets/normal.png')} style={{ width: 90, height: 90 }} />
+                <Image source={require('../../app/assets/normal.png')} style={{ width: 80, height: 80 }} />
             )}
             <View>
                 <Text className='text-base font-bold'>{data.question}</Text>
                 <Text className='text-sm font-normal'>{data.answer}</Text>
                 <View style={styles.line} />
             </View>
-            
         </View>
     )
 }
@@ -35,7 +34,7 @@ const styles = StyleSheet.create({
     line: {
         borderBottomColor: '#808080',
         borderBottomWidth: 1,
-        width: '200%',
+        width: 200,
         marginTop: 8, // 線とテキストの間隔
     }
 
