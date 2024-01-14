@@ -22,7 +22,7 @@ export const HomeScreen = ({ navigation }: Props) => {
 
   useEffect(() => {
     if (user) {
-      navigation.navigate("ChildChatScreen");
+      navigation.navigate("ChildChatScreen", {});
     } else {
       let initialized = false;
 
@@ -44,7 +44,7 @@ export const HomeScreen = ({ navigation }: Props) => {
 
   return (
     <View className='bg-primary flex-1'>
-      <Header navigation={null} BackScreenName={null} />
+      <Header navigation={null} isBackButton={false} />
       {
         user ? (
           // logged in
@@ -58,7 +58,7 @@ export const HomeScreen = ({ navigation }: Props) => {
             {/* ChildChatScreen Button */}
             <Pressable
               style={styles.button}
-              onPress={() => navigation.navigate("ChildChatScreen")}
+              onPress={() => navigation.navigate("ChildChatScreen", {})}
             >
               <Text
                 style={styles.buttonText}

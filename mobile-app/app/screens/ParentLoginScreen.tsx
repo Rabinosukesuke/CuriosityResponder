@@ -31,7 +31,7 @@ export const ParentLoginScreen = ({ navigation }: Props) => {
 
     return (
         <View className='bg-primary flex-1 items-center justify-start'>
-            <Header navigation={navigation} BackScreenName={"Home"} />
+            <Header navigation={navigation} isBackButton={true} />
             <Text
                 style={{
                     color: "black",

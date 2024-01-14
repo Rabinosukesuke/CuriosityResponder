@@ -40,7 +40,7 @@ export const ChildHistoryScreen = ({ navigation }: Props) => {
 
   return (
     <View className='flex-1 bg-primary items-center w-full h-full'>
-      <Header navigation={navigation} BackScreenName={'ChildChatScreen'} />
+      <Header navigation={navigation} isBackButton={true} />
 
       <Input
         placeholder="検索"
