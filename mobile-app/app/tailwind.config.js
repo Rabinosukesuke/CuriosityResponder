@@ -10,7 +10,10 @@ module.exports = {
         primary: "#CBF0E9",
         secondary: "#95E1D3",
         tertiary: "#95E1D3",
-        white: "#FFFFFF",
+        customGray: '#808080',
+      },
+      fontFamily: {
+        yellowtail: ["Yellowtail_400Regular"],
       },
     },
   },
