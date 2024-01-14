@@ -1,5 +1,5 @@
-# Created by https://www.toptal.com/developers/gitignore/api/macos,windows,git
-# Edit at https://www.toptal.com/developers/gitignore?templates=macos,windows,git
+# Created by https://www.toptal.com/developers/gitignore/api/macos,windows,git,venv
+# Edit at https://www.toptal.com/developers/gitignore?templates=macos,windows,git,venv
 
 ### Git ###
 # Created by git for backups. To disable backups in Git:
@@ -49,6 +49,20 @@ Temporary Items
 # iCloud generated files
 *.icloud
 
+### venv ###
+# Virtualenv
+# http://iamzed.com/2009/05/07/a-primer-on-virtualenv/
+.Python
+[Bb]in
+[Ii]nclude
+[Ll]ib
+[Ll]ib64
+[Ll]ocal
+[Ss]cripts
+pyvenv.cfg
+.venv
+pip-selfcheck.json
+
 ### Windows ###
 # Windows thumbnail cache files
 Thumbs.db
@@ -75,7 +89,7 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# End of https://www.toptal.com/developers/gitignore/api/macos,windows,git
+# End of https://www.toptal.com/developers/gitignore/api/macos,windows,git,venv
 
 #env
 .env.backend
