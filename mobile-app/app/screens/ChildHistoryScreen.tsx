@@ -68,7 +68,7 @@ export const ChildHistoryScreen = ({ navigation }: Props) => {
       <View className='w-full h-3/5 items-center'>
         {SortAndFilterChatData.map((item: ChatRecord, index: number) => (
           <ChildHistoryComponent
-            key={index}
+            key={item.id}
             timestamp={item.value.timestamp}
             question={item.value.question}
             answer={item.value.answer}
