@@ -10,15 +10,18 @@ import { ChildChatScreen } from '../screens/ChildChatScreen';
 import { MediaInputScreen } from '../screens/MediaInputScreen';
 import { ChildHistoryScreen } from '../screens/ChildHistoryScreen';
 import { SettingsScreen } from '../screens/SettingsScreen';
+import { IntroScreen } from '../screens/IntroScreen';
+import { SplashScreen } from '../screens/SplashScreen';
 import { useFonts, Yellowtail_400Regular } from '@expo-google-fonts/dev';
-
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export const RouteNavigator = () => {
     return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName='Home' screenOptions={{ headerShown: false }}>
+            <Stack.Navigator initialRouteName='SplashScreen' screenOptions={{ headerShown: false }}>
+                <Stack.Screen name='SplashScreen' component={SplashScreen} />
+                <Stack.Screen name='IntroScreen' component={IntroScreen} />           
                 <Stack.Screen name='Home' component={HomeScreen} />
                 <Stack.Screen name='SignIn' component={SignInScreen} />
                 <Stack.Screen name='ChildChatScreen' component={ChildChatScreen} />
@@ -30,4 +33,4 @@ export const RouteNavigator = () => {
             </Stack.Navigator>
         </NavigationContainer>
     );
-}
+};

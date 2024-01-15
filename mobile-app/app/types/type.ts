@@ -10,6 +10,8 @@ export type RootStackParamList = {
     ChildHistoryScreen: undefined;
     MediaInputScreen: undefined;
     SettingsScreen: undefined;
+    IntroScreen: undefined;
+    SplashScreen: undefined;
 };
 
 export type User = {

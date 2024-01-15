@@ -36,7 +36,7 @@ export const TapBar = () => {
   const buttonStyle = {
     position: 'absolute' as const, 
     top: 0,
-    left: windowWidth / 2,
+    left: windowWidth / 2 + -15,
     transform: [
       { translateX: -(buttonSize / 2) },
       { translateY: -(buttonSize / 2) },
