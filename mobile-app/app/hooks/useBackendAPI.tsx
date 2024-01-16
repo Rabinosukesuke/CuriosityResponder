@@ -3,39 +3,48 @@ import { BACKEND_URL, BACKEND_API_KEY } from "@env";
 import axios from "axios";
 
 type BackendAPI = {
-    fetchChatHistoryFromBackend: (uid: string) => Promise<ChatData>;
+    fetchChatHistoryFromBackend: (uid: string) => Promise<ChatData[]>;
     storeChatHistoryToBackend: (uid: string, chatData: ChatData) => Promise<void>;
 }
 
 export const useBackendAPI = (): BackendAPI => {
-    const fetchChatHistoryFromBackend = async (uid: string): Promise<any> => {
+    const headers = {
+        "x-api-key": BACKEND_API_KEY
+    }
+
+    const fetchChatHistoryFromBackend = async (uid: string): Promise<ChatData[]> => {
         try {
-            const headers = {
-                "x-api-key": BACKEND_API_KEY
-            }
             const body = {
                 "operation": "get",
                 "uid": uid as string,
             }
             const response = await axios.post(BACKEND_URL, body, { headers });
-            console.log(response["data"]);
+
+            const ChatDataArray: ChatData[] = [];
+            for (const item of response["data"]["items"]) {
+                ChatDataArray.push({
+                    "question": item["question"],
+                    "answer": item["answer"],
+                    "datetime": new Date(item["datetime"]),
+                    "emoji": item["emoji"],
+                });
+            }
+            return ChatDataArray
         } catch (error) {
             console.error(error);
+            return [];
         }
     }
 
     const storeChatHistoryToBackend = async (uid: string, chatData: ChatData): Promise<void> => {
         try {
-            const headers = {
-                "x-api-key": BACKEND_API_KEY
-            }
             const body = {
                 "operation": "post",
                 "item": {
-                    uid: uid as string,
+                    "uid": uid as string,
                     "question": chatData.question,
                     "answer": chatData.answer,
-                    "datetime": chatData.timestamp.toISOString(),
+                    "datetime": chatData.datetime.toISOString(),
                     "emoji": chatData.emoji,
                 }
             }

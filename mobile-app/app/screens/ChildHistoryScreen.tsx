@@ -4,37 +4,46 @@ import { Input } from 'react-native-elements';
 import { TapBar } from '../components/TapBar';
 import { Header } from '../components/Header';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList, ChatRecord } from '../types/type';
+import { RootStackParamList, ChatData } from '../types/type';
 import { ChildHistoryComponent } from "../components/ChildHistoryComponent";
 import { FontAwesome, FontAwesome5 } from '@expo/vector-icons';
-import { useChatStorage } from '../hooks/useChatStorage';
+import { useBackendAPI } from '../hooks/useBackendAPI';
+import { useSelector } from 'react-redux'
+import { selectAuth } from '../slices/authSlices';
 
 type Props = {
   navigation: NativeStackNavigationProp<RootStackParamList, "ChildHistoryScreen">;
 }
 
 export const ChildHistoryScreen = ({ navigation }: Props) => {
+  const user = useSelector(selectAuth);
+
   const [searchValue, setSearchValue] = useState<string>('');
-  const [storageData, setStorageData] = useState<ChatRecord[]>([]);
+  const [storageData, setStorageData] = useState<ChatData[]>([]);
   const [isToggled, setIsToggled] = useState<boolean>(false);
 
-  const { fetchAllChatFromStorage } = useChatStorage();
+  const { fetchChatHistoryFromBackend } = useBackendAPI();
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await fetchAllChatFromStorage();
-      setStorageData(data);
+      if (user == null) {
+        console.log("user is null");
+        navigation.navigate("Home");
+      } else {
+        const data = await fetchChatHistoryFromBackend(user.uid);
+        setStorageData(data);
+      }
     };
     fetchData();
   }, []);
 
   const SortAndFilterChatData = storageData
-    .filter(item => item.value.question.includes(searchValue) || item.value.answer.includes(searchValue))
+    .filter(item => item.question.includes(searchValue) || item.answer.includes(searchValue))
     .sort((a, b) => {
       if (isToggled) {
-        return new Date(a.value.timestamp) > new Date(b.value.timestamp) ? 1 : -1;
+        return new Date(a.datetime) > new Date(b.datetime) ? 1 : -1;
       } else {
-        return new Date(a.value.timestamp) < new Date(b.value.timestamp) ? 1 : -1;
+        return new Date(a.datetime) < new Date(b.datetime) ? 1 : -1;
       }
     });
 
@@ -65,14 +74,14 @@ export const ChildHistoryScreen = ({ navigation }: Props) => {
         leftIconContainerStyle={{ marginLeft: 10 }}
       />
 
-      <View className='w-full h-3/5 items-center'>
-        {SortAndFilterChatData.map((item: ChatRecord, index: number) => (
+      <View className='w-full h-3/5 items-center overflow-y-scroll'>
+        {SortAndFilterChatData.map((item: ChatData) => (
           <ChildHistoryComponent
-            key={item.id}
-            timestamp={item.value.timestamp}
-            question={item.value.question}
-            answer={item.value.answer}
-            emoji={item.value.emoji}
+            key={item.datetime.toString()}
+            datetime={item.datetime}
+            question={item.question}
+            answer={item.answer}
+            emoji={item.emoji}
           />
         ))}
       </View>

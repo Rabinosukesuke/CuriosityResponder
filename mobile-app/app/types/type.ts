@@ -20,14 +20,8 @@ export type User = {
 }
 
 export type ChatData = {
-    timestamp: Date;
+    datetime: Date;
     question: string;
     answer: string;
     emoji: "happy" | "normal" | "sad";
-}
-
-export type ChatRecord = {
-    key: "chatData";
-    id: string;
-    value: ChatData;
 }
