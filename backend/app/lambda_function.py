@@ -5,7 +5,7 @@ from boto3.dynamodb.conditions import Key
 from aws_lambda_context import LambdaContext
 
 
-def is_isoformat(date_string):
+def is_isoformat(date_string: str) -> bool:
     try:
         datetime.fromisoformat(date_string)
         return True
