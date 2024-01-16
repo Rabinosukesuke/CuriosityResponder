@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, TextInput, StyleSheet, TouchableOpacity } from 'react-native'; import { FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
+import { View, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
+import { FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
 import { TapBar } from '../components/TapBar';
 import { Header } from '../components/Header';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -8,6 +9,8 @@ import { RouteProp } from '@react-navigation/native';
 import { useBackendAPI } from '../hooks/useBackendAPI';
 import { useSelector } from 'react-redux'
 import { selectAuth } from '../slices/authSlices';
+import { AntDesign } from '@expo/vector-icons';
+import { useOpenAIAPI } from '../hooks/useOpenAIAPI';
 
 type ChildChatScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -31,8 +34,7 @@ const convertEmojiName = (iconName: IconType): FontAwesomeName => {
   return iconMap[iconName] || 'meh-o';
 };
 
-
-export const ChildChatScreen: React.FC<Props> = ({ navigation, route }) => {
+export const ChildChatScreen = ({ navigation, route }: Props) => {
   const user = useSelector(selectAuth);
 
   const [emoji, setEmoji] = useState<FontAwesomeName>('meh-o');
@@ -41,7 +43,7 @@ export const ChildChatScreen: React.FC<Props> = ({ navigation, route }) => {
   const [datetime, setDatetime] = useState<Date | null>(null);
 
   const { storeChatHistoryToBackend } = useBackendAPI();
-
+  const { sendToGPT } = useOpenAIAPI();
 
   useEffect(() => {
     if (route.params?.question) {
@@ -103,6 +105,26 @@ export const ChildChatScreen: React.FC<Props> = ({ navigation, route }) => {
         {question != '' || response != '' || datetime != null ?
           (
             <View className='flex-row '>
+              <TouchableOpacity
+                className='relative mr-60'
+                onPress={async () => {
+                  const regenerate_res = await sendToGPT(question);
+                  setResponse(regenerate_res);
+                  if (user == null || datetime == null) {
+                    navigation.navigate("Home");
+                  } else {
+                    storeChatHistoryToBackend(user.uid, {
+                      question: question,
+                      answer: regenerate_res,
+                      datetime: datetime,
+                      emoji: "normal"
+                    });
+                  }
+                }}
+              >
+                <AntDesign name="retweet" size={24} color="black" />
+              </TouchableOpacity>
+
               <TouchableOpacity onPress={() => updateEmoji('happy')}>
                 <MaterialCommunityIcons name="emoticon-happy" size={24} />
               </TouchableOpacity>
