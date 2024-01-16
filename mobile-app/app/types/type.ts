@@ -6,6 +6,7 @@ export type RootStackParamList = {
     ChildChatScreen: {
         question?: string;
         response?: string;
+        datetime?: string;
     };
     ChildHistoryScreen: undefined;
     MediaInputScreen: undefined;

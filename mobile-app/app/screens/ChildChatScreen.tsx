@@ -3,8 +3,11 @@ import { View, TextInput, StyleSheet, TouchableOpacity } from 'react-native'; im
 import { TapBar } from '../components/TapBar';
 import { Header } from '../components/Header';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../types/type';
+import { ChatData, RootStackParamList } from '../types/type';
 import { RouteProp } from '@react-navigation/native';
+import { useBackendAPI } from '../hooks/useBackendAPI';
+import { useSelector } from 'react-redux'
+import { selectAuth } from '../slices/authSlices';
 
 type ChildChatScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -17,9 +20,10 @@ type Props = {
 };
 
 type FontAwesomeName = 'smile-o' | 'meh-o' | 'frown-o';
+type IconType = 'happy' | 'normal' | 'sad';
 
-const convertEmojiName = (iconName: string): FontAwesomeName => {
-  const iconMap: Record<string, FontAwesomeName> = {
+const convertEmojiName = (iconName: IconType): FontAwesomeName => {
+  const iconMap: Record<IconType, FontAwesomeName> = {
     'happy': 'smile-o',
     'normal': 'meh-o',
     'sad': 'frown-o',
@@ -29,9 +33,15 @@ const convertEmojiName = (iconName: string): FontAwesomeName => {
 
 
 export const ChildChatScreen: React.FC<Props> = ({ navigation, route }) => {
+  const user = useSelector(selectAuth);
+
   const [emoji, setEmoji] = useState<FontAwesomeName>('meh-o');
-  const [question, setQuestion] = useState('');
-  const [response, setResponse] = useState('');
+  const [question, setQuestion] = useState<string>('');
+  const [response, setResponse] = useState<string>('');
+  const [datetime, setDatetime] = useState<Date | null>(null);
+
+  const { storeChatHistoryToBackend } = useBackendAPI();
+
 
   useEffect(() => {
     if (route.params?.question) {
@@ -40,16 +50,38 @@ export const ChildChatScreen: React.FC<Props> = ({ navigation, route }) => {
     if (route.params?.response) {
       setResponse(route.params.response);
     }
-  }, [route.params?.question, route.params?.response]);
-  const updateEmoji = (selectedEmoji: string) => {
+    if (route.params?.datetime) {
+      setDatetime(new Date(route.params.datetime));
+    }
+  }, [route.params?.question, route.params?.response, route.params?.datetime]);
+
+  const updateEmoji = (selectedEmoji: IconType) => {
+    if (user == null) {
+      navigation.navigate("Home");
+    } else if (question == '' || response == '' || datetime == null) {
+
+    } else {
+      const data: ChatData = {
+        question: question,
+        answer: response,
+        datetime: datetime,
+        emoji: selectedEmoji
+      };
+      storeChatHistoryToBackend(user.uid, data);
+    }
     setEmoji(convertEmojiName(selectedEmoji));
   };
-
 
   return (
     <View style={styles.container}>
       <Header navigation={navigation} isBackButton={true} />
-      <FontAwesome name={emoji} size={24} style={styles.emojiIcon} />
+
+      {question != '' || response != '' || datetime != null ?
+        (
+          <FontAwesome name={emoji} size={24} style={styles.emojiIcon} />
+        ) : (null)
+      }
+
       <View style={styles.inputQuestionContainer}>
         <TextInput
           style={styles.inputQuestion}
@@ -68,15 +100,21 @@ export const ChildChatScreen: React.FC<Props> = ({ navigation, route }) => {
         />
       </View>
       <View style={styles.iconContainer}>
-        <TouchableOpacity onPress={() => updateEmoji('happy')}>
-          <MaterialCommunityIcons name="emoticon-happy" size={24} />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => updateEmoji('normal')}>
-          <MaterialCommunityIcons name="emoticon-neutral" size={24} />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => updateEmoji('sad')}>
-          <MaterialCommunityIcons name="emoticon-sad" size={24} />
-        </TouchableOpacity>
+        {question != '' || response != '' || datetime != null ?
+          (
+            <View className='flex-row '>
+              <TouchableOpacity onPress={() => updateEmoji('happy')}>
+                <MaterialCommunityIcons name="emoticon-happy" size={24} />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => updateEmoji('normal')}>
+                <MaterialCommunityIcons name="emoticon-neutral" size={24} />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => updateEmoji('sad')}>
+                <MaterialCommunityIcons name="emoticon-sad" size={24} />
+              </TouchableOpacity>
+            </View>
+          ) : (null)
+        }
       </View>
       <TapBar />
     </View>

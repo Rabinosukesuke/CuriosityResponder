@@ -1,74 +1,57 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, StyleSheet, SafeAreaView, TextInput, TouchableOpacity, Text } from 'react-native';
+import { StyleSheet, SafeAreaView, TextInput, TouchableOpacity, Text } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { OPENAI_API_KEY } from '@env';
-import axios from 'axios';
-import {promptPrefix} from '../PromptConfig'; 
+import { useBackendAPI } from '../hooks/useBackendAPI';
+import { useSelector } from 'react-redux'
+import { selectAuth } from '../slices/authSlices';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList, ChatData } from '../types/type';
+import { useOpenAIAPI } from '../hooks/useOpenAIAPI';
 
 type Props = {
-  navigation: {
-    goBack: () => void;
-    navigate: (screen: string, params: { question: string; response: string }) => void;
-  };
+  navigation: NativeStackNavigationProp<RootStackParamList, "MediaInputScreen">
 };
 
 export const MediaInputScreen = ({ navigation }: Props) => {
-  const [inputText, setInputText] = useState('');
+  const user = useSelector(selectAuth);
+
+  const [inputText, setInputText] = useState<string>('');
   const inputRef = useRef<TextInput>(null);
 
-  const sendToGPT = async () => {
-    try {
-      // プロンプトの組み合わせ
-      const prompt = `${promptPrefix} ${inputText}`;
-  
-      // APIリクエストのボディを設定
-      const response = await axios.post(
-        'https://api.openai.com/v1/chat/completions',
-        {
-          model: "gpt-3.5-turbo", // 使用するモデル
-          messages: [
-            {
-              role: "system",
-              content: prompt
-            },
-            {
-              role: "user",
-              content: inputText
-            }
-          ],
-          max_tokens: 150
-        },
-        {
-          headers: {
-            'Authorization': `Bearer ${OPENAI_API_KEY}`
-          }
-        }
-      );
-  
-      // APIレスポンスの確認
-      if (response.status !== 200) {
-        console.error("API request failed with response:", response);
-        navigation.navigate('ChildChatScreen', { question: inputText, response: 'リクエストに失敗しました。' });
-        return;
-      }
-  
-      // レスポンスがOKの場合、応答データでナビゲート
-      const data = response.data;
-      navigation.navigate('ChildChatScreen', { question: inputText, response: data.choices[0].message.content.trim() });
-    } catch (error) {
-      console.error('Error during API request', error);
-      navigation.navigate('ChildChatScreen', { question: inputText, response: 'エラーが発生しました。' });
-    }
-  };
-  
+  const { storeChatHistoryToBackend } = useBackendAPI();
+  const { sendToGPT } = useOpenAIAPI();
+
   useEffect(() => {
     // キーボード表示
     inputRef.current?.focus();
   }, []);
 
+  const submitQuestion = async (question: string) => {
+    if (user == null) {
+      navigation.navigate("Home");
+    } else if (question == '') {
+      return;
+    } else {
+      const answer = await sendToGPT(question);
+      const datetime_now = new Date();
+      const data: ChatData = {
+        question: question,
+        answer: answer,
+        datetime: datetime_now,
+        emoji: "normal"
+      };
+      await storeChatHistoryToBackend(user.uid, data);
+      navigation.navigate("ChildChatScreen", {
+        question: question,
+        response: answer,
+        datetime: datetime_now.toISOString(),
+      });
+    }
+  }
+
   return (
     <SafeAreaView style={styles.safeArea}>
-      <TouchableOpacity 
+      <TouchableOpacity
         style={styles.backButton}
         onPress={() => navigation.goBack()}
       >
@@ -84,7 +67,7 @@ export const MediaInputScreen = ({ navigation }: Props) => {
       />
       <TouchableOpacity
         style={styles.sendButton}
-        onPress={sendToGPT} 
+        onPress={() => { submitQuestion(inputText) }}
       >
         <Text>送信</Text>
       </TouchableOpacity>
@@ -112,7 +95,7 @@ const styles = StyleSheet.create({
     height: 40,
     marginTop: 60,
     marginLeft: 20,
-    borderBottomWidth: 0, 
+    borderBottomWidth: 0,
     color: 'black',
     paddingHorizontal: 10,
   }
