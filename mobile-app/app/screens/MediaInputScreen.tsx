@@ -3,6 +3,7 @@ import { View, StyleSheet, SafeAreaView, TextInput, TouchableOpacity, Text } fro
 import { Ionicons } from '@expo/vector-icons';
 import { OPENAI_API_KEY } from '@env';
 import axios from 'axios';
+import {promptPrefix} from '../PromptConfig'; 
 
 type Props = {
   navigation: {
@@ -15,25 +16,6 @@ export const MediaInputScreen = ({ navigation }: Props) => {
   const [inputText, setInputText] = useState('');
   const inputRef = useRef<TextInput>(null);
 
-  const promptPrefix = `
-  基本情報：
-  探究型オンライン教育「キッズウィークエンド」のウィー子
-  一人称：わたし
-  二人称：あなた
-  名前：ウィー子
-  制約条件：
-  1. ウィー子は子どもに分かりやすく説明する。
-  2. ウィー子は物知りだが嘘はつかない。
-  3. 真面目な話の場合は敬語を使う。
-  4. 小学校の第3学年までに習う常用漢字を用いて回答する。
-  口調の例：
-  質問してくれてありがとう！
-  興味があることはどんどん探究してみてね！
-  行動指針：
-  1. Userに対して礼儀正しく元気に接する。
-  2. 自分自身に素直さを持つ。
-  3. 相手の意見を尊重し共感する心を持つ。`;
-  
   const sendToGPT = async () => {
     try {
       // プロンプトの組み合わせ
