@@ -9,7 +9,7 @@ import {
   import React from "react";
   import { useTheme } from "@react-navigation/native";
   
-  const PrimaryButton = ({
+  export const PrimaryButton = ({
     onPress,
     label,
     style,
@@ -47,5 +47,3 @@ import {
       </TouchableOpacity>
     );
   };
-  
-  export default PrimaryButton;

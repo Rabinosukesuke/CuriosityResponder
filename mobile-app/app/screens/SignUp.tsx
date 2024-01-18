@@ -13,7 +13,7 @@ import { useTheme } from "@react-navigation/native";
 import Icons from "@expo/vector-icons/MaterialIcons";
 import { Artwork03 } from "../components/artworks/Artwork03";
 import { SIGN_UP_SCREEN } from "../utils/constants"; // SIGN_UP_SCREENの定数を使用
-import PrimaryButton from "../components/PrimaryButton";
+import { PrimaryButton } from "../components/PrimaryButton";
 import Animated, { FadeInDown, FadeInUp } from "react-native-reanimated";
 import { useAuth } from "../hooks/useAuth";
 
@@ -93,7 +93,7 @@ export const SignUp = ({ navigation }: RootStackScreenProps<"SignUp">) => {
                 style={{ position: "relative", width: "100%" }}
               >
                 <TextInput
-                  placeholder="Your Email"
+                  placeholder="メールアドレス"
                   value={email}
                   onChangeText={setEmail}
                   style={{
@@ -125,7 +125,7 @@ export const SignUp = ({ navigation }: RootStackScreenProps<"SignUp">) => {
                 style={{ position: "relative", width: "100%" }}
               >
                 <TextInput
-                  placeholder="Your Password"
+                  placeholder="パスワード"
                   value={password}
                   onChangeText={setPassword}
                   style={{

@@ -13,7 +13,7 @@ import { useTheme } from "@react-navigation/native";
 import Icons from "@expo/vector-icons/MaterialIcons";
 import { Artwork03 } from "../components/artworks/Artwork03";
 import { LOG_IN_SCREEN } from "../utils/constants";
-import PrimaryButton from "../components/PrimaryButton";
+import { PrimaryButton } from "../components/PrimaryButton";
 import Animated, { FadeInDown, FadeInUp } from "react-native-reanimated";
 import { useAuth } from "../hooks/useAuth";
 
@@ -94,7 +94,7 @@ export const SignIn = ({ navigation }: RootStackScreenProps<"SignIn">) => {
                 style={{ position: "relative", width: "100%" }}
               >
                 <TextInput
-                  placeholder="Your Email"
+                  placeholder="メールアドレス"
                   value={email}
                   onChangeText={setEmail}
                   style={{
@@ -126,7 +126,7 @@ export const SignIn = ({ navigation }: RootStackScreenProps<"SignIn">) => {
                 style={{ position: "relative", width: "100%" }}
               >
                 <TextInput
-                  placeholder="Your Password"
+                  placeholder="パスワード"
                   value={password}
                   onChangeText={setPassword}
                   style={{
@@ -153,22 +153,22 @@ export const SignIn = ({ navigation }: RootStackScreenProps<"SignIn">) => {
                   }}
                 />
               </Animated.View>
+              <View style={{ width: "100%", alignItems: 'flex-end', marginTop: 5 }}>
+                <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
+                  <Text style={{ color: theme.colors.primary, fontSize: 13 }}>
+                    アカウント登録はこちら
+                  </Text>
+                </TouchableOpacity>
+              </View>
+
               <Animated.View
                 entering={FadeInDown.delay(600).duration(1000).springify()}
               >
                 <PrimaryButton
-                  label="Log In"
+                  label="ログイン"
                   onPress={handleSignIn}
-                 />
+                />
               </Animated.View>
-              <TouchableOpacity
-              onPress={() => navigation.navigate("SignUp")}
-              style={{ marginTop: 20 }}
-            >
-              <Text style={{ color: theme.colors.primary, fontSize: 16 }}>
-                アカウント登録はこちら
-              </Text>
-            </TouchableOpacity>
             </View>
           </View>
         </SafeAreaView>

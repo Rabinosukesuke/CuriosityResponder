@@ -6,7 +6,7 @@ import { INTRO_SCREEN_01 } from "../utils/constants";
 import { Artwork01 } from "../components/artworks/Artwork01";
 import { useTheme } from "@react-navigation/native";
 import { ScreenIndicators } from "../components/ScreenIndicators";
-import PrimaryButton from "../components/PrimaryButton";
+import { PrimaryButton } from "../components/PrimaryButton";
 import Animated, { FadeInDown, FadeInUp } from "react-native-reanimated";
 
 export const Intro01 = ({
@@ -49,7 +49,7 @@ export const Intro01 = ({
           style={{ alignItems: "center" }}
         >
           <PrimaryButton
-            label="Next"
+            label="次へ"
             onPress={() => navigation.replace("Intro02")}
           />
         </Animated.View>

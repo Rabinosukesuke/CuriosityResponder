@@ -2,7 +2,7 @@ import { View, SafeAreaView, TouchableOpacity } from "react-native";
 import React from "react";
 import { RootStackScreenProps } from "../navigation/RouteNavigator";
 import { useTheme } from "@react-navigation/native";
-import PrimaryButton from "../components/PrimaryButton";
+import { PrimaryButton } from "../components/PrimaryButton";
 import { ScreenIndicators } from "../components/ScreenIndicators";
 import { INTRO_SCREEN_02 } from "../utils/constants";
 import Icons from "@expo/vector-icons/MaterialIcons";
@@ -63,7 +63,7 @@ export const Intro02 = ({
           style={{ alignItems: "center" }}
         >
           <PrimaryButton
-            label="Next"
+            label="次へ"
             onPress={() => navigation.replace("Intro03")}
           />
         </Animated.View>
