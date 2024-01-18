@@ -19,21 +19,25 @@ export const SignUpScreen = ({ navigation }: Props) => {
     return (
         <View className='bg-primary flex-1 items-center justify-top'>
             <Header navigation={navigation} isBackButton={true} />
-            <Text className='mt-20 mb-20 text-3xl font-bold'>アカウント登録</Text>
+            <Text style={styles.loginText}>Discover Ease</Text>
+            <Text style={styles.loginText2}>アカウント作成</Text>
             <Input
-                placeholder='type email'
+                placeholder='アカウントIDを入力してください'
                 value={email}
                 onChangeText={setEmail}
                 textContentType='emailAddress'
+                inputStyle={styles.input}
+                placeholderTextColor='#FFFFFF'
             />
             <Input
-                placeholder='type password'
+                placeholder='パスワードを入力してください'
                 value={password}
                 onChangeText={setPassword}
                 textContentType='password'
+                inputStyle={styles.input}
+                placeholderTextColor='#FFFFFF'
             />
 
-            {/* SignUp Button */}
             <Pressable
                 style={styles.button}
                 onPress={() => {
@@ -46,9 +50,7 @@ export const SignUpScreen = ({ navigation }: Props) => {
                         })
                 }}
             >
-                <Text
-                    style={styles.buttonText}
-                >登録</Text>
+                <Text style={styles.buttonText}>Next</Text>
             </Pressable>
 
         </View>
@@ -56,11 +58,24 @@ export const SignUpScreen = ({ navigation }: Props) => {
 }
 
 const styles = StyleSheet.create({
+    loginText: {
+        fontSize: 32,
+        fontWeight: 'bold',
+        color: '#000',
+        marginTop: 60,
+        marginBottom: 16,
+    },  
+    loginText2: {
+        fontSize: 32,
+        fontWeight: 'bold',
+        color: '#000',
+        marginBottom: 60,
+    }, 
     button: {
-        width: "70%",
-        height: "5%",
+        width: 346,
+        height: 52,
         borderWidth: 1,
-        shadowColor: "#000",
+        shadowColor: '#000',
         backgroundColor: "#6EE7B3",
         flexDirection: "column",
         borderRadius: 50,
@@ -68,17 +83,35 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         padding: 1,
-
-        marginTop: "30%",
+        marginTop: "10%",
+    },
+    input: {
+        flex: 1,
+        height: 52,  
+        backgroundColor: '#CBF0E9',
+        borderRadius: 50,
+        borderWidth: 3,
+        borderColor: 'white',
+        paddingLeft: 10,
+        marginTop: 16,
+        marginBottom: 16,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.3,
+        shadowRadius: 2,
+        textAlign: 'center',
+        opacity: 0.8,
+        fontWeight: 'bold',
+        textDecorationStyle: 'solid',
+        textDecorationColor: 'black',
     },
     buttonText: {
         color: "white",
         textAlign: "center",
-        // fontFamily: "Junge",
         fontSize: 20,
         fontStyle: "normal",
         fontWeight: "400",
         letterSpacing: -0.5,
         textTransform: "capitalize",
-    }
+    },
 });

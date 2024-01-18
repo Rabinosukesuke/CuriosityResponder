@@ -19,21 +19,31 @@ export const SignInScreen = ({ navigation }: Props) => {
   return (
     <View className='bg-primary flex-1 items-center justify-top'>
       <Header navigation={navigation} isBackButton={true} />
-      <Text className='mt-20 mb-20 text-3xl font-bold'>ログイン</Text>
+      {/* ログイン画面のタイトル */}
+      <Text style={styles.loginText}>Discover Ease</Text>
+      <Text style={styles.loginText2}>ログイン</Text>
+
+      {/* メールアドレス入力欄 */}
       <Input
-        placeholder='*****@example.com'
+        placeholder='アカウントIDを入力してください'
         value={email}
         onChangeText={setEmail}
         textContentType='emailAddress'
+        inputStyle={styles.input} // 入力欄のスタイル
+        placeholderTextColor='#FFFFFF' // placeholderのテキスト色
       />
+
+      {/* パスワード入力欄 */}
       <Input
-        placeholder='**password**'
+        placeholder='パスワードを入力してください'
         value={password}
         onChangeText={setPassword}
         textContentType='password'
+        inputStyle={styles.input} // 入力欄のスタイル
+        placeholderTextColor='#FFFFFF' // placeholderのテキスト色
       />
 
-      {/* SignIn Button */}
+      {/* ログインボタン */}
       <Pressable
         style={styles.button}
         onPress={() => {
@@ -48,18 +58,44 @@ export const SignInScreen = ({ navigation }: Props) => {
       >
         <Text
           style={styles.buttonText}
-        >ログイン</Text>
+        >Next</Text>
       </Pressable >
+
+      {/* 新規アカウント作成への誘導 */}
+      <View style={styles.signupTextContainer}>
+        <Pressable
+          style={styles.signupButton}
+          onPress={() => {
+            // 新規アカウント作成画面に遷移
+            navigation.navigate("SignUp");
+          }}
+        >
+          <Text style={styles.signupButtonText}>アカウントがない方はこちら</Text>
+        </Pressable>
+      </View>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
+  loginText: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    color: '#000',
+    marginTop: 60,
+    marginBottom: 16,
+  },  
+  loginText2: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    color: '#000',
+    marginBottom: 60,
+  }, 
   button: {
-    width: "70%",
-    height: "5%",
+    width: 346,
+    height: 52,
     borderWidth: 1,
-    shadowColor: "#000",
+    shadowColor: '#000',
     backgroundColor: "#6EE7B3",
     flexDirection: "column",
     borderRadius: 50,
@@ -67,17 +103,49 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     padding: 1,
-
-    marginTop: "30%",
+    marginTop: "10%",
+  },
+  signupTextContainer: {
+    flex: 1,
+    alignItems: 'flex-end',
+    paddingLeft: 140,
+    paddingTop: 8,
+  },
+  input: {
+    flex: 1,
+    height: 52,  
+    backgroundColor: '#CBF0E9',
+    borderRadius: 50,
+    borderWidth: 3,
+    borderColor: 'white',
+    paddingLeft: 10,
+    marginTop: 16,
+    marginBottom: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 2,
+    textAlign: 'center',
+    opacity: 0.8,
+    fontWeight: 'bold',
+    textDecorationStyle: 'solid',
+    textDecorationColor: 'black',
   },
   buttonText: {
     color: "white",
     textAlign: "center",
-    // fontFamily: "Junge",
     fontSize: 20,
     fontStyle: "normal",
     fontWeight: "400",
     letterSpacing: -0.5,
     textTransform: "capitalize",
-  }
+  },
+  signupButton: {
+    borderBottomWidth: 1,
+    borderBottomColor: 'white',
+  },
+  signupButtonText: {
+    color: '#000AFF',
+    paddingLeft: 5,
+  },
 });
