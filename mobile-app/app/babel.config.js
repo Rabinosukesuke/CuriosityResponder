@@ -8,6 +8,7 @@ module.exports = function (api) {
         "path": ".env.local",
       }],
       ['nativewind/babel'],
+      ["react-native-reanimated/plugin"],
     ],
   };
 };

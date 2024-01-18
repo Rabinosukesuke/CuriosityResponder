@@ -12,10 +12,10 @@ import { useSelector } from 'react-redux'
 import { selectAuth } from '../slices/authSlices';
 
 type Props = {
-  navigation: NativeStackNavigationProp<RootStackParamList, "ChildHistoryScreen">;
+  navigation: NativeStackNavigationProp<RootStackParamList, "ChildHistory">;
 }
 
-export const ChildHistoryScreen = ({ navigation }: Props) => {
+export const ChildHistory = ({ navigation }: Props) => {
   const user = useSelector(selectAuth);
 
   const [searchValue, setSearchValue] = useState<string>('');

@@ -7,11 +7,11 @@ type Props = {
     navigation: NavigationProp<RootStackParamList>;
 };
 
-export const SplashScreen: React.FC<Props> = ({ navigation }) => {
+export const Splash: React.FC<Props> = ({ navigation }) => {
     useEffect(() => {
         setTimeout(() => {
-            navigation.navigate('IntroScreen');
-        }, 5000); // 5秒後にIntroScreenに遷移
+            navigation.navigate('Intro01');
+        }, 5000); // 5秒後にIntro01に遷移
     }, [navigation]);
 
     return (

@@ -14,12 +14,12 @@ import { useOpenAIAPI } from '../hooks/useOpenAIAPI';
 
 type ChildChatScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
-  'ChildChatScreen'
+  'ChildChat'
 >;
 
 type Props = {
   navigation: ChildChatScreenNavigationProp;
-  route: RouteProp<RootStackParamList, 'ChildChatScreen'>;
+  route: RouteProp<RootStackParamList, 'ChildChat'>;
 };
 
 type FontAwesomeName = 'smile-o' | 'meh-o' | 'frown-o';
@@ -34,7 +34,7 @@ const convertEmojiName = (iconName: IconType): FontAwesomeName => {
   return iconMap[iconName] || 'meh-o';
 };
 
-export const ChildChatScreen = ({ navigation, route }: Props) => {
+export const ChildChat = ({ navigation, route }: Props) => {
   const user = useSelector(selectAuth);
 
   const [emoji, setEmoji] = useState<FontAwesomeName>('meh-o');

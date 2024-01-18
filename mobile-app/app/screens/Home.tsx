@@ -15,14 +15,14 @@ type Props = {
   navigation: NativeStackNavigationProp<RootStackParamList, "Home">;
 }
 
-export const HomeScreen = ({ navigation }: Props) => {
+export const Home = ({ navigation }: Props) => {
   const user = useSelector(selectAuth);
 
   const { signOut, autoSignIn } = useAuth();
 
   useEffect(() => {
     if (user) {
-      navigation.navigate("ChildChatScreen", {});
+      navigation.navigate("ChildChat", {});
     } else {
       let initialized = false;
 
@@ -58,7 +58,7 @@ export const HomeScreen = ({ navigation }: Props) => {
             {/* ChildChatScreen Button */}
             <Pressable
               style={styles.button}
-              onPress={() => navigation.navigate("ChildChatScreen", {})}
+              onPress={() => navigation.navigate("ChildChat", {})}
             >
               <Text
                 style={styles.buttonText}

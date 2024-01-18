@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { RouteNavigator } from './navigation/RouteNavigator';
+import { RootNavigator } from './navigation/RouteNavigator';
 import { Provider } from "react-redux";
 import { store } from './store';
 import { NativeWindStyleSheet } from "nativewind";
@@ -29,7 +29,7 @@ export default function App() {
 
   return (
     <Provider store={store}>
-      <RouteNavigator />
+      <RootNavigator />
     </Provider>
   );
 }

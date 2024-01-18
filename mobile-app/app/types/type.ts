@@ -1,18 +1,25 @@
 export type RootStackParamList = {
-    Home: undefined;
-    SignIn: undefined;
-    SignUp: undefined;
-    ParentLogin: undefined;
-    ChildChatScreen: {
+    ChildChat: {
         question?: string;
         response?: string;
         datetime?: string;
     };
-    ChildHistoryScreen: undefined;
-    MediaInputScreen: undefined;
-    SettingsScreen: undefined;
-    IntroScreen: undefined;
-    SplashScreen: undefined;
+    ChildHistory: undefined;
+    Home: undefined;
+    Intro01: undefined;
+    Intro02: undefined;
+    Intro03: undefined;
+    Intro04: undefined;
+    Intro05: undefined;
+    Intro06: undefined;
+    Intro07: undefined;
+    Intro08: undefined;
+    MediaInput: undefined;
+    ParentLogin: undefined;
+    Settings: undefined;
+    SignIn: undefined;
+    SignUp: undefined;
+    Splash: undefined;
 };
 
 export type User = {

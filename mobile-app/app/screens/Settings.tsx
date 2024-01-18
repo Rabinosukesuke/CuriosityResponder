@@ -22,7 +22,7 @@ type Props = {
     navigation: any; // 任意のナビゲーション型を指定するか、'any'を使用する
 };
 
-export const SettingsScreen: React.FC<Props> = ({ navigation }) => {
+export const Settings: React.FC<Props> = ({ navigation }) => {
     return (
         <View style={styles.container}>
             <Header navigation={navigation} isBackButton={true} />

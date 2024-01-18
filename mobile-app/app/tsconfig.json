@@ -9,12 +9,10 @@
     "strict": true
   },
   "include": [
-    ".//*.ts",
-    ".//*.tsx",
-    "types/env.d.ts",
-    "types/nativewind.d.ts"
+    "**/*.ts",
+    "**/*.tsx",
   ],
-  "typeRoots": [
+    "typeRoots": [
     "./types/"
   ]
 }

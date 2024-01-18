@@ -18,14 +18,14 @@ export const TapBar = () => {
       useNativeDriver: true,
     }).start(() => {
       animation.setValue(0);
-      navigation.navigate('MediaInputScreen');
+      navigation.navigate('MediaInput');
     });
   };
   const navigateToChildHistoryScreen = () => {
-    navigation.navigate('ChildHistoryScreen');
+    navigation.navigate('ChildHistory');
   };
   const navigateToSettingsScreen = () => {
-    navigation.navigate('SettingsScreen');
+    navigation.navigate('Settings');
   };
 
   const rotate = animation.interpolate({

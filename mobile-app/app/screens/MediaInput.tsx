@@ -9,10 +9,10 @@ import { RootStackParamList, ChatData } from '../types/type';
 import { useOpenAIAPI } from '../hooks/useOpenAIAPI';
 
 type Props = {
-  navigation: NativeStackNavigationProp<RootStackParamList, "MediaInputScreen">
+  navigation: NativeStackNavigationProp<RootStackParamList, "MediaInput">
 };
 
-export const MediaInputScreen = ({ navigation }: Props) => {
+export const MediaInput = ({ navigation }: Props) => {
   const user = useSelector(selectAuth);
 
   const [inputText, setInputText] = useState<string>('');
@@ -41,7 +41,7 @@ export const MediaInputScreen = ({ navigation }: Props) => {
         emoji: "normal"
       };
       await storeChatHistoryToBackend(user.uid, data);
-      navigation.navigate("ChildChatScreen", {
+      navigation.navigate("ChildChat", {
         question: question,
         response: answer,
         datetime: datetime_now.toISOString(),
@@ -100,4 +100,3 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   }
 });
-

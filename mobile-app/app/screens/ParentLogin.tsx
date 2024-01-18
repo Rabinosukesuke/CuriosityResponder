@@ -12,7 +12,7 @@ type Props = {
     navigation: NativeStackNavigationProp<RootStackParamList, "ParentLogin">;
 }
 
-export const ParentLoginScreen = ({ navigation }: Props) => {
+export const ParentLogin = ({ navigation }: Props) => {
     const { signIn } = useAuth();
 
     const user = useSelector(selectAuth);
