@@ -1,4 +1,5 @@
 export type RootStackParamList = {
+    LineChart: undefined;
     ChildChat: {
         question?: string;
         response?: string;
