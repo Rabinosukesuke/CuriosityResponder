@@ -6,14 +6,7 @@ import { Header } from '../components/Header'
 import { useSelector } from 'react-redux'
 import { selectAuth } from '../slices/authSlices';
 import { useBackendAPI } from '../hooks/useBackendAPI';
-import {
-    LineChart as LineChartTag,
-    BarChart,
-    PieChart,
-    ProgressChart,
-    ContributionGraph,
-    StackedBarChart
-} from "react-native-chart-kit";
+import { LineChart as LineChartTag } from "react-native-chart-kit";
 import { Dimensions } from 'react-native';
 
 
