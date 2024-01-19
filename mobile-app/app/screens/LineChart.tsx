@@ -29,6 +29,7 @@ export const LineChart = ({ navigation }: Props) => {
     const [storageData, setStorageData] = useState<ChatData[]>([]);
 
     const ONEWEEK = 7;
+    const dayOfWeekList = ["日", "月", "火", "水", "木", "金", "土"];
 
     useEffect(() => {
         const fetchData = async () => {
@@ -49,8 +50,10 @@ export const LineChart = ({ navigation }: Props) => {
     const currentDate = Array.from({ length: ONEWEEK }, (_, i) => {
         const month: string = (datetime_now.getMonth() + 1).toString();
         const day: string = (datetime_now.getDate() - ONEWEEK + i + 1).toString();
-        return `${month}/${day}`
+        const dayOfWeek: string = dayOfWeekList[datetime_now.getDay() - ONEWEEK + i + 1];
+        return `${month}/${day}${"\n"}${dayOfWeek}`
     });
+    console.log(currentDate);
 
     const ChartData = Array.from({ length: 7 }, (_, i) => {
         const thisYear = new Date().getFullYear();
@@ -69,10 +72,13 @@ export const LineChart = ({ navigation }: Props) => {
         })
         return count;
     })
+    console.log(ChartData);
 
     return (
         <View className='bg-primary flex-1 items-center'>
             <Header navigation={navigation} isBackButton={true} />
+
+            <View className='h-1/12'></View>
 
             <LineChartTag
                 data={{
@@ -91,12 +97,12 @@ export const LineChart = ({ navigation }: Props) => {
                     barPercentage: 0.5,
                     color: (opacity = 1) => `rgba(9, 219, 181, ${opacity})`,
                     labelColor: (opacity = 1) => `rgba(9, 219, 181, ${opacity})`,
-                    propsForVerticalLabels:{
+                    propsForVerticalLabels: {
                         fontSize: 14,
                         fontWeight: "bold",
                         fill: "black",
                     },
-                    propsForHorizontalLabels:{
+                    propsForHorizontalLabels: {
                         fontSize: 14,
                         fontWeight: "bold",
                         fill: "black",
