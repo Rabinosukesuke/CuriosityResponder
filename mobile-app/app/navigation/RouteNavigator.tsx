@@ -1,9 +1,9 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import {
-    NativeStackScreenProps,
-    createNativeStackNavigator,
-  } from "@react-navigation/native-stack";
+  NativeStackScreenProps,
+  createNativeStackNavigator,
+} from "@react-navigation/native-stack";
 import { type RootStackParamList } from '../types/type';
 import { Home } from '../screens/Home';
 import { SignIn } from '../screens/SignIn';
@@ -22,7 +22,7 @@ import { Intro05 } from "../screens/Intro05";
 import { Intro06 } from "../screens/Intro06";
 import { Intro07 } from "../screens/Intro07";
 import { Intro08 } from "../screens/Intro08";
-import { useFonts, Yellowtail_400Regular } from '@expo-google-fonts/dev';
+import { LineChart } from "../screens/LineChart";
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 
@@ -50,6 +50,7 @@ export const RootNavigator = () => {
         <RootStack.Screen name="Intro06" component={Intro06} />
         <RootStack.Screen name="Intro07" component={Intro07} />
         <RootStack.Screen name="Intro08" component={Intro08} />
+        <RootStack.Screen name="LineChart" component={LineChart} />
       </RootStack.Navigator>
     </NavigationContainer>
   );

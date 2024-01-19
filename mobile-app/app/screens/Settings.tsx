@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Pressable } from 'react-native';
 import { AntDesign, Entypo, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { Header } from '../components/Header';
 
@@ -27,9 +27,12 @@ export const Settings: React.FC<Props> = ({ navigation }) => {
         <View style={styles.container}>
             <Header navigation={navigation} isBackButton={true} />
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 10 }}>
-                <View style={{ width: 90, height: 90, backgroundColor: 'white', left: 55 }}>
+                <Pressable
+                    onPress={() => { navigation.navigate("LineChart") }}
+                    style={{ width: 90, height: 90, backgroundColor: 'white', left: 55 }}
+                >
                     <AntDesign name="user" size={90} color="black" />
-                </View>
+                </Pressable>
                 <View style={{ width: 90, height: 90, backgroundColor: 'white', right: 55 }}>
                     <Entypo name="text-document" size={90} color="black" />
                 </View>
