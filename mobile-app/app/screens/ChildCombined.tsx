@@ -12,6 +12,7 @@ import { useSelector } from 'react-redux';
 import { selectAuth } from '../slices/authSlices';
 import { AntDesign } from '@expo/vector-icons';
 import { Input } from 'react-native-elements';
+import { Image } from 'react-native';
 import { ChildHistoryComponent } from "../components/ChildHistoryComponent";
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 
@@ -19,7 +20,7 @@ const screenWidth = Dimensions.get('window').width;
 
 type ChildCombinedProps = {
     navigation: DrawerNavigationProp<DrawerParamList, "ChildCombined">;
-    route: RouteProp<DrawerParamList, 'ChildCombined'>; 
+    route: RouteProp<DrawerParamList, 'ChildCombined'>;
 };
 
 export const ChildCombined = ({ navigation, route }: ChildCombinedProps) => {
@@ -43,6 +44,19 @@ export const ChildCombined = ({ navigation, route }: ChildCombinedProps) => {
     const [searchValue, setSearchValue] = useState<string>('');
     const [storageData, setStorageData] = useState<ChatData[]>([]);
     const [isToggled, setIsToggled] = useState<boolean>(false);
+    const [emojiAnimation, setEmojiAnimation] = useState(new Animated.Value(0));
+    const animatedStyle = {
+        transform: [
+            {
+                scale: emojiAnimation.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [0, 1] // 0から1までスケール
+                })
+            }
+        ],
+        opacity: emojiAnimation // 透明度もアニメーション
+    };
+
 
     const { storeChatHistoryToBackend, fetchChatHistoryFromBackend } = useBackendAPI();
     const { sendToGPT } = useOpenAIAPI();
@@ -69,6 +83,7 @@ export const ChildCombined = ({ navigation, route }: ChildCombinedProps) => {
         fetchData();
     }, [route.params?.question, route.params?.response, route.params?.datetime]);
 
+    const [emojiSaved, setEmojiSaved] = useState(false);
 
     const updateEmoji = (selectedEmoji: IconType) => {
         if (user == null) {
@@ -83,9 +98,23 @@ export const ChildCombined = ({ navigation, route }: ChildCombinedProps) => {
                 emoji: selectedEmoji
             };
             storeChatHistoryToBackend(user.uid, data);
+            setEmojiSaved(true);
         }
+        Animated.timing(emojiAnimation, {
+            toValue: 1,
+            duration: 1000,
+            useNativeDriver: true
+        }).start(() => {
+            Animated.timing(emojiAnimation, {
+                toValue: 0,
+                duration: 1000,
+                useNativeDriver: true
+            }).start();
+        });
+
         setEmoji(convertEmojiName(selectedEmoji));
     };
+
     const trimText = (text: string, maxLength: number) => {
         if (text.length > maxLength) {
             return text.substring(0, maxLength) + '...';
@@ -136,16 +165,11 @@ export const ChildCombined = ({ navigation, route }: ChildCombinedProps) => {
                 ref={scrollViewRef}
             >
                 <View style={{ width: screenWidth }}>
-                    {question != '' || response != '' || datetime != null ?
-                        (
-                            <FontAwesome name={emoji} size={24} style={styles.emojiIcon} />
-                        ) : (null)
-                    }
 
                     <View style={styles.inputQuestionContainer}>
                         <TextInput
                             style={styles.inputQuestion}
-                            placeholder="ここに質問を入力してね！"
+                            placeholder="ここに質問が出るよ！"
                             editable={false}
                             value={question}
                         />
@@ -153,18 +177,29 @@ export const ChildCombined = ({ navigation, route }: ChildCombinedProps) => {
                     <View style={styles.inputAnswerContainer}>
                         <TextInput
                             style={styles.inputAnswer}
-                            placeholder="回答はここに出るよ〜"
+                            placeholder="ここに回答が出るよ〜"
                             editable={false}
                             value={response}
                             multiline
                         />
+                        <Animated.View style={[animatedStyle]}>
+                            <Image
+                                source={
+                                    emoji === 'smile-o' ? require('../../app/assets/happy.png') :
+                                        emoji === 'meh-o' ? require('../../app/assets/normal.png') :
+                                            require('../../app/assets/sad.png')
+                                }
+                                style={styles.animatedImage}
+                            />
+
+                        </Animated.View>
+
                     </View>
                     <View style={styles.iconContainer}>
                         {question != '' || response != '' || datetime != null ?
                             (
                                 <View className='flex-row '>
                                     <TouchableOpacity
-                                        className='relative mr-60'
                                         onPress={async () => {
                                             const regenerate_res = await sendToGPT(question);
                                             setResponse(regenerate_res);
@@ -180,22 +215,28 @@ export const ChildCombined = ({ navigation, route }: ChildCombinedProps) => {
                                             }
                                         }}
                                     >
-                                        <AntDesign name="retweet" size={24} color="black" />
+                                        <AntDesign name="retweet" size={35} color="black" style={styles.retweet} />
                                     </TouchableOpacity>
 
-                                    <TouchableOpacity onPress={() => updateEmoji('happy')}>
-                                        <MaterialCommunityIcons name="emoticon-happy" size={24} />
+                                    <TouchableOpacity onPress={() => updateEmoji('happy')} style={styles.emojiButton}>
+                                        <FontAwesome5 name="surprise" size={35} />
                                     </TouchableOpacity>
-                                    <TouchableOpacity onPress={() => updateEmoji('normal')}>
-                                        <MaterialCommunityIcons name="emoticon-neutral" size={24} />
+                                    <TouchableOpacity onPress={() => updateEmoji('normal')} style={styles.emojiButton}>
+                                        <FontAwesome5 name="grin" size={35} />
                                     </TouchableOpacity>
-                                    <TouchableOpacity onPress={() => updateEmoji('sad')}>
-                                        <MaterialCommunityIcons name="emoticon-sad" size={24} />
+                                    <TouchableOpacity onPress={() => updateEmoji('sad')} style={styles.emojiButton}>
+                                        <FontAwesome5 name="frown" size={35} />
                                     </TouchableOpacity>
+
+
                                 </View>
+
                             ) : (null)
                         }
+
+
                     </View>
+
                 </View>
                 <View style={{ width: screenWidth }}>
                     <Input
@@ -255,6 +296,36 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#CBF0E9',
+    },
+    emojiAnimationContainer: {
+        position: 'absolute',
+        width: '100%',
+        height: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'rgba(0,0,0,0.5)', // 半透明の背景
+    },
+    animatedText: {
+        fontSize: 24,
+        color: 'white', // テキストの色
+        textAlign: 'center',
+    },
+    animatedImage: {
+        width: 150,  // 画像の幅
+        height: 150, // 画像の高さ
+        bottom: 80,
+    },
+    emojiContainer: {
+        flexDirection: 'row',
+        justifyContent: 'center', // 左に配置
+        alignItems: 'center',
+        marginRight: 95,
+    },
+    emojiButton: {
+        marginRight: 50,
+    },
+    retweet: {
+        marginRight: 40, // 絵文字間の隙間
     },
     emojiIcon: {
         position: 'absolute',

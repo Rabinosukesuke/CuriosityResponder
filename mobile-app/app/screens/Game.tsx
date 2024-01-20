@@ -27,6 +27,25 @@ export const Game = ({ navigation }: Props) => {
 
     const fadeInText = useSharedValue(0);
     const translateY = useSharedValue(0);
+    const stopAndResetTimer = () => {
+        setRemainingTime(20); // タイマーをリセット
+        setTimerPaused(true); // タイマーを停止
+    };
+
+    useEffect(() => {
+        const focusListener = navigation.addListener('focus', () => {
+            setTimerPaused(false); // 画面が表示されたらタイマーを再開
+        });
+
+        const blurListener = navigation.addListener('blur', () => {
+            stopAndResetTimer(); // 画面から離れるときにタイマーを停止してリセット
+        });
+
+        return () => {
+            focusListener();
+            blurListener();
+        };
+    }, [navigation]);
 
     useEffect(() => {
         const questionInterval = setInterval(() => {
