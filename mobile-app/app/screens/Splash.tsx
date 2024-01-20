@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { View, Image, StyleSheet } from 'react-native';
+import React from 'react';
+import { View, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
 import { RootStackParamList } from '../types/type'; 
 
@@ -8,16 +8,14 @@ type Props = {
 };
 
 export const Splash: React.FC<Props> = ({ navigation }) => {
-    useEffect(() => {
-        setTimeout(() => {
-            navigation.navigate('Intro01');
-        }, 5000); // 5秒後にIntro01に遷移
-    }, [navigation]);
-
     return (
-        <View style={styles.container}>
+        <TouchableOpacity
+            style={styles.container}
+            onPress={() => navigation.navigate('Intro01')} 
+            activeOpacity={1.0} 
+        >
             <Image source={require('../assets/owl.png')} style={styles.image} />
-        </View>
+        </TouchableOpacity>
     );
 };
 
@@ -26,16 +24,11 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#CBF0E9', // 背景色を変更
+        backgroundColor: '#CBF0E9',
     },
     image: {
         width: 160, 
         height: 160, 
         resizeMode: 'contain' 
-    },
-    title: {
-        marginTop: 20,
-        fontSize: 24,
-        fontWeight: 'bold',
     },
 });

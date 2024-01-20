@@ -52,6 +52,13 @@ export const Intro01 = ({
             label="次へ"
             onPress={() => navigation.replace("Intro02")}
           />
+              <View style={{ width: "100%", alignItems: 'flex-end', marginTop: 5 }}>
+                <TouchableOpacity onPress={() => navigation.navigate("SignIn")}>
+                  <Text style={{ color: theme.colors.primary, fontSize: 13 }}>
+                    スキップ
+                  </Text>
+                </TouchableOpacity>
+              </View>
         </Animated.View>
       </View>
     </SafeAreaView>

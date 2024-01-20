@@ -1,6 +1,6 @@
-import { View, Text, Pressable } from 'react-native'
-import React, { memo } from 'react'
-import { AntDesign } from '@expo/vector-icons';
+import React, { memo } from 'react';
+import { View, Text, Pressable, TouchableOpacity, StyleSheet } from 'react-native';
+import { FontAwesome5 } from '@expo/vector-icons';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types/type';
 
@@ -9,30 +9,92 @@ type Props = {
         RootStackParamList,
         keyof RootStackParamList
     > | null;
-    isBackButton: boolean;
+    currentScreen: "ChildChat" | "ChildHistory" | "null";
 }
 
-const MemoHeader = ({ navigation, isBackButton }: Props) => {
+export const Header = ({ navigation, currentScreen }: Props) => {
+    const navigateToSettingsScreen = () => {
+        navigation && navigation.navigate('Settings');
+    };
+
     return (
-        <View className='h-1/5 w-full flex flex-row bg-secondary'>
-            <View className='w-1/5 h-full items-center justify-end'>
-                {isBackButton && navigation ? (
+        <View style={styles.container}>
+            <View style={styles.titleContainer}>
+                <Text style={styles.title}>Discoveries</Text>
+                <View style={styles.navigationLinks}>
                     <Pressable
-                        className='pb-5 pt-5'
-                        onPress={() => { navigation.goBack(); }}
+                        style={currentScreen === "ChildChat" ? styles.activeRadioButton : styles.radioButton}
+                        onPress={() => navigation && navigation.navigate('ChildChat', {
+                            question: "",
+                            response: "",
+                            datetime: ""
+                        })}
                     >
-                        <AntDesign name="arrowleft" size={32} color="black" />
+                        <Text style={styles.radioButtonText}>チャット</Text>
                     </Pressable>
-                ) :
-                    (null)
-                }
+                    <Pressable
+                        style={currentScreen === "ChildHistory" ? styles.activeRadioButton : styles.radioButton}
+                        onPress={() => navigation && navigation.navigate('ChildHistory')}
+                    >
+                        <Text style={styles.radioButtonText}>会話の記録</Text>
+                    </Pressable>
+                </View>
             </View>
-            <View className='w-3/5 h-full flex-1 items-center justify-center'>
-                <Text className='font-yellowtail text-3xl text-white'>Discoveries</Text>
-            </View>
-            <View className='w-1/5 h-full'></View>
+            <TouchableOpacity onPress={navigateToSettingsScreen} style={styles.settingsButton}>
+        <FontAwesome5 name="cog" size={30} color="#95E1D3" />
+    </TouchableOpacity>
         </View>
     )
 }
 
-export const Header = memo(MemoHeader);
+const styles = StyleSheet.create({
+    container: {
+        height: '20%',
+        width: '100%',
+        backgroundColor: '#CBF0E9',
+        flexDirection: 'column',
+        alignItems: 'flex-start',
+        justifyContent: 'center',
+        padding: 10,
+    },
+    titleContainer: {
+        alignItems: 'center',
+        width: '100%',
+    },
+    title: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        color: 'white',
+        marginTop: 100,
+    },
+    navigationLinks: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+    },
+    radioButton: {
+        padding: 10,
+        margin: 5,
+        backgroundColor: '#95E1D3',
+        borderRadius: 15,
+        borderWidth: 1,
+        borderColor: 'black',
+    },
+    activeRadioButton: {
+        padding: 10,
+        margin: 5,
+        backgroundColor: '#CBF0E9',
+        borderRadius: 15,
+        borderWidth: 1,
+        borderColor: 'black',
+    },
+    radioButtonText: {
+        color: 'black',
+        fontSize: 16,
+        textAlign: 'center',
+    },
+    settingsButton: {
+        position: 'absolute',
+        right: 30,
+        top: 70,
+    },
+});

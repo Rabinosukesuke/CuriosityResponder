@@ -44,7 +44,7 @@ export const Home = ({ navigation }: Props) => {
 
   return (
     <View className='bg-primary flex-1'>
-      <Header navigation={null} isBackButton={false} />
+      <Header navigation={null} currentScreen='null'/>
       {
         user ? (
           // logged in

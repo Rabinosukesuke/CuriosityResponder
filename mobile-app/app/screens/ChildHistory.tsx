@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, Pressable } from 'react-native';
+import { View, Pressable, StyleSheet } from 'react-native';
 import { Input } from 'react-native-elements';
-import { TapBar } from '../components/TapBar';
 import { Header } from '../components/Header';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList, ChatData } from '../types/type';
@@ -10,6 +9,7 @@ import { FontAwesome, FontAwesome5 } from '@expo/vector-icons';
 import { useBackendAPI } from '../hooks/useBackendAPI';
 import { useSelector } from 'react-redux'
 import { selectAuth } from '../slices/authSlices';
+import { FloatingButton } from '../components/FloatingActionButton';
 
 type Props = {
   navigation: NativeStackNavigationProp<RootStackParamList, "ChildHistory">;
@@ -49,7 +49,7 @@ export const ChildHistory = ({ navigation }: Props) => {
 
   return (
     <View className='flex-1 bg-primary items-center w-full h-full'>
-      <Header navigation={navigation} isBackButton={true} />
+      <Header navigation={navigation} currentScreen="ChildHistory" />
 
       <Input
         placeholder="検索"
@@ -59,7 +59,7 @@ export const ChildHistory = ({ navigation }: Props) => {
         containerStyle={{
           width: '80%',
           height: "5%",
-          marginTop: -14,
+          marginTop: 50,
           justifyContent: 'center',
         }}
         inputContainerStyle={{
@@ -91,8 +91,20 @@ export const ChildHistory = ({ navigation }: Props) => {
         onPress={() => { setIsToggled(!isToggled) }}>
         <FontAwesome5 name={isToggled ? ("sort-amount-up-alt") : ("sort-amount-down")} size={24} color="black" />
       </Pressable>
-
-      <TapBar />
-    </View>
+      <View style={styles.floatingButtonContainer}>
+        <FloatingButton />
+      </View>
+      </View>
   );
 };
+export const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#CBF0E9',
+  },
+  floatingButtonContainer: {
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+  },
+});

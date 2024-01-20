@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import { FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
-import { TapBar } from '../components/TapBar';
+import { FloatingButton } from '../components/FloatingActionButton';
 import { Header } from '../components/Header';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { ChatData, RootStackParamList } from '../types/type';
@@ -76,7 +76,8 @@ export const ChildChat = ({ navigation, route }: Props) => {
 
   return (
     <View style={styles.container}>
-      <Header navigation={navigation} isBackButton={true} />
+      
+      <Header navigation={navigation} currentScreen="ChildChat" />
 
       {question != '' || response != '' || datetime != null ?
         (
@@ -138,8 +139,10 @@ export const ChildChat = ({ navigation, route }: Props) => {
           ) : (null)
         }
       </View>
-      <TapBar />
-    </View>
+      <View style={styles.floatingButtonContainer}>
+        <FloatingButton />
+      </View>
+          </View>
   );
 };
 
@@ -202,6 +205,12 @@ export const styles = StyleSheet.create({
     borderTopWidth: 0,
     paddingVertical: 16,
     marginHorizontal: 16,
-    marginBottom: 16,
+    marginBottom: 50,
+    height: 80,
+  },
+  floatingButtonContainer: {
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
   },
 });
