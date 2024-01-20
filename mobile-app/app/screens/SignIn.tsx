@@ -26,7 +26,7 @@ export const SignIn = ({ navigation }: RootStackScreenProps<"SignIn">) => {
 
   const handleSignIn = () => {
     signIn(email, password)
-      .then(() => navigation.navigate("Home"))
+      .then(() => navigation.navigate("DailyHistory"))
       .catch(error => alert(error.message));
   };
 
@@ -108,6 +108,7 @@ export const SignIn = ({ navigation }: RootStackScreenProps<"SignIn">) => {
                     backgroundColor: theme.colors.background,
                     width: "100%",
                   }}
+                  textContentType="emailAddress"
                 />
                 <Icons
                   name="email"
@@ -140,6 +141,7 @@ export const SignIn = ({ navigation }: RootStackScreenProps<"SignIn">) => {
                     backgroundColor: theme.colors.background,
                     width: "100%",
                   }}
+                  textContentType="password"
                 />
                 <Icons
                   name="lock"

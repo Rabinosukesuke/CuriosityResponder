@@ -24,6 +24,7 @@ import { Intro06 } from "../screens/Intro06";
 import { Intro07 } from "../screens/Intro07";
 import { Intro08 } from "../screens/Intro08";
 import { LineChart } from "../screens/LineChart";
+import { DailyHistory } from '../screens/DailyHistory';
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 
@@ -53,6 +54,7 @@ export const RootNavigator = () => {
         <RootStack.Screen name="Intro07" component={Intro07} />
         <RootStack.Screen name="Intro08" component={Intro08} />
         <RootStack.Screen name="LineChart" component={LineChart} />
+        <RootStack.Screen name="DailyHistory" component={DailyHistory} />
       </RootStack.Navigator>
     </NavigationContainer>
   );

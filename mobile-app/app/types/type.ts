@@ -16,6 +16,7 @@ export type RootStackParamList = {
     Intro06: undefined;
     Intro07: undefined;
     Intro08: undefined;
+    DailyHistory: undefined;
     MediaInput: undefined;
     ParentLogin: undefined;
     Settings: undefined;
