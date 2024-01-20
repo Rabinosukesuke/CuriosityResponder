@@ -29,7 +29,7 @@ import { DrawerNavigationProp, createDrawerNavigator } from '@react-navigation/d
 
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
-const Drawer = createDrawerNavigator();
+const Drawer = createDrawerNavigator<DrawerParamList>();
 
 export type RootStackScreenProps<T extends keyof RootStackParamList> =
   NativeStackScreenProps<RootStackParamList, T>;
