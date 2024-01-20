@@ -3,6 +3,7 @@ export type RootStackParamList = {
         question?: string;
         response?: string;
         datetime?: string;
+        emoji?: "happy" | "normal" | "sad";
     };
     Game: undefined;
     Home: undefined;

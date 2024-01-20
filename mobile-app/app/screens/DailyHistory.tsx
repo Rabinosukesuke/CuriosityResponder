@@ -152,13 +152,24 @@ export const DailyHistory = ({ navigation }: Props) => {
                 style={{ width: "100%", paddingTop: "5%", overflow: "scroll" }}
             >
                 {SortChatData.map((item: ChatData) => (
-                    <ChildHistoryComponent
+                    <Pressable
                         key={item.datetime.toString()}
-                        datetime={item.datetime}
-                        question={item.question}
-                        answer={item.answer}
-                        emoji={item.emoji}
-                    />
+                        onPress={() => {
+                            navigation.navigate("ChildCombined", {
+                                datetime: item.datetime.toISOString(),
+                                question: item.question,
+                                response: item.answer,
+                                emoji: item.emoji,
+                            });
+                        }}
+                    >
+                        <ChildHistoryComponent
+                            datetime={item.datetime}
+                            question={item.question}
+                            answer={item.answer}
+                            emoji={item.emoji}
+                        />
+                    </Pressable>
                 ))}
             </ScrollView>
 
