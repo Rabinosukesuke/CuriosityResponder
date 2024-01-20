@@ -9,9 +9,7 @@ import { Home } from '../screens/Home';
 import { SignIn } from '../screens/SignIn';
 import { SignUp } from '../screens/SignUp';
 import { ParentLogin } from '../screens/ParentLogin';
-import { ChildChat } from '../screens/ChildChat';
 import { MediaInput } from '../screens/MediaInput';
-import { ChildHistory } from '../screens/ChildHistory';
 import { Game } from '../screens/Game';
 import { Settings } from '../screens/Settings';
 import { Splash } from '../screens/Splash';
@@ -25,6 +23,7 @@ import { Intro07 } from "../screens/Intro07";
 import { Intro08 } from "../screens/Intro08";
 import { LineChart } from "../screens/LineChart";
 import { DailyHistory } from '../screens/DailyHistory';
+import { ChildCombined } from "../screens/ChildCombined";
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 
@@ -40,9 +39,7 @@ export const RootNavigator = () => {
         <RootStack.Screen name='SignIn' component={SignIn} />
         <RootStack.Screen name='SignUp' component={SignUp} />
         <RootStack.Screen name='ParentLogin' component={ParentLogin} />
-        <RootStack.Screen name='ChildChat' component={ChildChat} />
         <RootStack.Screen name='MediaInput' component={MediaInput} />
-        <RootStack.Screen name='ChildHistory' component={ChildHistory} />
         <RootStack.Screen name='Game' component={Game} />
         <RootStack.Screen name='Settings' component={Settings} />
         <RootStack.Screen name="Intro01" component={Intro01} />
@@ -55,6 +52,7 @@ export const RootNavigator = () => {
         <RootStack.Screen name="Intro08" component={Intro08} />
         <RootStack.Screen name="LineChart" component={LineChart} />
         <RootStack.Screen name="DailyHistory" component={DailyHistory} />
+        <RootStack.Screen name="ChildCombined" component={ChildCombined} />
       </RootStack.Navigator>
     </NavigationContainer>
   );

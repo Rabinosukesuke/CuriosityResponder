@@ -1,8 +1,9 @@
-import { View, Text, FlatList, Pressable } from 'react-native'
+import { View, Text, FlatList, Pressable, StyleSheet } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types/type';
 import { Header } from '../components/Header'
+import { FloatingButton } from '../components/FloatingActionButton';
 
 type Props = {
     navigation: NativeStackNavigationProp<RootStackParamList, "DailyHistory">;
@@ -93,7 +94,7 @@ export const DailyHistory = ({ navigation }: Props) => {
 
     return (
         <View className='bg-primary flex-1'>
-            <Header navigation={navigation} currentScreen='null' />
+            <Header navigation={navigation}/>
 
             <View className='h-30'>
                 <FlatList
@@ -107,7 +108,18 @@ export const DailyHistory = ({ navigation }: Props) => {
                     )}
                 />
             </View>
+            <View style={styles.floatingButtonContainer}>
+                <FloatingButton />
+            </View>
 
         </View>
     )
 }
+const styles = StyleSheet.create({
+
+    floatingButtonContainer: {
+        position: 'absolute',
+        bottom: 20,
+        right: 20,
+    },
+});

@@ -22,8 +22,12 @@ export const Home = ({ navigation }: Props) => {
 
   useEffect(() => {
     if (user) {
-      navigation.navigate("ChildChat", {});
-    } else {
+      navigation.navigate("ChildCombined", {
+        question: "",
+        response: "",
+        datetime: "",
+      });
+        } else {
       let initialized = false;
 
       onAuthStateChanged(auth, (user: firebaseUser | null) => {
@@ -44,7 +48,7 @@ export const Home = ({ navigation }: Props) => {
 
   return (
     <View className='bg-primary flex-1'>
-      <Header navigation={null} currentScreen='null'/>
+      <Header navigation={null} />
       {
         user ? (
           // logged in
@@ -58,7 +62,7 @@ export const Home = ({ navigation }: Props) => {
             {/* ChildChatScreen Button */}
             <Pressable
               style={styles.button}
-              onPress={() => navigation.navigate("ChildChat", {})}
+              onPress={() => navigation.navigate("ChildCombined", {})}
             >
               <Text
                 style={styles.buttonText}
@@ -93,7 +97,6 @@ export const Home = ({ navigation }: Props) => {
 
           </View>
         ) : (
-          // not logged in
           <View className='flex-1 items-center justify-center'>
             {/* SignIn Button */}
             <Pressable

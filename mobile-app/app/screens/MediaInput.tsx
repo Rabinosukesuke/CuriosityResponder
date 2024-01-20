@@ -41,7 +41,7 @@ export const MediaInput = ({ navigation }: Props) => {
         emoji: "normal"
       };
       await storeChatHistoryToBackend(user.uid, data);
-      navigation.navigate("ChildChat", {
+      navigation.navigate("ChildCombined", {
         question: question,
         response: answer,
         datetime: datetime_now.toISOString(),

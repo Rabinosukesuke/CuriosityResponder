@@ -1,33 +1,57 @@
-import { View, Text, Image, } from 'react-native'
+import { View, Text, Image, StyleSheet } from 'react-native'
 import React, { memo } from 'react'
 import { ChatData } from '../types/type'
 
 const MemoChildHistoryComponent = (data: ChatData) => {
     return (
-        <View className='w-11/12 h-1/6 flex-row items-center'>
-            {data.emoji === 'happy' ? (
-                <Image
-                    source={require('../../app/assets/happy.png')}
-                    className='w-20 h-20'
-                />
-            ) : data.emoji === 'sad' ? (
-                <Image
-                    source={require('../../app/assets/sad.png')}
-                    className='w-20 h-20'
-                />
-            ) : (
-                <Image
-                    source={require('../../app/assets/normal.png')}
-                    className='w-20 h-20'
-                />
-            )}
-            <View className='w-8/12'>
-                <Text className='text-base font-bold'>{data.question}</Text>
-                <Text className='text-sm font-normal'>{data.answer}</Text>
-                <View className='border border-customGray mt-2' />
+        <View style={styles.container}>
+            <Image
+                source={data.emoji === 'happy' ? require('../../app/assets/happy.png') :
+                        data.emoji === 'sad' ? require('../../app/assets/sad.png') :
+                        require('../../app/assets/normal.png')}
+                style={styles.emoji}
+            />
+            <View style={styles.textContainer}>
+                <Text style={styles.question}>{data.question}</Text>
+                <Text style={styles.answer}>{data.answer}</Text>
+                <View style={styles.divider} />
             </View>
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        width: '95%', // 11/12 of the width
+        height: '17%', // 1/6 of the height
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: -10, // Adjust as needed for spacing between items
+    },
+    emoji: {
+        width: 60, // Adjust as needed
+        height: 60, // Adjust as needed
+        marginRight: 10, // Adjust as needed for spacing
+    },
+    textContainer: {
+        width: '80%', // 8/12 of the width
+        // Add padding if needed
+    },
+    question: {
+        fontSize: 16, // Adjust as needed
+        fontWeight: 'bold',
+        marginBottom: 4, // Adjust as needed for spacing
+    },
+    answer: {
+        fontSize: 14, // Adjust as needed
+        fontWeight: 'normal',
+        marginBottom: 4, // Adjust as needed for spacing
+    },
+    divider: {
+        borderBottomColor: 'gray', // Adjust color as needed
+        borderBottomWidth: StyleSheet.hairlineWidth,
+        marginTop: 4, // Adjust as needed for spacing
+    },
+});
 
 export const ChildHistoryComponent = memo(MemoChildHistoryComponent);

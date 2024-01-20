@@ -2,6 +2,7 @@ import React from 'react';
 import { View, StyleSheet, Pressable } from 'react-native';
 import { AntDesign, Entypo, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { Header } from '../components/Header';
+import { FloatingButton } from '../components/FloatingActionButton';
 
 // FontAwesomeにおける有効なアイコン名の型
 type FontAwesomeName = 'user' | 'file-lines' | 'children' | 'person-breastfeeding' | 'bell';
@@ -19,13 +20,13 @@ const SettingsIconName = (iconName: string): FontAwesomeName => {
 };
 
 type Props = {
-    navigation: any; // 任意のナビゲーション型を指定するか、'any'を使用する
+    navigation: any; 
 };
 
 export const Settings: React.FC<Props> = ({ navigation }) => {
     return (
         <View style={styles.container}>
-            <Header navigation={navigation} isBackButton={true} />
+            <Header navigation={navigation}  />
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 10 }}>
                 <Pressable
                     onPress={() => { navigation.navigate("LineChart") }}
@@ -51,7 +52,11 @@ export const Settings: React.FC<Props> = ({ navigation }) => {
                 </View>
                 <View style={{ marginVertical: 65 }}></View>
             </View>
+            <View style={styles.floatingButtonContainer}>
+        <FloatingButton />
+      </View>
         </View>
+        
     );
 };
 
@@ -60,4 +65,9 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#CBF0E9',
     },
+    floatingButtonContainer: {
+        position: 'absolute',
+        bottom: 20,
+        right: 20,
+      },
 });

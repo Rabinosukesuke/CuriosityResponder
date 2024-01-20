@@ -1,11 +1,9 @@
 export type RootStackParamList = {
-    LineChart: undefined;
-    ChildChat: {
+    ChildCombined: {
         question?: string;
         response?: string;
         datetime?: string;
     };
-    ChildHistory: undefined;
     Game: undefined;
     Home: undefined;
     Intro01: undefined;
@@ -17,6 +15,7 @@ export type RootStackParamList = {
     Intro07: undefined;
     Intro08: undefined;
     DailyHistory: undefined;
+    LineChart: undefined;
     MediaInput: undefined;
     ParentLogin: undefined;
     Settings: undefined;
