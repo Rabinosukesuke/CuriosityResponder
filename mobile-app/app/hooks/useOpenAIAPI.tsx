@@ -1,4 +1,4 @@
-// import { promptPrefix } from '../PromptConfig';
+import { promptPrefix } from '../PromptConfig';
 import axios from 'axios';
 import { OPENAI_API_KEY } from '@env';
 
