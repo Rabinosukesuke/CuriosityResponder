@@ -1,13 +1,16 @@
 import { View, Text, Image, StyleSheet } from 'react-native'
 import React, { memo } from 'react'
 import { ChatData } from '../types/type'
+import { Dimensions } from 'react-native';
+
+const { width, height } = Dimensions.get('window');
 
 const MemoChildHistoryComponent = (data: ChatData) => {
     return (
         <View style={styles.container}>
             <Image
                 source={data.emoji === 'happy' ? require('../../app/assets/happy.png') :
-                        data.emoji === 'sad' ? require('../../app/assets/sad.png') :
+                    data.emoji === 'sad' ? require('../../app/assets/sad.png') :
                         require('../../app/assets/normal.png')}
                 style={styles.emoji}
             />
@@ -22,8 +25,8 @@ const MemoChildHistoryComponent = (data: ChatData) => {
 
 const styles = StyleSheet.create({
     container: {
-        width: '95%', // 11/12 of the width
-        height: '17%', // 1/6 of the height
+        width: width * 0.95, // 11/12 of the width
+        height: height * 0.17, // 1/6 of the height
         flexDirection: 'row',
         alignItems: 'center',
         marginBottom: -10, // Adjust as needed for spacing between items
