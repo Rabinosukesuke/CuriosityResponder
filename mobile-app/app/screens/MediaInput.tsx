@@ -5,8 +5,10 @@ import { useBackendAPI } from '../hooks/useBackendAPI';
 import { useSelector } from 'react-redux'
 import { selectAuth } from '../slices/authSlices';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList, ChatData } from '../types/type';
+import { RootStackParamList, ChatData, DrawerParamList } from '../types/type';
 import { useOpenAIAPI } from '../hooks/useOpenAIAPI';
+import { useNavigation } from '@react-navigation/native';
+import { DrawerNavigationProp } from '@react-navigation/drawer';
 
 type Props = {
   navigation: NativeStackNavigationProp<RootStackParamList, "MediaInput">
@@ -14,6 +16,8 @@ type Props = {
 
 export const MediaInput = ({ navigation }: Props) => {
   const user = useSelector(selectAuth);
+
+  const drawNavigation = useNavigation<DrawerNavigationProp<DrawerParamList>>();
 
   const [inputText, setInputText] = useState<string>('');
   const inputRef = useRef<TextInput>(null);
@@ -41,7 +45,7 @@ export const MediaInput = ({ navigation }: Props) => {
         emoji: "normal"
       };
       await storeChatHistoryToBackend(user.uid, data);
-      navigation.navigate("ChildCombined", {
+      drawNavigation.navigate("ChildCombined", {
         question: question,
         response: answer,
         datetime: datetime_now.toISOString(),

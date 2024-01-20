@@ -1,16 +1,18 @@
 import { View, Text, FlatList, Pressable, StyleSheet, ScrollView } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList, ChatData } from '../types/type';
+import { DrawerNavigationProp } from '@react-navigation/drawer';
+import { RootStackParamList, ChatData, DrawerParamList } from '../types/type';
 import { Header } from '../components/Header'
 import { FloatingButton } from '../components/FloatingActionButton';
 import { useSelector } from 'react-redux'
 import { selectAuth } from '../slices/authSlices';
 import { ChildHistoryComponent } from '../components/ChildHistoryComponent';
 import { useBackendAPI } from '../hooks/useBackendAPI';
+import { useNavigation } from '@react-navigation/native';
 
 type Props = {
-    navigation: NativeStackNavigationProp<RootStackParamList, "DailyHistory">;
+    navigation: NativeStackNavigationProp<RootStackParamList, "Drawer">;
 }
 
 type DateWithDayOfWeek = {
@@ -53,6 +55,7 @@ export const DailyHistory = ({ navigation }: Props) => {
     const [isToggled, setIsToggled] = useState<boolean>(false);
 
     const dateWithDayOfWeekList = getDaysFromNowToLastMonth();
+    const drawNavigation = useNavigation<DrawerNavigationProp<DrawerParamList, "DailyHistory">>();
 
     const { periodFetchChatHistoryFromBackend } = useBackendAPI();
 
@@ -133,7 +136,7 @@ export const DailyHistory = ({ navigation }: Props) => {
 
     return (
         <View className='bg-primary flex-1'>
-            <Header navigation={navigation} />
+            <Header navigation={null} />
 
             <View style={{ width: "100%", height: "10%" }}>
                 <FlatList
@@ -155,7 +158,7 @@ export const DailyHistory = ({ navigation }: Props) => {
                     <Pressable
                         key={item.datetime.toString()}
                         onPress={() => {
-                            navigation.navigate("ChildCombined", {
+                            drawNavigation.navigate("ChildCombined", {
                                 datetime: item.datetime.toISOString(),
                                 question: item.question,
                                 response: item.answer,
@@ -173,9 +176,9 @@ export const DailyHistory = ({ navigation }: Props) => {
                 ))}
             </ScrollView>
 
-            <View style={styles.floatingButtonContainer}>
+            {/* <View style={styles.floatingButtonContainer}>
                 <FloatingButton />
-            </View>
+            </View> */}
         </View>
     )
 }

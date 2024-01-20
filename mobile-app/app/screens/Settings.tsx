@@ -4,7 +4,9 @@ import { AntDesign, Entypo, MaterialIcons, MaterialCommunityIcons } from '@expo/
 import { Header } from '../components/Header';
 import { FloatingButton } from '../components/FloatingActionButton';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../types/type';
+import { DrawerParamList, RootStackParamList } from '../types/type';
+import { DrawerNavigationProp } from '@react-navigation/drawer';
+import { useNavigation } from '@react-navigation/native';
 
 type FontAwesomeName = 'user' | 'file-lines' | 'children' | 'person-breastfeeding' | 'bell';
 
@@ -21,16 +23,17 @@ const SettingsIconName = (iconName: string): FontAwesomeName => {
 };
 
 type Props = {
-    navigation: NativeStackNavigationProp<RootStackParamList, "Settings">;
+    navigation: DrawerNavigationProp<DrawerParamList, "Settings">;
 }
 
 export const Settings: React.FC<Props> = ({ navigation }) => {
+    const rootNavigation = useNavigation<NativeStackNavigationProp<RootStackParamList, "Drawer">>();
     return (
         <View style={styles.container}>
-            <Header navigation={navigation}  />
+            <Header navigation={null} />
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 10 }}>
                 <Pressable
-                    onPress={() => { navigation.navigate("LineChart") }}
+                    onPress={() => { rootNavigation.navigate("LineChart") }}
                     style={{ width: 90, height: 90, backgroundColor: 'white', left: 55 }}
                 >
                     <AntDesign name="user" size={90} color="black" />
@@ -57,10 +60,10 @@ export const Settings: React.FC<Props> = ({ navigation }) => {
                 <View style={{ marginVertical: 65 }}></View>
             </View>
             <View style={styles.floatingButtonContainer}>
-        <FloatingButton />
-      </View>
+                <FloatingButton />
+            </View>
         </View>
-        
+
     );
 };
 
@@ -73,5 +76,5 @@ const styles = StyleSheet.create({
         position: 'absolute',
         bottom: 20,
         right: 20,
-      },
+    },
 });

@@ -11,8 +11,10 @@
   "include": [
     "**/*.ts",
     "**/*.tsx",
+    "**//.ts",
+    "**//.tsx",
   ],
-    "typeRoots": [
+  "typeRoots": [
     "./types/"
   ]
 }

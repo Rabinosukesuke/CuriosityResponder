@@ -1,10 +1,10 @@
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import {
   NativeStackScreenProps,
   createNativeStackNavigator,
 } from "@react-navigation/native-stack";
-import { type RootStackParamList } from '../types/type';
+import { DrawerParamList, RootStackParamList } from '../types/type';
 import { Home } from '../screens/Home';
 import { SignIn } from '../screens/SignIn';
 import { SignUp } from '../screens/SignUp';
@@ -25,12 +25,17 @@ import { LineChart } from "../screens/LineChart";
 import { DailyHistory } from '../screens/DailyHistory';
 import { ChildCombined } from "../screens/ChildCombined";
 import { CharacterSettings } from "../screens/CharacterSettings";
+import { DrawerNavigationProp, createDrawerNavigator } from '@react-navigation/drawer';
 
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
+const Drawer = createDrawerNavigator();
 
 export type RootStackScreenProps<T extends keyof RootStackParamList> =
   NativeStackScreenProps<RootStackParamList, T>;
+
+export type DrawerStackScreenProps<T extends keyof DrawerParamList> =
+  DrawerNavigationProp<DrawerParamList, T>;
 
 export const RootNavigator = () => {
   return (
@@ -42,8 +47,6 @@ export const RootNavigator = () => {
         <RootStack.Screen name='SignUp' component={SignUp} />
         <RootStack.Screen name='ParentLogin' component={ParentLogin} />
         <RootStack.Screen name='MediaInput' component={MediaInput} />
-        <RootStack.Screen name='Game' component={Game} />
-        <RootStack.Screen name='Settings' component={Settings} />
         <RootStack.Screen name="Intro01" component={Intro01} />
         <RootStack.Screen name="Intro02" component={Intro02} />
         <RootStack.Screen name="Intro03" component={Intro03} />
@@ -53,10 +56,26 @@ export const RootNavigator = () => {
         <RootStack.Screen name="Intro07" component={Intro07} />
         <RootStack.Screen name="Intro08" component={Intro08} />
         <RootStack.Screen name="LineChart" component={LineChart} />
-        <RootStack.Screen name="DailyHistory" component={DailyHistory} />
-        <RootStack.Screen name="ChildCombined" component={ChildCombined} />
-        <RootStack.Screen name="CharacterSettings" component={CharacterSettings} />
+        <RootStack.Screen name="Drawer" component={DrawerNavigation} />
       </RootStack.Navigator>
     </NavigationContainer>
   );
 };
+
+const ChildCombinedWrapper = () => {
+  const navigation = useNavigation<DrawerNavigationProp<DrawerParamList, "ChildCombined">>();
+  const route = useRoute<RouteProp<DrawerParamList, 'ChildCombined'>>();
+  return <ChildCombined navigation={navigation} route={route} />;
+};
+
+const DrawerNavigation = () => {
+  return (
+    <Drawer.Navigator initialRouteName='DailyHistory'>
+      <Drawer.Screen name="ChildCombined" component={ChildCombinedWrapper} />
+      <Drawer.Screen name="DailyHistory" component={DailyHistory} />
+      <Drawer.Screen name="Game" component={Game} />
+      <Drawer.Screen name="Settings" component={Settings} />
+      <Drawer.Screen name="CharacterSettings" component={CharacterSettings} />
+    </Drawer.Navigator>
+  )
+}

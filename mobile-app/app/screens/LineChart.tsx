@@ -1,14 +1,13 @@
 import { View, Text } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList, ChatData } from '../types/type';
+import { RootStackParamList, ChatData, DrawerParamList } from '../types/type';
 import { Header } from '../components/Header'
 import { useSelector } from 'react-redux'
 import { selectAuth } from '../slices/authSlices';
 import { useBackendAPI } from '../hooks/useBackendAPI';
 import { LineChart as LineChartTag } from "react-native-chart-kit";
 import { Dimensions } from 'react-native';
-
 
 type Props = {
     navigation: NativeStackNavigationProp<RootStackParamList, "LineChart">;
@@ -69,7 +68,7 @@ export const LineChart = ({ navigation }: Props) => {
 
     return (
         <View className='bg-primary flex-1 items-center'>
-            <Header navigation={navigation} isBackButton={true} />
+            <Header navigation={navigation} />
 
             <View className='h-1/12'></View>
 

@@ -5,11 +5,13 @@ import { selectAuth } from "../slices/authSlices";
 import { useAuth } from '../hooks/useAuth';
 import { UserInfo } from '../components/UserInfo';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../types/type';
+import { DrawerParamList, RootStackParamList } from '../types/type';
 import { auth } from '../firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { type User as firebaseUser } from 'firebase/auth';
 import { Header } from '../components/Header';
+import { useNavigation } from '@react-navigation/native';
+import { DrawerNavigationProp } from '@react-navigation/drawer';
 
 type Props = {
   navigation: NativeStackNavigationProp<RootStackParamList, "Home">;
@@ -18,16 +20,18 @@ type Props = {
 export const Home = ({ navigation }: Props) => {
   const user = useSelector(selectAuth);
 
+  const drawNavigation = useNavigation<DrawerNavigationProp<DrawerParamList>>();
+
   const { signOut, autoSignIn } = useAuth();
 
   useEffect(() => {
     if (user) {
-      navigation.navigate("ChildCombined", {
+      drawNavigation.navigate("ChildCombined", {
         question: "",
         response: "",
         datetime: "",
       });
-        } else {
+    } else {
       let initialized = false;
 
       onAuthStateChanged(auth, (user: firebaseUser | null) => {
@@ -62,7 +66,7 @@ export const Home = ({ navigation }: Props) => {
             {/* ChildChatScreen Button */}
             <Pressable
               style={styles.button}
-              onPress={() => navigation.navigate("ChildCombined", {})}
+              onPress={() => drawNavigation.navigate("ChildCombined", {})}
             >
               <Text
                 style={styles.buttonText}

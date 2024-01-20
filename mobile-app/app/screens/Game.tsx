@@ -4,17 +4,17 @@ import { questions } from '../Gamedata';
 import { useSelector } from 'react-redux';
 import { selectAuth } from "../slices/authSlices";
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../types/type';
+import { DrawerNavigationProp } from '@react-navigation/drawer';
+import { RootStackParamList, DrawerParamList } from '../types/type';
 import { Header } from '../components/Header';
 import Animated, { useSharedValue, withSpring, useAnimatedStyle } from 'react-native-reanimated';
 
 
 type Props = {
-    navigation: NativeStackNavigationProp<RootStackParamList, "Game">;
+    navigation: NativeStackNavigationProp<RootStackParamList, "Drawer">;
 }
 
 export const Game = ({ navigation }: Props) => {
-    const user = useSelector(selectAuth);
     const [currentQuestion, setCurrentQuestion] = useState(questions[0]);
     const [userAnswer, setUserAnswer] = useState('');
     const [score, setScore] = useState(0);
@@ -146,7 +146,7 @@ export const Game = ({ navigation }: Props) => {
 
     return (
         <View style={styles.container}>
-            <Header navigation={navigation} isBackButton={true} />
+            <Header navigation={null} />
             <View style={styles.content}>
                 <Text style={styles.remainingTime}>残り時間: {remainingTime}秒</Text>
                 {currentHints.map((hint, index) => (

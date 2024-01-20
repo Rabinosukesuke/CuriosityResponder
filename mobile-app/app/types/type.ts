@@ -1,11 +1,4 @@
 export type RootStackParamList = {
-    ChildCombined: {
-        question?: string;
-        response?: string;
-        datetime?: string;
-        emoji?: "happy" | "normal" | "sad";
-    };
-    Game: undefined;
     Home: undefined;
     Intro01: undefined;
     Intro02: undefined;
@@ -15,16 +8,27 @@ export type RootStackParamList = {
     Intro06: undefined;
     Intro07: undefined;
     Intro08: undefined;
-    DailyHistory: undefined;
     LineChart: undefined;
     MediaInput: undefined;
     ParentLogin: undefined;
-    Settings: undefined;
     SignIn: undefined;
     SignUp: undefined;
     Splash: undefined;
-    CharacterSettings: undefined;
+    Drawer: undefined;
 };
+
+export type DrawerParamList = {
+    CharacterSettings: undefined;
+    ChildCombined: {
+        question?: string;
+        response?: string;
+        datetime?: string;
+        emoji?: "happy" | "normal" | "sad";
+    };
+    DailyHistory: undefined;
+    Game: undefined;
+    Settings: undefined;
+}
 
 export type User = {
     uid: string;

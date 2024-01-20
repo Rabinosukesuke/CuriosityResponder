@@ -1,11 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ScrollView, TextInput, View, Dimensions, TouchableOpacity, Text, StyleSheet, Animated, Pressable } from 'react-native';
 import { Header } from '../components/Header';
-import { RouteProp } from '@react-navigation/native';
+import { RouteProp, useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { FloatingButton } from '../components/FloatingActionButton';
 import { FontAwesome, MaterialCommunityIcons, FontAwesome5, Ionicons } from '@expo/vector-icons';
-import { ChatData, RootStackParamList } from '../types/type';
+import { ChatData, DrawerParamList, RootStackParamList } from '../types/type';
 import { useBackendAPI } from '../hooks/useBackendAPI';
 import { useOpenAIAPI } from '../hooks/useOpenAIAPI';
 import { useSelector } from 'react-redux';
@@ -13,15 +13,18 @@ import { selectAuth } from '../slices/authSlices';
 import { AntDesign } from '@expo/vector-icons';
 import { Input } from 'react-native-elements';
 import { ChildHistoryComponent } from "../components/ChildHistoryComponent";
+import { DrawerNavigationProp } from '@react-navigation/drawer';
 
 const screenWidth = Dimensions.get('window').width;
 
 type ChildCombinedProps = {
-    navigation: NativeStackNavigationProp<RootStackParamList, "ChildCombined">;
-    route: RouteProp<RootStackParamList, 'ChildCombined'>; 
+    navigation: DrawerNavigationProp<DrawerParamList, "ChildCombined">;
+    route: RouteProp<DrawerParamList, 'ChildCombined'>; 
 };
 
 export const ChildCombined = ({ navigation, route }: ChildCombinedProps) => {
+    const rootNavigation = useNavigation<NativeStackNavigationProp<RootStackParamList, "Drawer">>();
+
     type FontAwesomeName = 'smile-o' | 'meh-o' | 'frown-o';
     type IconType = 'happy' | 'normal' | 'sad';
     const convertEmojiName = (iconName: IconType): FontAwesomeName => {
@@ -57,7 +60,7 @@ export const ChildCombined = ({ navigation, route }: ChildCombinedProps) => {
         const fetchData = async () => {
             if (user == null) {
                 console.log("user is null");
-                navigation.navigate("Home");
+                rootNavigation.navigate("Home");
             } else {
                 const data = await fetchChatHistoryFromBackend(user.uid);
                 setStorageData(data);
@@ -69,7 +72,7 @@ export const ChildCombined = ({ navigation, route }: ChildCombinedProps) => {
 
     const updateEmoji = (selectedEmoji: IconType) => {
         if (user == null) {
-            navigation.navigate("Home");
+            rootNavigation.navigate("Home");
         } else if (question == '' || response == '' || datetime == null) {
 
         } else {
@@ -115,7 +118,7 @@ export const ChildCombined = ({ navigation, route }: ChildCombinedProps) => {
 
     return (
         <View style={styles.container}>
-            <Header navigation={navigation} />
+            <Header navigation={null} />
             <View style={styles.tabContainer}>
                 <TouchableOpacity style={styles.tab} onPress={() => handleTabPress(0)}>
                     <Text style={activeTab === 0 ? styles.activeTabText : styles.tabText}>チャット</Text>
@@ -166,7 +169,7 @@ export const ChildCombined = ({ navigation, route }: ChildCombinedProps) => {
                                             const regenerate_res = await sendToGPT(question);
                                             setResponse(regenerate_res);
                                             if (user == null || datetime == null) {
-                                                navigation.navigate("Home");
+                                                rootNavigation.navigate("Home");
                                             } else {
                                                 storeChatHistoryToBackend(user.uid, {
                                                     question: question,
