@@ -12,6 +12,7 @@ import { ParentLogin } from '../screens/ParentLogin';
 import { ChildChat } from '../screens/ChildChat';
 import { MediaInput } from '../screens/MediaInput';
 import { ChildHistory } from '../screens/ChildHistory';
+import { Game } from '../screens/Game';
 import { Settings } from '../screens/Settings';
 import { Splash } from '../screens/Splash';
 import { Intro01 } from "../screens/Intro01";
@@ -41,6 +42,7 @@ export const RootNavigator = () => {
         <RootStack.Screen name='ChildChat' component={ChildChat} />
         <RootStack.Screen name='MediaInput' component={MediaInput} />
         <RootStack.Screen name='ChildHistory' component={ChildHistory} />
+        <RootStack.Screen name='Game' component={Game} />
         <RootStack.Screen name='Settings' component={Settings} />
         <RootStack.Screen name="Intro01" component={Intro01} />
         <RootStack.Screen name="Intro02" component={Intro02} />

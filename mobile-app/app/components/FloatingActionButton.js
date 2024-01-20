@@ -67,7 +67,7 @@ export const FloatingButton = () => {
         </TouchableOpacity>
       </Animated.View>
       <Animated.View style={[styles.circle, { right: icon_3}]}>
-        <TouchableOpacity >
+        <TouchableOpacity onPress={() => navigation.navigate("Game", {})}>
           <Icon name="gamepad" size={25} color="#FFFF" />
         </TouchableOpacity>
       </Animated.View>

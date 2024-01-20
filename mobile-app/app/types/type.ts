@@ -6,6 +6,7 @@ export type RootStackParamList = {
         datetime?: string;
     };
     ChildHistory: undefined;
+    Game: undefined;
     Home: undefined;
     Intro01: undefined;
     Intro02: undefined;
