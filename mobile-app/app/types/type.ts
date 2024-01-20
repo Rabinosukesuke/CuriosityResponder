@@ -23,6 +23,7 @@ export type RootStackParamList = {
     SignIn: undefined;
     SignUp: undefined;
     Splash: undefined;
+    CharacterSettings: undefined;
 };
 
 export type User = {

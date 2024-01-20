@@ -3,8 +3,9 @@ import { View, StyleSheet, Pressable } from 'react-native';
 import { AntDesign, Entypo, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { Header } from '../components/Header';
 import { FloatingButton } from '../components/FloatingActionButton';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../types/type';
 
-// FontAwesomeにおける有効なアイコン名の型
 type FontAwesomeName = 'user' | 'file-lines' | 'children' | 'person-breastfeeding' | 'bell';
 
 // 絵文字の変換を行う関数
@@ -20,8 +21,8 @@ const SettingsIconName = (iconName: string): FontAwesomeName => {
 };
 
 type Props = {
-    navigation: any; 
-};
+    navigation: NativeStackNavigationProp<RootStackParamList, "Settings">;
+}
 
 export const Settings: React.FC<Props> = ({ navigation }) => {
     return (
@@ -34,9 +35,12 @@ export const Settings: React.FC<Props> = ({ navigation }) => {
                 >
                     <AntDesign name="user" size={90} color="black" />
                 </Pressable>
-                <View style={{ width: 90, height: 90, backgroundColor: 'white', right: 55 }}>
-                    <Entypo name="text-document" size={90} color="black" />
-                </View>
+                <Pressable
+                    onPress={() => { navigation.navigate("CharacterSettings") }}
+                    style={{ width: 90, height: 90, backgroundColor: 'white' }}
+                >
+                    <AntDesign name="user" size={90} color="black" />
+                </Pressable>
             </View>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 40 }}>
                 <View style={{ width: 90, height: 90, backgroundColor: 'white', left: 55 }}>

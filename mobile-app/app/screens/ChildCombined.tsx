@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { ScrollView, TextInput, View, Dimensions, TouchableOpacity, Text, StyleSheet, Pressable } from 'react-native';
+import { ScrollView, TextInput, View, Dimensions, TouchableOpacity, Text, StyleSheet, Animated, Pressable } from 'react-native';
 import { Header } from '../components/Header';
 import { RouteProp } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -18,7 +18,7 @@ const screenWidth = Dimensions.get('window').width;
 
 type ChildCombinedProps = {
     navigation: NativeStackNavigationProp<RootStackParamList, "ChildCombined">;
-    route: RouteProp<RootStackParamList, 'ChildCombined'>; // 追加
+    route: RouteProp<RootStackParamList, 'ChildCombined'>; 
 };
 
 export const ChildCombined = ({ navigation, route }: ChildCombinedProps) => {

@@ -1,83 +1,46 @@
-import React, { useState } from "react";
-import { View, TouchableOpacity, StyleSheet, Animated } from "react-native";
+import React, { useState, useRef } from "react";
+import { View, TouchableOpacity, StyleSheet, Animated, PanResponder } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { RootStackParamList } from '../types/type'; 
 
 export const FloatingButton: React.FC = () => {
-  const [icon_1] = useState(new Animated.Value(40));
-  const [icon_2] = useState(new Animated.Value(40));
-  const [icon_3] = useState(new Animated.Value(40));
-
-  const [pop, setPop] = useState(false);
 
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
-  const popIn = () => {
-    setPop(true);
-    Animated.timing(icon_1, {
-      toValue: 130,
-      duration: 500,
-      useNativeDriver: false,
-    }).start();
-    Animated.timing(icon_2, {
-      toValue: 110,
-      duration: 500,
-      useNativeDriver: false,
-    }).start();
-    Animated.timing(icon_3, {
-      toValue: 130,
-      duration: 500,
-      useNativeDriver: false,
-    }).start();
-  }
+  const pan = useRef(new Animated.ValueXY()).current;
 
-  const popOut = () => {
-    setPop(false);
-    Animated.timing(icon_1, {
-      toValue: 40,
-      duration: 500,
-      useNativeDriver: false,
-    }).start();
-    Animated.timing(icon_2, {
-      toValue: 40,
-      duration: 500,
-      useNativeDriver: false,
-    }).start();
-    Animated.timing(icon_3, {
-      toValue: 40,
-      duration: 500,
-      useNativeDriver: false,
-    }).start();
-  }
-
-  const navigateInputScreen = () => {
-    navigation.navigate('MediaInput');
-  };
+  const panResponder = useRef(
+    PanResponder.create({
+      onStartShouldSetPanResponder: () => true,
+      onPanResponderMove: Animated.event(
+        [
+          null,
+          { dx: pan.x, dy: pan.y }
+        ],
+        { useNativeDriver: false }
+      ),
+      onPanResponderRelease: () => {
+        pan.extractOffset();  // 移動量をオフセットとして抽出し、移動量をリセット
+      },
+    })
+  ).current;
 
   return (
     <View style={{ flex: 1 }}>
-      <Animated.View style={[styles.circle, { bottom: icon_1 }]}>
-        <TouchableOpacity onPress={navigateInputScreen}>
-          <Icon name="comments" size={25} color="#FFFF" />
-        </TouchableOpacity>
-      </Animated.View>
-      <Animated.View style={[styles.circle, { bottom: icon_2, right: icon_2 }]}>
-        <TouchableOpacity>
-          <Icon name="exchange-alt" size={25} color="#FFFF" />
-        </TouchableOpacity>
-      </Animated.View>
-      <Animated.View style={[styles.circle, { right: icon_3 }]}>
-        <TouchableOpacity onPress={() => navigation.navigate("Game")}>
-          <Icon name="gamepad" size={25} color="#FFFF" />
-        </TouchableOpacity>
-      </Animated.View>
-      <TouchableOpacity
-        style={styles.circle}
-        onPress={() => (pop === false ? popIn() : popOut())}
+      <Animated.View 
+        style={[
+          styles.circle, 
+          { transform: pan.getTranslateTransform() } 
+        ]}
+        {...panResponder.panHandlers}
       >
-        <Icon name="plus" size={25} color="#FFFF" />
-      </TouchableOpacity>
+        <TouchableOpacity
+         onPress={() => navigation.navigate("MediaInput")}
+        >
+          <Icon name="plus" size={25} color="#FFFF" />
+        </TouchableOpacity>
+      </Animated.View>
     </View>
   );
 };

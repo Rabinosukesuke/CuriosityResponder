@@ -24,6 +24,8 @@ import { Intro08 } from "../screens/Intro08";
 import { LineChart } from "../screens/LineChart";
 import { DailyHistory } from '../screens/DailyHistory';
 import { ChildCombined } from "../screens/ChildCombined";
+import { CharacterSettings } from "../screens/CharacterSettings";
+
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 
@@ -53,6 +55,7 @@ export const RootNavigator = () => {
         <RootStack.Screen name="LineChart" component={LineChart} />
         <RootStack.Screen name="DailyHistory" component={DailyHistory} />
         <RootStack.Screen name="ChildCombined" component={ChildCombined} />
+        <RootStack.Screen name="CharacterSettings" component={CharacterSettings} />
       </RootStack.Navigator>
     </NavigationContainer>
   );
