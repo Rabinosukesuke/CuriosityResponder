@@ -4,6 +4,7 @@ import axios from "axios";
 
 type BackendAPI = {
     fetchChatHistoryFromBackend: (uid: string) => Promise<ChatData[]>;
+    periodFetchChatHistoryFromBackend: (uid: string, start: Date, end: Date) => Promise<ChatData[]>;
     storeChatHistoryToBackend: (uid: string, chatData: ChatData) => Promise<void>;
 }
 
@@ -17,6 +18,32 @@ export const useBackendAPI = (): BackendAPI => {
             const body = {
                 "operation": "get",
                 "uid": uid as string,
+            }
+            const response = await axios.post(BACKEND_URL, body, { headers });
+
+            const ChatDataArray: ChatData[] = [];
+            for (const item of response["data"]["items"]) {
+                ChatDataArray.push({
+                    "question": item["question"],
+                    "answer": item["answer"],
+                    "datetime": new Date(item["datetime"]),
+                    "emoji": item["emoji"],
+                });
+            }
+            return ChatDataArray
+        } catch (error) {
+            console.error(error);
+            return [];
+        }
+    }
+
+    const periodFetchChatHistoryFromBackend = async (uid: string, start: Date, end: Date): Promise<ChatData[]> => {
+        try {
+            const body = {
+                "operation": "periodGet",
+                "uid": uid as string,
+                "start": start.toISOString(),
+                "end": end.toISOString(),
             }
             const response = await axios.post(BACKEND_URL, body, { headers });
 
@@ -54,5 +81,9 @@ export const useBackendAPI = (): BackendAPI => {
             console.error(error);
         }
     }
-    return { fetchChatHistoryFromBackend, storeChatHistoryToBackend }
+    return {
+        fetchChatHistoryFromBackend,
+        periodFetchChatHistoryFromBackend,
+        storeChatHistoryToBackend
+    }
 }
