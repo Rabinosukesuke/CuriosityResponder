@@ -47,7 +47,7 @@ export const CharacterSettings: React.FC<Props> = ({ navigation }) => {
         <View style={styles.container}>
             <Header navigation={navigation} />
 
-            <Text style={{ textAlign: 'center', marginTop: 10, fontSize: 36 }}>キャラクター設定</Text>
+            <Text style={{ textAlign: 'center', marginTop: 10, fontSize: 36 }}>キャラクター選択</Text>
             <View style={{ flexDirection: 'row', marginTop: 60 }}>
 
                 <Animated.View entering={FadeInDown.delay(600).duration(1000).springify()}>

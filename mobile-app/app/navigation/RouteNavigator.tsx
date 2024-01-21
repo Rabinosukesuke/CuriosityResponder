@@ -63,19 +63,19 @@ export const RootNavigator = () => {
 };
 
 const ChildCombinedWrapper = () => {
-  const navigation = useNavigation<DrawerNavigationProp<DrawerParamList, "ChildCombined">>();
-  const route = useRoute<RouteProp<DrawerParamList, 'ChildCombined'>>();
+  const navigation = useNavigation<DrawerNavigationProp<DrawerParamList, "おしゃべりタイムライン">>();
+  const route = useRoute<RouteProp<DrawerParamList, 'おしゃべりタイムライン'>>();
   return <ChildCombined navigation={navigation} route={route} />;
 };
 
 const DrawerNavigation = () => {
   return (
-    <Drawer.Navigator initialRouteName='DailyHistory'>
-      <Drawer.Screen name="ChildCombined" component={ChildCombinedWrapper} />
-      <Drawer.Screen name="DailyHistory" component={DailyHistory} />
-      <Drawer.Screen name="Game" component={Game} />
-      <Drawer.Screen name="Settings" component={Settings} />
-      <Drawer.Screen name="CharacterSettings" component={CharacterSettings} />
+    <Drawer.Navigator initialRouteName='質問カレンダー'>
+      <Drawer.Screen name="おしゃべりタイムライン" component={ChildCombinedWrapper} />
+      <Drawer.Screen name="質問カレンダー" component={DailyHistory} />
+      <Drawer.Screen name="ミニゲーム" component={Game} />
+      <Drawer.Screen name="分析" component={LineChart} />
+      <Drawer.Screen name="キャラクター変更" component={CharacterSettings} />
     </Drawer.Navigator>
   )
 }

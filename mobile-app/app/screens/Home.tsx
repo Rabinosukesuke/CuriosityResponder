@@ -26,7 +26,7 @@ export const Home = ({ navigation }: Props) => {
 
   useEffect(() => {
     if (user) {
-      drawNavigation.navigate("ChildCombined", {
+      drawNavigation.navigate("おしゃべりタイムライン", {
         question: "",
         response: "",
         datetime: "",
@@ -66,7 +66,7 @@ export const Home = ({ navigation }: Props) => {
             {/* ChildChatScreen Button */}
             <Pressable
               style={styles.button}
-              onPress={() => drawNavigation.navigate("ChildCombined", {})}
+              onPress={() => drawNavigation.navigate("おしゃべりタイムライン", {})}
             >
               <Text
                 style={styles.buttonText}

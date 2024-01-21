@@ -19,8 +19,8 @@ import { DrawerNavigationProp } from '@react-navigation/drawer';
 const screenWidth = Dimensions.get('window').width;
 
 type ChildCombinedProps = {
-    navigation: DrawerNavigationProp<DrawerParamList, "ChildCombined">;
-    route: RouteProp<DrawerParamList, 'ChildCombined'>;
+    navigation: DrawerNavigationProp<DrawerParamList, "おしゃべりタイムライン">;
+    route: RouteProp<DrawerParamList, 'おしゃべりタイムライン'>;
 };
 
 export const ChildCombined = ({ navigation, route }: ChildCombinedProps) => {
@@ -277,7 +277,7 @@ export const ChildCombined = ({ navigation, route }: ChildCombinedProps) => {
                                 <Pressable
                                     key={item.datetime.toString()}
                                     onPress={() => {
-                                        navigation.navigate("ChildCombined", {
+                                        navigation.navigate("おしゃべりタイムライン", {
                                             datetime: item.datetime.toISOString(),
                                             question: item.question,
                                             response: item.answer,

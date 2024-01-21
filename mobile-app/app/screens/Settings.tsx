@@ -23,7 +23,7 @@ const SettingsIconName = (iconName: string): FontAwesomeName => {
 };
 
 type Props = {
-    navigation: DrawerNavigationProp<DrawerParamList, "Settings">;
+    navigation: DrawerNavigationProp<DrawerParamList, "分析">;
 }
 
 export const Settings: React.FC<Props> = ({ navigation }) => {
@@ -39,7 +39,7 @@ export const Settings: React.FC<Props> = ({ navigation }) => {
                     <AntDesign name="user" size={90} color="black" />
                 </Pressable>
                 <Pressable
-                    onPress={() => { navigation.navigate("CharacterSettings") }}
+                    onPress={() => { navigation.navigate("分析") }}
                     style={{ width: 90, height: 90, backgroundColor: 'white' }}
                 >
                     <AntDesign name="user" size={90} color="black" />

@@ -18,16 +18,16 @@ export type RootStackParamList = {
 };
 
 export type DrawerParamList = {
-    CharacterSettings: undefined;
-    ChildCombined: {
+    キャラクター変更: undefined;
+    おしゃべりタイムライン: {
         question?: string;
         response?: string;
         datetime?: string;
         emoji?: "happy" | "normal" | "sad";
     };
-    DailyHistory: undefined;
-    Game: undefined;
-    Settings: undefined;
+    質問カレンダー: undefined;
+    ミニゲーム: undefined;
+    分析: undefined;
 }
 
 export type User = {

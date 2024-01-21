@@ -55,7 +55,7 @@ export const DailyHistory = ({ navigation }: Props) => {
     const [isToggled, setIsToggled] = useState<boolean>(false);
 
     const dateWithDayOfWeekList = getDaysFromNowToLastMonth();
-    const drawNavigation = useNavigation<DrawerNavigationProp<DrawerParamList, "DailyHistory">>();
+    const drawNavigation = useNavigation<DrawerNavigationProp<DrawerParamList, "質問カレンダー">>();
 
     const { periodFetchChatHistoryFromBackend } = useBackendAPI();
 
@@ -158,7 +158,7 @@ export const DailyHistory = ({ navigation }: Props) => {
                     <Pressable
                         key={item.datetime.toString()}
                         onPress={() => {
-                            drawNavigation.navigate("ChildCombined", {
+                            drawNavigation.navigate("おしゃべりタイムライン", {
                                 datetime: item.datetime.toISOString(),
                                 question: item.question,
                                 response: item.answer,
