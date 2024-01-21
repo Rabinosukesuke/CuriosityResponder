@@ -1,10 +1,9 @@
 import { View, Text, FlatList, Pressable, StyleSheet, ScrollView } from 'react-native'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { RootStackParamList, ChatData, DrawerParamList } from '../types/type';
 import { Header } from '../components/Header'
-import { FloatingButton } from '../components/FloatingActionButton';
 import { useSelector } from 'react-redux'
 import { selectAuth } from '../slices/authSlices';
 import { ChildHistoryComponent } from '../components/ChildHistoryComponent';
@@ -22,40 +21,42 @@ type DateWithDayOfWeek = {
     dayOfWeek: number
 }
 
-const getDaysFromNowToLastMonth = (): DateWithDayOfWeek[] => {
-    const today = new Date();
-    const lastMonth = new Date();
-    lastMonth.setMonth(today.getMonth() - 1);
+const getDaysFromNowToLastMonth = (month: number): DateWithDayOfWeek[] => {
+    const year = new Date().getFullYear();
+    const date = new Date(year, month, 0);
+    const daysInMonth = date.getDate();
 
     const dateWithDayOfWeekList = [];
-    while (today >= lastMonth) {
-        const dateWithDayOfWeek: DateWithDayOfWeek = {
-            datetime: new Date(today),
-            month: today.getMonth() + 1,
-            day: today.getDate(),
-            dayOfWeek: today.getDay()
-        }
-        dateWithDayOfWeekList.push(dateWithDayOfWeek);
-        today.setDate(today.getDate() - 1);
+    for (let i = 0; i < daysInMonth; i++) {
+        const datetime = new Date(year, month, i + 1);
+        const dayOfWeek = datetime.getDay();
+        dateWithDayOfWeekList.push({
+            datetime: datetime,
+            month: month,
+            day: i + 1,
+            dayOfWeek: dayOfWeek,
+        });
     }
-    console.log("function")
-
-    return dateWithDayOfWeekList.reverse();
+    console.log(dateWithDayOfWeekList)
+    return dateWithDayOfWeekList;
 }
 
 export const DailyHistory = ({ navigation }: Props) => {
+    const drawNavigation = useNavigation<DrawerNavigationProp<DrawerParamList, "質問カレンダー">>();
+
     const user = useSelector(selectAuth);
 
+    const monthList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
     const dayOfWeekList = ["日", "月", "火", "水", "木", "金", "土"];
-    const nowMonth = new Date().getMonth() + 1;
+    const nowMonth = new Date().getMonth();
     const nowDay = new Date().getDate();
 
+    const monthScrollView = useRef<ScrollView>(null);
+
+    const [selectMonth, setSelectMonth] = useState<number>(0);
     const [selectedDate, setSelectedDate] = useState<number>(0);
     const [storageData, setStorageData] = useState<ChatData[]>([]);
-    const [isToggled, setIsToggled] = useState<boolean>(false);
-
-    const dateWithDayOfWeekList = getDaysFromNowToLastMonth();
-    const drawNavigation = useNavigation<DrawerNavigationProp<DrawerParamList, "質問カレンダー">>();
+    const [dateWithDayOfWeekList, setDateWithDayOfWeekList] = useState<DateWithDayOfWeek[]>([]);
 
     const { periodFetchChatHistoryFromBackend } = useBackendAPI();
 
@@ -74,18 +75,23 @@ export const DailyHistory = ({ navigation }: Props) => {
     };
 
     useEffect(() => {
-        setSelectedDate(lastIndex);
-        fetchData(lastIndex);
-        console.log("useEffect")
+        const monthIndex = monthList.indexOf(nowMonth)
+        setSelectMonth(monthIndex);
+        if (monthScrollView.current) {
+            monthScrollView.current.scrollTo({ x: 65 * monthIndex, y: 0, animated: false });
+        }
+        setSelectedDate(0);
+        fetchData(0);
     }, []);
+
+    useEffect(() => {
+        setDateWithDayOfWeekList(getDaysFromNowToLastMonth(selectMonth));
+        setSelectedDate(0);
+    }, [selectMonth]);
 
     const SortChatData = storageData
         .sort((a, b) => {
-            if (isToggled) {
-                return new Date(a.datetime) > new Date(b.datetime) ? 1 : -1;
-            } else {
-                return new Date(a.datetime) < new Date(b.datetime) ? 1 : -1;
-            }
+            return new Date(a.datetime) > new Date(b.datetime) ? 1 : -1;
         });
 
     const renderDateWithDayOfWeek = ({ item, index }: { item: DateWithDayOfWeek, index: number }) => (
@@ -138,6 +144,36 @@ export const DailyHistory = ({ navigation }: Props) => {
         <View className='bg-primary flex-1'>
             <Header navigation={null} />
 
+            <View style={{ width: "100%", height: "3%" }}>
+                <ScrollView
+                    className="w-full h-full overflow-scroll"
+                    horizontal={true}
+                    showsVerticalScrollIndicator={false}
+                    showsHorizontalScrollIndicator={false}
+                    ref={monthScrollView}
+                >
+                    {monthList.map((item: number, index: number) => (
+                        selectMonth == index ? (
+                            <Pressable
+                                key={index}
+                                className='flex-1 items-center justify-center w-20 h-full mx-1 border rounded border-green-600'
+                                onPress={() => { setSelectMonth(index) }}
+                            >
+                                <Text>{item}月</Text>
+                            </Pressable>
+                        ) : (
+                            <Pressable
+                                key={index}
+                                className='flex-1 items-center justify-center w-20 h-full mx-1 border rounded border-green-100'
+                                onPress={() => { setSelectMonth(index) }}
+                            >
+                                <Text className='text-gray-400'>{item}月</Text>
+                            </Pressable>
+                        )
+                    ))}
+                </ScrollView>
+            </View>
+
             <View style={{ width: "100%", height: "10%" }}>
                 <FlatList
                     data={dateWithDayOfWeekList}
@@ -176,17 +212,6 @@ export const DailyHistory = ({ navigation }: Props) => {
                 ))}
             </ScrollView>
 
-            {/* <View style={styles.floatingButtonContainer}>
-                <FloatingButton />
-            </View> */}
         </View>
     )
 }
-const styles = StyleSheet.create({
-
-    floatingButtonContainer: {
-        position: 'absolute',
-        bottom: 20,
-        right: 20,
-    },
-});
