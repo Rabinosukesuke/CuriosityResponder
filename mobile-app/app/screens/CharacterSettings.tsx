@@ -13,7 +13,6 @@ export const CharacterSettings: React.FC<Props> = ({ navigation }) => {
         container: {
             flex: 1,
             backgroundColor: '#CBF0E9',
-            justifyContent: 'center',
             alignItems: 'center',
         },
         rectangle: {
@@ -47,72 +46,76 @@ export const CharacterSettings: React.FC<Props> = ({ navigation }) => {
         <View style={styles.container}>
             <Header navigation={navigation} />
 
-            <Text style={{ textAlign: 'center', marginTop: 10, fontSize: 36 }}>キャラクター選択</Text>
-            <View style={{ flexDirection: 'row', marginTop: 60 }}>
+            <Text style={{ textAlign: 'center', marginTop: 0, fontSize: 36 }}>キャラクター選択</Text>
+            <View style={{ flexDirection: 'row', marginTop: 40 }}>
 
                 <Animated.View entering={FadeInDown.delay(600).duration(1000).springify()}>
-                    <Pressable onPress={() => { navigation.navigate("ChildChat") }} style={styles.rectangle}>
+                    <Pressable  style={styles.rectangle}>
                         <View style={styles.square}>
-                        <Image source={require('../assets/ameba.png')} style={styles.square} />
+                        <Image source={require('../assets/owl.png')} style={styles.square} />
                     </View>
-                    <Text style={{ textAlign: 'center', marginTop: 10 }}>あめちゃん</Text>
+                    <Text style={{ textAlign: 'center', marginTop: 10 }}>ふくちゃん</Text>
                     <View style={[styles.square, { backgroundColor: 'white', borderColor: 'black', borderWidth: 1 }]} >
-                        <Text style={{ textAlign: 'center', marginTop: 5 }}>紹介文</Text>
+                        <Text style={{ textAlign: 'center', marginTop: 5, fontSize:11 }}>みんなのリーダーでとても物知り！なんでも聞いてね！！</Text>
                     </View>
                 </Pressable>
                 </Animated.View>
                 
                 <Animated.View entering={FadeInDown.delay(600).duration(1000).springify()}>
-                <Pressable onPress={() => { navigation.navigate("ChildChat") }} style={styles.rectangle}>
+                <Pressable style={styles.rectangle}>
                     <View style={styles.square} >
                         <Image source={require('../assets/bear.png')} style={styles.square} />
                     </View>
                     <Text style={{ textAlign: 'center', marginTop: 10 }}>くまちゃん</Text>
                     <View style={[styles.square, { backgroundColor: 'white', borderColor: 'black', borderWidth: 1 }]} >
-                        <Text style={{ textAlign: 'center', marginTop: 5 }}>紹介文</Text>
+                        <Text style={{ textAlign: 'center', marginTop: 5 , fontSize:11 }}>パソコンが大好き操作でわからないことがあったら、なんでも聞いてね！</Text>
                     </View>
                 </Pressable>
                 </Animated.View>
 
                 <Animated.View entering={FadeInDown.delay(600).duration(1000).springify()}>
-                <Pressable onPress={() => { navigation.navigate("ChildChat") }} style={styles.rectangle}>
+                <Pressable  style={styles.rectangle}>
                     <View style={styles.square} >
                         <Image source={require('../assets/crocodile.png')} style={styles.square} />
                     </View>
                     <Text style={{ textAlign: 'center', marginTop: 10 }}>わにくん</Text>
                     <View style={[styles.square, { backgroundColor: 'white', borderColor: 'black', borderWidth: 1 }]} >
-                        <Text style={{ textAlign: 'center', marginTop: 5 }}>紹介文</Text>
+                        <Text style={{ textAlign: 'center', marginTop: 5 , fontSize:11}}>将来の夢はヒーロー!かっこい決め台詞をたくさん教えてくれるよ！</Text>
                     </View>
                 </Pressable>
                 </Animated.View>
             </View>
             <View style={{ flexDirection: 'row' }}>
             <Animated.View entering={FadeInDown.delay(600).duration(1000).springify()}>
-                <Pressable onPress={() => { navigation.navigate("ChildChat") }} style={styles.rectangle}>
-                    <View style={styles.square} />
-                    <Text style={{ textAlign: 'center', marginTop: 5 }}>名前</Text>
+                <Pressable style={styles.rectangle}>
+                <View style={styles.square} >
+                        <Image source={require('../assets/ameba.png')} style={styles.square} />
+                    </View>                    
+                    <Text style={{ textAlign: 'center', marginTop: 10 }}>あめちゃん</Text>
                     <View style={[styles.square, { backgroundColor: 'white', borderColor: 'black', borderWidth: 1 }]} >
-                        <Text style={{ textAlign: 'center', marginTop: 5 }}>紹介文</Text>
+                        <Text style={{ textAlign: 'center', marginTop: 5 , fontSize:11}}>お星様が大好きで将来の夢は宇宙飛行士！夢に向かって努力しているよ！</Text>
                     </View>
                 </Pressable>
                 </Animated.View>
 
                 <Animated.View entering={FadeInDown.delay(600).duration(1000).springify()}>
-                <Pressable onPress={() => { navigation.navigate("ChildChat") }} style={styles.rectangle}>
+                <Pressable style={styles.rectangle}>
                     <View style={styles.square} />
-                    <Text style={{ textAlign: 'center', marginTop: 5 }}>名前</Text>
+                    <Text style={{ textAlign: 'center', marginTop: 10 }}>名前</Text>
                     <View style={[styles.square, { backgroundColor: 'white', borderColor: 'black', borderWidth: 1 }]} >
-                        <Text style={{ textAlign: 'center', marginTop: 5 }}>紹介文</Text>
+                        <Text style={{ textAlign: 'center', marginTop: 5 }}>Coming
+                        Soon!</Text>
                     </View>
                 </Pressable>
                 </Animated.View>
 
                 <Animated.View entering={FadeInDown.delay(600).duration(1000).springify()}>
-                <Pressable onPress={() => { navigation.navigate("ChildChat") }} style={styles.rectangle}>
+                <Pressable  style={styles.rectangle}>
                     <View style={styles.square} />
-                    <Text style={{ textAlign: 'center', marginTop: 5 }}>名前</Text>
+                    <Text style={{ textAlign: 'center', marginTop: 10 }}>名前</Text>
                     <View style={[styles.square, { backgroundColor: 'white', borderColor: 'black', borderWidth: 1 }]}>
-                        <Text style={{ textAlign: 'center', marginTop: 5 }}>紹介文</Text>
+                        <Text style={{ textAlign: 'center', marginTop: 5 }}>Coming
+                        Soon!</Text>
                     </View>
                 </Pressable>
                 </Animated.View>
