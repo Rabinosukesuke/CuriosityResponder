@@ -15,8 +15,16 @@ const MemoChildHistoryComponent = (data: ChatData) => {
                 style={styles.emoji}
             />
             <View style={styles.textContainer}>
-                <Text style={styles.question}>{data.question}</Text>
-                <Text style={styles.answer}>{data.answer}</Text>
+                <Text
+                    style={styles.question}
+                    numberOfLines={1}
+                >{data.question}
+                </Text>
+                <Text
+                    style={styles.answer}
+                    numberOfLines={2}
+                >{data.answer}
+                </Text>
                 <View style={styles.divider} />
             </View>
         </View>
@@ -26,7 +34,7 @@ const MemoChildHistoryComponent = (data: ChatData) => {
 const styles = StyleSheet.create({
     container: {
         width: width * 0.95, // 11/12 of the width
-        height: height * 0.17, // 1/6 of the height
+        height: height * 0.10, // 1/6 of the height
         flexDirection: 'row',
         alignItems: 'center',
         marginBottom: -10, // Adjust as needed for spacing between items
