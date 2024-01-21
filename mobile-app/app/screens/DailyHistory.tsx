@@ -75,18 +75,16 @@ export const DailyHistory = ({ navigation }: Props) => {
     };
 
     useEffect(() => {
-        const monthIndex = monthList.indexOf(nowMonth)
-        setSelectMonth(monthIndex);
+        setSelectMonth(0);
         if (monthScrollView.current) {
-            monthScrollView.current.scrollTo({ x: 65 * monthIndex, y: 0, animated: false });
+            monthScrollView.current.scrollTo({ x: 65 * 0, y: 0, animated: false });
         }
-        setSelectedDate(0);
+        setSelectedDate(20);
         fetchData(0);
     }, []);
 
     useEffect(() => {
         setDateWithDayOfWeekList(getDaysFromNowToLastMonth(selectMonth));
-        setSelectedDate(0);
     }, [selectMonth]);
 
     const SortChatData = storageData
@@ -180,7 +178,7 @@ export const DailyHistory = ({ navigation }: Props) => {
                     renderItem={renderDateWithDayOfWeek}
                     keyExtractor={(item) => item.datetime.toString()}
                     horizontal
-                    initialScrollIndex={dateWithDayOfWeekList.length >= 1 ? dateWithDayOfWeekList.length - 1 : 0}
+                    initialScrollIndex={18}
                     getItemLayout={(data, index) => (
                         { length: 56, offset: 56 * index, index }
                     )}
