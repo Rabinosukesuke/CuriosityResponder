@@ -123,6 +123,15 @@ export const ChildCombined = ({ navigation, route }: ChildCombinedProps) => {
     };
 
     const SortAndFilterChatData = storageData
+        .filter(item => {
+            if (route.params?.datetime) {
+                const routeDatetime = new Date(route.params.datetime);
+                const routeMonth = routeDatetime.getMonth();
+                const routeDay = routeDatetime.getDate();
+                return routeMonth === item.datetime.getMonth() && routeDay === item.datetime.getDate();
+            }
+            return false;
+        })
         .filter(item => item.question.includes(searchValue) || item.answer.includes(searchValue))
         .sort((a, b) => {
             if (isToggled) {
@@ -265,13 +274,25 @@ export const ChildCombined = ({ navigation, route }: ChildCombinedProps) => {
                     <View style={styles.scrollView}>
                         <ScrollView >
                             {SortAndFilterChatData.map((item: ChatData) => (
-                                <ChildHistoryComponent
+                                <Pressable
                                     key={item.datetime.toString()}
-                                    datetime={item.datetime}
-                                    question={trimText(item.question, 10)}
-                                    answer={trimText(item.answer, 28)}
-                                    emoji={item.emoji}
-                                />
+                                    onPress={() => {
+                                        navigation.navigate("ChildCombined", {
+                                            datetime: item.datetime.toISOString(),
+                                            question: item.question,
+                                            response: item.answer,
+                                            emoji: item.emoji,
+                                        });
+                                        handleTabPress(0)
+                                    }}
+                                >
+                                    <ChildHistoryComponent
+                                        datetime={item.datetime}
+                                        question={item.question}
+                                        answer={item.answer}
+                                        emoji={item.emoji}
+                                    />
+                                </Pressable>
                             ))}
                         </ScrollView>
 
