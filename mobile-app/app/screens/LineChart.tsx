@@ -40,11 +40,14 @@ export const LineChart = ({ navigation }: Props) => {
     const datetime_now = new Date();
 
     const currentDate = Array.from({ length: ONEWEEK }, (_, i) => {
-        const month: string = (datetime_now.getMonth() + 1).toString();
-        const day: string = (datetime_now.getDate() - ONEWEEK + i + 1).toString();
-        const dayOfWeek: string = dayOfWeekList[datetime_now.getDay() - ONEWEEK + i + 1];
-        return `${month}/${day}${"\n"}${dayOfWeek}`
+        const date = new Date();
+        date.setDate(datetime_now.getDate() - ONEWEEK + i + 1);
+        const month = (date.getMonth() + 1).toString();
+        const day = date.getDate().toString();
+        const dayOfWeek = dayOfWeekList[date.getDay()];
+        return `${month}/${day}\n${dayOfWeek}`;
     });
+    
     console.log(currentDate);
 
     const ChartData = Array.from({ length: 7 }, (_, i) => {
